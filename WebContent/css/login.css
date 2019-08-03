@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+/* メインフレーム */
+#main {
+	padding: 60px 20%;
+}
+
+/* エラー表示 */
+#error {
+	color: red;
+}
+
+/* テーブル */
+tr:nth-child(1) {
+	text-align: center;
+	font-size: 28px;
+}
+
+/* 先頭から最後から3番目まで高さ指定 */
+tr:nth-child(n+1):nth-last-child(n+3) {
+	height: 60px;
+}
+
+tr:nth-child(4) {
+	text-align: center;
+	height: 100px;
+}
+
+tr:nth-child(5) label {
+	vertical-align: middle;
+	font-size: 12px;
+}
+
+/* インプット要素 */
+#login_action input {
+	vertical-align: middle;
+	position: relative;
+}
+
+#login_action input[type="submit"], input[type="text"], input[type="password"]
+	{
+	width: 350px;
+	border-radius: 5px;
+}
+
+#login_action input[type="text"], input[type="password"] {
+	height: 25px;
+	padding: 5px;
+	border: 1px solid #D8D8D8;
+}
+
+#login_action input[type="submit"] {
+	height: 50px;
+	background-color: #81BEF7;
+	color: white;
+	border: 1px solid #81BEF7;
+	font-size: 16px;
+}
+
