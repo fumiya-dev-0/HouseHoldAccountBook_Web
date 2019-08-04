@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+* {
+	font-family: -apple-system, blinkMacSystemFont, "Helvetica Neue",
+		"Segoe UI", YuGothicM, YuGothic, Meiryo, sans-serif;
+}
+
 body {
 	margin: 0;
 	padding: 0;
