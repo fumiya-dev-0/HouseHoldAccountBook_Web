@@ -24,7 +24,7 @@
 	text-decoration: underline;
 }
 
-#tab_body div {
+#tab_body {
 	border: 1px solid black;
 	margin-top: -1px;
 	padding: 1em;
