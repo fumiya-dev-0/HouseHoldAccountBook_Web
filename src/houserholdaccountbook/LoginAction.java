@@ -2,9 +2,16 @@ package houserholdaccountbook;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
 import houserholdaccountbook.model.LoginModel;
 
-public class LoginAction extends BaseDBAction {
+public class LoginAction extends BaseDBAction implements ServletResponseAware, ServletRequestAware{
 
 	/**
 	 * メンバ変数
@@ -17,6 +24,8 @@ public class LoginAction extends BaseDBAction {
 	private String password;
 
 	private Boolean auto;
+	private HttpServletResponse response;
+	private HttpServletRequest request;
 
 	/**
 	 * コンストラクタ
@@ -38,8 +47,9 @@ public class LoginAction extends BaseDBAction {
 		/**
 		 * クッキーにユーザIDが存在する場合、クッキーをユーザIDのセッターに設定する
 		 */
-		if(isCookie()) {
-			setUserId(getCookie());
+		Cookie cookies [] = request.getCookies();
+		if(isCookie(cookies)) {
+			setUserId(getCookie(cookies));
 		}
 
 		return ACTION_SUCCESS;
@@ -198,21 +208,24 @@ public class LoginAction extends BaseDBAction {
 
 		// ユーザID保存チェックボックスがtrueのとき
 		if(getAuto()) {
-
+			setCookie();
 		}
 
-		/**
-		 * TODO: ユーザIDをクッキーに保存
-		 */
 	}
 
 	/**
 	 * クッキーが存在するかチェック
 	 * @return
 	 */
-	private boolean isCookie() {
+	private boolean isCookie(Cookie cookies[]) {
 
-		// TODO: クッキーチェック処理
+		if(cookies == null) {
+			return false;
+		}
+
+		if(cookies.length == 0) {
+			return false;
+		}
 
 		return true;
 	}
@@ -222,13 +235,39 @@ public class LoginAction extends BaseDBAction {
 	 * @return
 	 *
 	 */
-	private String getCookie() {
+	private String getCookie(Cookie cookies[]) {
+		String cookie = "";
 
-		/**
-		 * TODO: クッキー取得処理
-		 *
-		 */
+		for(int i = 0; i < cookies.length; i++) {
+			if(cookies[i].getName().equals(USER_USERID_COLUMN)) {
+				cookie = cookies[i].getValue();
+			}
+		}
 
-		return "";
+		return cookie;
 	}
+
+	/**
+	 * クッキーの設定
+	 *
+	 */
+	private void setCookie() {
+
+		Cookie cookie = new Cookie(USER_USERID_COLUMN, userId);
+		cookie.setMaxAge(60 * 60 * 24);
+		response.addCookie(cookie);
+
+	}
+
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+
 }
