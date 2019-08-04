@@ -41,6 +41,11 @@ public interface Util {
 	public static final String MYSQL_DATABASE_CONNECTION_PASSWORD = "";
 
 	/**
+	 * Hibernate設定ファイルパス
+	 *
+	 */
+	public static final String HIBERNATE_CONFIG_PATH = "hibernate.cfg.xml";
+	/**
 	 *  カラム名
 	 *
 	 */

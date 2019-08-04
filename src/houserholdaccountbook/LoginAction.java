@@ -1,7 +1,5 @@
 package houserholdaccountbook;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -121,16 +119,10 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 	 */
 	private boolean login() {
 
-		try {
-			User user = loginModel.load();
-			if(user != null) {
-				return true;
-			}else {
-				return false;
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+		User user = loginModel.load();
+		if(user != null) {
+			return true;
+		}else {
 			return false;
 		}
 
