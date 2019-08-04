@@ -69,13 +69,15 @@ public interface Util {
 
 	/**
 	 * CSSファイルパスの列挙型クラス
-	 * @author fumiya
+	 * @author
 	 *
 	 */
 	public enum Css {
 
 		DEFAULT_CSS_PATH("default.css"),
-		LOGIN_CSS_PATH("login.css");
+		LOGIN_CSS_PATH("login.css"),
+		LIST_CSS_PATH("list.css"),
+		TAB_CSS_PATH("tab.css");
 
 		private final String path;
 
@@ -102,7 +104,7 @@ public interface Util {
 
 	/**
 	 * HTMLタグの列挙型クラス
-	 * @author fumiya
+	 * @author
 	 *
 	 */
 	public enum Html {
@@ -118,7 +120,6 @@ public interface Util {
 		 */
 		private Html(String htmlTag) {
 			this.htmlTag = htmlTag;
-			// TODO 自動生成されたコンストラクター・スタブ
 		}
 
 		/**
@@ -128,6 +129,38 @@ public interface Util {
 		 */
 		public String getHtmlTag() {
 			return htmlTag;
+		}
+
+	}
+
+	/**
+	 * JSファイルパスの列挙型クラス
+	 *
+	 * @author
+	 *
+	 */
+	public enum JavaScript {
+
+		TAB_JS_PATH("tab.js");
+
+		private final String path;
+
+		/**
+		 * コンストラクタ
+		 *
+		 * @param path
+		 */
+		private JavaScript(String path) {
+			this.path = path;
+		}
+
+		/**
+		 * JSファイルパスの取得
+		 *
+		 * @return
+		 */
+		public String getPath() {
+			return "js/" + path;
 		}
 
 	}

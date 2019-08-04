@@ -20,3 +20,23 @@ header h1 {
 	padding: 0;
 	color: white;
 }
+
+input[type="submit"], input[type="text"], input[type="password"] {
+	border-radius: 5px;
+}
+
+/* メインフレーム */
+#main {}
+
+/* ログアウトボタン */
+#logout {
+	position: absolute;
+	right: 20px;
+	top: 15px;
+	height: 40px;
+	width: 120px;
+	background-color: #ffc926;
+	color: white;
+	border: 1px solid #ffc926;
+	font-size: 16px;
+}

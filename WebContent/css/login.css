@@ -2,7 +2,7 @@
 
 /* メインフレーム */
 #main {
-	padding: 60px 20%;
+	padding: 60px 15px;
 }
 
 /* エラー表示 */
@@ -40,7 +40,6 @@ tr:nth-child(5) label {
 #login_action input[type="submit"], input[type="text"], input[type="password"]
 	{
 	width: 350px;
-	border-radius: 5px;
 }
 
 #login_action input[type="text"], input[type="password"] {

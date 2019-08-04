@@ -7,23 +7,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- CSSファイル読み込み -->
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@DEFAULT_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
-
-<title><s:property value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+<!-- タイトル -->
+<title><s:property
+		value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
 </head>
 <body>
+	<!-- ヘッダー -->
 	<header>
-	<h1><s:property value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></h1>
+	<h1>
+		<s:property
+			value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
+	</h1>
 	</header>
 	<div align="center" id="main">
+		<!-- エラーメッセージ表示 -->
 		<div id="error">
 			<s:if test="!errorMessage.isEmpty()">
 				<s:property value="errorMessage" />
 			</s:if>
 		</div>
+		<!-- ログインフォーム -->
 		<s:form action="login_action">
 			<table>
 				<tr>
@@ -45,6 +53,7 @@
 			</table>
 		</s:form>
 	</div>
+	<!-- フッター -->
 	<footer> </footer>
 </body>
 </html>

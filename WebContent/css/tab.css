@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+/* タブ */
+#tab_controll {
+	margin: 0;
+}
+
+/* タブ a要素 */
+#tab_controll a {
+	display: inline-block;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: black;
+	padding: 0.75em 3.5em;
+	text-decoration: none;
+	color: black;
+	background-color: white;
+	font-weight: bold;
+	margin-right: -1px;
+}
+
+/* タブにマウスポインタが載った時 */
+#tab_controll a:hover {
+	text-decoration: underline;
+}
+
+#tab_body div {
+	border: 1px solid black;
+	margin-top: -1px;
+	padding: 1em;
+	background-color: white;
+	position: relative;
+	z-index: 0;
+}

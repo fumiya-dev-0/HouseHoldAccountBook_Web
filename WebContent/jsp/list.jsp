@@ -7,21 +7,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- CSSファイル読み込み -->
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@DEFAULT_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css"
-	href="<s:property value="@houserholdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
-
-<title><s:property value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+	href="<s:property value="@houserholdaccountbook.util.Util$Css@LIST_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css"
+	href="<s:property value="@houserholdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
+<!-- タイトル -->
+<title><s:property
+		value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
 </head>
 <body>
+	<!-- ヘッダー -->
 	<header>
-	<h1><s:property value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></h1>
-	</header>
-	<div align="center" id="main">
-		<s:form action="">
-		</s:form>
+	<h1>
+		<s:property
+			value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
+	</h1>
+	<s:submit name="logout" id="logout" value="ログアウト"></s:submit> </header>
+	<div id="main">
+		<!-- タブメニュー読み込み -->
+		<%@include file="tab.jsp"%>
+		<!-- JSファイル読み込み -->
+		<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
 	</div>
-	<footer> </footer>
+	<!-- フッター -->
+	<footer></footer>
 </body>
 </html>
