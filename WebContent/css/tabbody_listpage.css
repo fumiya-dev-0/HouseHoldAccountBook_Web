@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+#dlt_button, #add_button, #upd_button, #print_button, #date {
+	border: 1px solid;
+}
+
+/* 入力エリア */
+#inputArea {
+
+}
+
+/* 画像 */
+#inputArea input[type="image"] {
+	width: 20px;
+	height: 20px;
+	vertical-align: bottom;
+	margin-bottom: 5px;
+}
+
+/* ボタン */
+#print_button, #add_button, #upd_button {
+	background-color: #81BEF7;
+	color: white;
+	border-color: #81BEF7;
+}
+
+#dlt_button {
+	background-color: #ffa500;
+	color: white;
+	border-color: #ffa500;
+}
+
+/* テーブルエリア */
+#tableArea {
+	margin: 30px 0;
+	overflow: auto;
+}
+
+/* テーブル */
+table {
+	width: 1000px;
+	border-collapse: separate;
+}
+
+/* テーブルth */
+table th:first-child {
+	border-radius: 5px 0 0 0;
+}
+
+table th:last-child {
+	border-radius: 0 5px 0 0;
+	border-right: 1px solid #3c6690;
+}
+
+table th {
+	text-align: center;
+	color: white;
+	background: linear-gradient(#829ebc, #225588);
+	border: solid #3c6690;
+	border-width: 0 1px 1px 1px;
+	box-shadow: 0 1px 1px rgba(255, 255, 255, 0.3) inset;
+	padding: 5px 0;
+}
+
+/* テーブルtd */
+table td {
+	text-align: center;
+	border-left: 1px solid #a8b7c5;
+	border-bottom: 1px solid #a8b7c5;
+	border-top: none;
+	box-shadow: 0px -3px 5px 1px #eee inset;
+	padding: 5px 0;
+}
+
+table td:last-child {
+	border-right: 1px solid #a8b7c5;
+}
+
+table tr:last-child td:first-child {
+	border-radius: 0 0 0 5px;
+}
+
+table tr:last-child td:last-child {
+	border-radius: 0 0 5px 0;
+}
+
+/* テキストエリア*/
+#memoArea textarea{
+	width: 98%;
+	padding: 10px;
+	height: 100px;
+	resize: none; /* 右下の//を消す */
+}

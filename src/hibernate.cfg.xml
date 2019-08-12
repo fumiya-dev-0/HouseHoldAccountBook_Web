@@ -11,6 +11,8 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
+		<mapping resource="expense.hbm.xml" />
+		<mapping resource="householdaccountbook.hbm.xml" />
 		<mapping resource="user.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

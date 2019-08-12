@@ -1,3 +1,5 @@
 /houserholdaccountbook/
 /hibernate.cfg.xml
 /user.hbm.xml
+/expense.hbm.xml
+/householdaccountbook.hbm.xml

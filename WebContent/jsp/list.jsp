@@ -14,9 +14,10 @@
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@LIST_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
+<!-- JSファイル読み込み -->
+<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@DATE_COMMON_JS_PATH.getPath()" />"></script>
 <!-- タイトル -->
-<title><s:property
-		value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+<title><s:property value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
 </head>
 <body>
 	<!-- ヘッダー -->

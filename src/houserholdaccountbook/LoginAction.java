@@ -1,29 +1,23 @@
 package houserholdaccountbook;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
+import houserholdaccountbook.model.UserModel;
 
-import houserholdaccountbook.model.LoginModel;
-
-public class LoginAction extends BaseDBAction implements ServletResponseAware, ServletRequestAware{
+public class LoginAction extends BaseDBAction{
 
 	/**
 	 * メンバ変数
 	 *
 	 */
-	private LoginModel loginModel;
+	private UserModel loginModel;
+	private User user;
 
-	private int userCode;
 	private String userId;
 	private String password;
 
 	private Boolean auto;
-	private HttpServletResponse response;
-	private HttpServletRequest request;
+
 
 	/**
 	 * コンストラクタ
@@ -60,7 +54,10 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 	 */
 	public String execute() {
 
-		loginModel = new LoginModel(this, userCode, userId, password);
+		user = new User();
+		user.setUserId(userId);
+		user.setPassword(password);
+		loginModel = new UserModel(this, user);
 
 		if(!isValidate()) {
 			return ACTION_LOGIN_ERROR;
@@ -80,14 +77,6 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 	 *
 	 * @return
 	 */
-	public int getUserCode() {
-		return userCode;
-	}
-
-	public void setUserCode(int userCode) {
-		this.userCode = userCode;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -121,6 +110,7 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 
 		User user = loginModel.load();
 		if(user != null) {
+			setSessionAttribute(SESSION_USER_CODE, String.valueOf(user.getUserCode()));
 			return true;
 		}else {
 			return false;
@@ -135,11 +125,11 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 	 */
 	private boolean isValidate() {
 
-		if(loginModel.isValidateUserId(userId)) {
+		if(user.isValidateUserId(userId)) {
 			setErrorMessage(EMPTY_USERID_ERROR_MESSAGE);
 			return false;
 		}
-		if(loginModel.isValidatePassword(password)) {
+		if(user.isValidatePassword(password)) {
 			setErrorMessage(EMPTY_PASSWORD_ERROR_MESSAGE);
 			return false;
 		}
@@ -231,7 +221,7 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 		String cookie = "";
 
 		for(int i = 0; i < cookies.length; i++) {
-			if(cookies[i].getName().equals(USER_USERID_COLUMN)) {
+			if(cookies[i].getName().equals(COOKIE_USER_ID)) {
 				cookie = cookies[i].getValue();
 			}
 		}
@@ -245,21 +235,10 @@ public class LoginAction extends BaseDBAction implements ServletResponseAware, S
 	 */
 	private void setCookie() {
 
-		Cookie cookie = new Cookie(USER_USERID_COLUMN, userId);
+		Cookie cookie = new Cookie(COOKIE_USER_ID, userId);
 		cookie.setMaxAge(60 * 60 * 24);
 		response.addCookie(cookie);
 
 	}
-
-	@Override
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;
-	}
-
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
 
 }

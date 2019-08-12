@@ -21,7 +21,7 @@ header h1 {
 	color: white;
 }
 
-input[type="submit"], input[type="text"], input[type="password"] {
+input[type="submit"], input[type="text"], input[type="password"], input[type="date"] , textarea{
 	border-radius: 5px;
 }
 

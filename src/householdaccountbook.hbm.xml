@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="houserholdaccountbook.HouseHoldAccountBook" table="HOUSEHOLDACCOUNTBOOK">
+		<id name="HouseHoldAccountBookCode" type="int" unsaved-value="null">
+			<column name="HOUSEHOLDACCOUNTBOOK_CODE" sql-type="int" />
+			<generator class="assigned" />
+		</id>
+		<many-to-one name="expense" column="EXPENSE_CODE" class="houserholdaccountbook.Expense" />
+		<many-to-one name="user" column="USER_CODE" class="houserholdaccountbook.User" />
+		<property name="date" type="string" column="DATE" />
+		<property name="name" type="text" column="NAME" />
+		<property name="income" type="int" column="INCOME" />
+		<property name="spending" type="int" column="SPENDING" />
+	</class>
+</hibernate-mapping>

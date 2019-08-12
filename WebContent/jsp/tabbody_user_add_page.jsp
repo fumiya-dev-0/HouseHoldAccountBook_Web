@@ -3,9 +3,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@TABBODY_LISTPAGE_CSS_PATH.getPath()" />">
-<!-- JSファイル読み込み -->
-<script
-	src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@TABBODY_LISTPAGE_JS_PATH.getPath()" />"></script>
+	<!-- JSファイル読み込み -->
+<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@TABBODY_LISTPAGE_JS_PATH.getPath()" />"></script>
 <div id="inputArea">
 	<s:submit name="prev_button" type="image"
 		src="/HouseHoldAccountBook_Web/img/left-chevron.png"
@@ -30,18 +29,14 @@
 			<th>費目</th>
 			<th>合計</th>
 		</tr>
-		<s:if test="houseHoldAccountBooks.size != 0">
-			<s:iterator value="houseHoldAccountBooks">
-				<tr>
-					<td><s:property value="date" /></td>
-					<td><s:property value="name" /></td>
-					<td><s:property value="income" /></td>
-					<td><s:property value="spending" /></td>
-					<td><s:property value="expense.name" /></td>
-					<td><s:property value="income - spending" /></td>
-				</tr>
-			</s:iterator>
-		</s:if>
+		<tr>
+			<td>yyyy/mm/dd</td>
+			<td>xxx</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+		</tr>
 	</table>
 </div>
 <div id="memoArea">

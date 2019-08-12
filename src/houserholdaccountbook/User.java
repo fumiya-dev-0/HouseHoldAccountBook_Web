@@ -1,5 +1,12 @@
 package houserholdaccountbook;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import houserholdaccountbook.util.Util;
+
 public class User {
 
 	/**
@@ -14,12 +21,11 @@ public class User {
 	 * コンストラクタ
 	 */
 	public User() {
-		userCode = -1;
-		userId = null;
-		password = null;
+		this.userCode = -1;
+		this.userId = null;
+		this.password = null;
 		loginState = null;
 	}
-
 
 	/**
 	 * アクセサ
@@ -42,14 +48,13 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPassword() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		return getPasswordHash();
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public String getLoginState() {
 		return loginState;
@@ -59,5 +64,40 @@ public class User {
 		this.loginState = loginState;
 	}
 
+	/**
+	 * ユーザID空文字チェック
+	 *
+	 * @param userId
+	 * @return
+	 */
+	public boolean isValidateUserId(String userId) {
+		return userId.trim().isEmpty();
+	}
+
+	/**
+	 * パスワード空文字チェック
+	 *
+	 * @param password
+	 * @return
+	 */
+	public boolean isValidatePassword(String password) {
+		return password.trim().isEmpty();
+	}
+
+	/**
+	 * ハッシュの取得(パスワード)
+	 *
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
+	private String getPasswordHash() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest digest = MessageDigest.getInstance(Util.HASH_ALGORITHM);
+		String target = password + userId + Util.SALT;
+		digest.update(target.getBytes("utf8"));
+
+		return String.format("%064x", new BigInteger(1, digest.digest()));
+
+	}
 
 }

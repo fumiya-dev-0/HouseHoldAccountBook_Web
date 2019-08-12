@@ -15,6 +15,7 @@ public interface Util {
 	 *
 	 */
 	public static final String DATABASE_ERROR = "データベース側でエラーが発生しました。";
+	public static final String SQL_ERROR = "SQLの発行に失敗しました。";
 
 	/**
 	 * ログイン処理メッセージ定数
@@ -45,19 +46,6 @@ public interface Util {
 	 *
 	 */
 	public static final String HIBERNATE_CONFIG_PATH = "hibernate.cfg.xml";
-	/**
-	 *  カラム名
-	 *
-	 */
-	public static final String USER_USERCODE_COLUMN = "user_code";
-	public static final String USER_USERID_COLUMN = "user_id";
-	public static final String USER_PASSWORD_COLUMN = "password";
-
-	/**
-	 * SQL
-	 *
-	 */
-	public static final String USER_LOAD_SQL = "SELECT * FROM user";
 
 	/**
 	 * ハッシュ関数・ソルト
@@ -66,6 +54,16 @@ public interface Util {
 	public static final String HASH_ALGORITHM = "SHA-512";
 	public static final String HASH_ERROR_MESSAGE = "ハッシュの生成に失敗しました。";
 	public static final String SALT = "bbksadasvgsrsferccadsefg44wefKYTJRBaawf356";
+
+	/**
+	 * クッキー用変数
+	 */
+	public static final String COOKIE_USER_ID = "user_id";
+
+	/**
+	 * セッション用変数
+	 */
+	public static final String SESSION_USER_CODE = "user_code";
 
 	/**
 	 * CSSファイルパスの列挙型クラス
@@ -77,7 +75,8 @@ public interface Util {
 		DEFAULT_CSS_PATH("default.css"),
 		LOGIN_CSS_PATH("login.css"),
 		LIST_CSS_PATH("list.css"),
-		TAB_CSS_PATH("tab.css");
+		TAB_CSS_PATH("tab.css"),
+		TABBODY_LISTPAGE_CSS_PATH("tabbody_listpage.css");
 
 		private final String path;
 
@@ -141,7 +140,9 @@ public interface Util {
 	 */
 	public enum JavaScript {
 
-		TAB_JS_PATH("tab.js");
+		TAB_JS_PATH("tab.js"),
+		DATE_COMMON_JS_PATH("date_common.js"),
+		TABBODY_LISTPAGE_JS_PATH("tabbody_listpage.js");
 
 		private final String path;
 

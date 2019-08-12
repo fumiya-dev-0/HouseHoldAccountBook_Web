@@ -1,11 +1,32 @@
 package houserholdaccountbook;
 
-import houserholdaccountbook.util.Util;
+import java.sql.SQLException;
+import java.util.List;
 
-public class ListAction implements Util{
+import houserholdaccountbook.model.HouseHoldAccountBookModel;
 
+public class ListAction extends BaseDBAction {
+
+	/**
+	 * メンバ変数
+	 *
+	 */
+	private List<HouseHoldAccountBook> houseHoldAccountBooks;
+
+	/**
+	 * コンストラクタ
+	 *
+	 */
 	public ListAction() {
-		// TODO 自動生成されたコンストラクター・スタブ
+		houseHoldAccountBooks = null;
+	}
+
+	/**
+	 * 家計簿テーブル情報取得
+	 * @return
+	 */
+	public List<HouseHoldAccountBook> getHouseHoldAccountBooks(){
+		return houseHoldAccountBooks;
 	}
 
 	/**
@@ -14,7 +35,18 @@ public class ListAction implements Util{
 	 * @return
 	 */
 	public String show() {
+
+		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
+		try {
+			houseHoldAccountBooks = model.load(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			setErrorMessage(SQL_ERROR);
+		}
+
 		return ACTION_SUCCESS;
 	}
+
+
 
 }
