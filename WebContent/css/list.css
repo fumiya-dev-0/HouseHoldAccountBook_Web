@@ -1,5 +1,30 @@
 @charset "utf-8";
 /* メインフレーム */
 #main {
-	padding: 60px 0;
+	padding: 60px 0 0 0;
+}
+
+/* ログアウトボタン */
+#logout {
+	position: absolute;
+	right: 20px;
+	top: 15px;
+	height: 40px;
+	width: 120px;
+	background-color: #eea236;
+	color: white;
+	border: 1px solid #eea236;
+	font-size: 16px;
+}
+
+/* ログアウトボタンがカーソルに置かれた時に色変更 */
+#logout:hover {
+	background: #ffa500;
+	border: solid 1px #ffa500;
+}
+
+/* ログアウトボタンがクリックされた時に色変更 */
+#logout:active {
+	background: #ff8c00;
+	border: solid 1px #ff8c00;
 }

@@ -1,7 +1,7 @@
 /**
  * 今日の日時を表示
  */
-window.onload = function() {
+window.addEventListener("load", function(){
 
 	var dateCommon = new DateCommon();
 
@@ -10,7 +10,8 @@ window.onload = function() {
 	var day = dateCommon.toDateDigits(dateCommon.getDay(), 2);
 
 	document.getElementById("date").value = year + "-" + month + "-" + day;
-}
+
+})
 
 /**
  * 日付変更ボタン
@@ -27,5 +28,32 @@ function dateChange(_this){
 	}else{
 		date.value = dateCommon.nextDate(date.value);
 	}
+
+}
+
+/**
+ * 行選択時背景色変更
+ *
+ * @returns
+ */
+function rowSelectBackgroundColor(){
+
+}
+
+/**
+ * モーダルダイアログの表示(YES,NO)
+ *
+ * @returns
+ */
+function showDialog(){
+
+}
+
+/**
+ * データの追加(1行)
+ *
+ * @returns
+ */
+function addRow(){
 
 }

@@ -140,6 +140,7 @@ public interface Util {
 	 */
 	public enum JavaScript {
 
+		DEFAULT_JS_PATH("default.js"),
 		TAB_JS_PATH("tab.js"),
 		DATE_COMMON_JS_PATH("date_common.js"),
 		TABBODY_LISTPAGE_JS_PATH("tabbody_listpage.js");
@@ -165,6 +166,5 @@ public interface Util {
 		}
 
 	}
-
 
 }

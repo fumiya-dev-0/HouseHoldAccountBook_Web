@@ -21,22 +21,20 @@ header h1 {
 	color: white;
 }
 
-input[type="submit"], input[type="text"], input[type="password"], input[type="date"] , textarea{
+footer {
+	width: 100%;
+	height: 50px;
+	background-color: #3ADF00;
+	position: absolute;
+	bottom: 0;
+}
+
+input[type="submit"], input[type="text"], input[type="password"], input[type="date"],
+	textarea {
 	border-radius: 5px;
 }
 
 /* メインフレーム */
-#main {}
+#main {
 
-/* ログアウトボタン */
-#logout {
-	position: absolute;
-	right: 20px;
-	top: 15px;
-	height: 40px;
-	width: 120px;
-	background-color: #ffc926;
-	color: white;
-	border: 1px solid #ffc926;
-	font-size: 16px;
 }

@@ -25,9 +25,31 @@
 }
 
 #dlt_button {
-	background-color: #ffa500;
+	background-color: #eea236;
 	color: white;
-	border-color: #ffa500;
+	border-color: #eea236;
+}
+
+/* ボタンがカーソルに置かれた時に色変更 */
+#print_button:hover, #add_button:hover, #upd_button:hover {
+	background: #58ACFA;
+	border: solid 1px #58ACFA;
+}
+
+#dlt_button:hover {
+	background: #ffa500;
+	border: solid 1px #ffa500;
+}
+
+/* ボタンがクリックされた時に色変更 */
+#print_button:active, #add_button:active, #upd_button:active {
+	background: #2E9AFE;
+	border: solid 1px #2E9AFE;
+}
+
+#dlt_button:active {
+	background: #ff8c00;
+	border: solid 1px #ff8c00;
 }
 
 /* テーブルエリア */
@@ -86,7 +108,7 @@ table tr:last-child td:last-child {
 
 /* テキストエリア*/
 #memoArea textarea{
-	width: 98%;
+	width: 95%;
 	padding: 10px;
 	height: 100px;
 	resize: none; /* 右下の//を消す */

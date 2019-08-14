@@ -33,12 +33,12 @@
 		<s:if test="houseHoldAccountBooks.size != 0">
 			<s:iterator value="houseHoldAccountBooks">
 				<tr>
-					<td><s:property value="date" /></td>
+					<td><s:property value="date.substring(0,4)" />/<s:property value="date.substring(4,6)" />/<s:property value="date.substring(6,8)" /></td>
 					<td><s:property value="name" /></td>
-					<td><s:property value="income" /></td>
-					<td><s:property value="spending" /></td>
+					<td><s:property value="income" />円</td>
+					<td><s:property value="spending" />円</td>
 					<td><s:property value="expense.name" /></td>
-					<td><s:property value="income - spending" /></td>
+					<td><s:property value="income - spending" />円</td>
 				</tr>
 			</s:iterator>
 		</s:if>

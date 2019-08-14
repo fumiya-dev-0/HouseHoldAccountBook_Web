@@ -56,3 +56,14 @@ tr:nth-child(5) label {
 	font-size: 16px;
 }
 
+/* ログインボタンがカーソルに置かれた時に色変更 */
+#login_action input[type="submit"]:hover {
+	background: #58ACFA;
+	border: solid 1px #58ACFA;
+}
+
+/* ログインボタンがクリックされた時に色変更 */
+#login_action input[type="submit"]:active {
+	background: #2E9AFE;
+	border: solid 1px #2E9AFE;
+}
