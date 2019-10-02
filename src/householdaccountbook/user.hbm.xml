@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="houserholdaccountbook.dto.User" table="USER" lazy="false">
+		<id name="userCode" type="int" unsaved-value="null">
+			<column name="USER_CODE" sql-type="int" />
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="string" column="user_id" />
+		<property name="password" type="string" column="password" />
+	</class>
+</hibernate-mapping>
