@@ -105,7 +105,6 @@ TableCommon.prototype.setColumnHidden = function(element){
  */
 TableCommon.prototype.addFormVertical = function(options){
 
-	var idx = 0;
 	options.forEach(function(option){
 		var tr = document.createElement("tr");
 
@@ -134,7 +133,6 @@ TableCommon.prototype.addFormVertical = function(options){
 		}
 
 		this.table.appendChild(tr);
-		idx++;
 	}, this)
 
 }
@@ -241,6 +239,35 @@ TableCommon.prototype.setNext = function(option, tr){
  * コンボボックス設定
  *
  */
-TableCommon.prototype.setCombobox = function(){
-
+TableCommon.prototype.setCombobox = function(rowIdx, columnIdx, data){
+	var select = this.table.rows[rowIdx].cells[columnIdx].children[0];
+	this.setSelectToOption(select, data);
 }
+
+/**
+ * コンボボックスに設定
+ *
+ */
+TableCommon.prototype.setSelectToOption = function(select, data){
+
+	// 初期値の設定
+	var defaultOption = this.createOption(new Array("",""));
+	select.appendChild(defaultOption);
+
+	data.forEach(function(val){
+		var option = this.createOption(val);
+		select.appendChild(option);
+	}, this)
+}
+
+/**
+ * オプション作成
+ *
+ */
+TableCommon.prototype.createOption = function(val){
+	var option = document.createElement("option");
+	option.value = val[0];
+	option.text = val[1];
+	return option;
+}
+

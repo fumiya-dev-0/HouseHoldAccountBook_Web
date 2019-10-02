@@ -30,11 +30,11 @@ footer {
 }
 
 input[type="submit"], input[type="text"], input[type="password"], input[type="date"],
-	textarea, select {
+	textarea, select, input[type="number"] {
 	border-radius: 5px;
 }
 
-input[type="text"], input[type="password"], input[type="date"], select {
+input[type="text"], input[type="password"], input[type="date"], select, input[type="number"] {
 	border: 1px solid #D8D8D8;
 }
 
