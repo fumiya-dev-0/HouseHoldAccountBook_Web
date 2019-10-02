@@ -1,4 +1,4 @@
-package houserholdaccountbook.util;
+package householdaccountbook.util;
 
 public interface Util {
 
@@ -103,8 +103,8 @@ public interface Util {
 
 	/**
 	 * HTMLタグの列挙型クラス
-	 * @author
 	 *
+	 * @author
 	 */
 	public enum Html {
 
@@ -136,7 +136,6 @@ public interface Util {
 	 * JSファイルパスの列挙型クラス
 	 *
 	 * @author
-	 *
 	 */
 	public enum JavaScript {
 

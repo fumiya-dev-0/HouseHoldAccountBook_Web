@@ -1,4 +1,4 @@
-package houserholdaccountbook.model;
+package householdaccountbook.model;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,11 +1,11 @@
-package houserholdaccountbook.action;
+package householdaccountbook.action;
 
 import javax.servlet.http.Cookie;
 
-import houserholdaccountbook.dto.User;
-import houserholdaccountbook.model.UserModel;
+import householdaccountbook.dto.User;
+import householdaccountbook.model.UserModel;
 
-public class LoginAction extends BaseDBAction{
+public class LoginAction extends BaseAction{
 
 	/**
 	 * メンバ変数

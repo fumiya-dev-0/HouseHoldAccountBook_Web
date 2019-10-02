@@ -1,4 +1,4 @@
-package houserholdaccountbook.dto;
+package householdaccountbook.dto;
 
 public class Expense {
 

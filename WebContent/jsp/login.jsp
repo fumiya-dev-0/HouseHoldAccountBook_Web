@@ -8,18 +8,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="lib.jsp"%>
-<link rel="stylesheet" type="text/css" href="<s:property value="@houserholdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
 
 <!-- タイトル -->
 <title><s:property
-		value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+		value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
 </head>
 <body>
 	<!-- ヘッダー -->
 	<header>
 	<h1>
 		<s:property
-			value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
+			value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
 	</h1>
 	</header>
 	<div align="center" id="main">

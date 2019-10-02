@@ -1,10 +1,10 @@
-package houserholdaccountbook.model;
+package householdaccountbook.model;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import houserholdaccountbook.util.Util;
+import householdaccountbook.util.Util;
 
 public class BaseModel implements Util {
 

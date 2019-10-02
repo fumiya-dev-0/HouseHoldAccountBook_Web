@@ -1,4 +1,4 @@
-package houserholdaccountbook.action;
+package householdaccountbook.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,9 +9,9 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import houserholdaccountbook.util.Util;
+import householdaccountbook.util.Util;
 
-public class BaseDBAction extends ActionSupport implements Util, ServletResponseAware, ServletRequestAware {
+public class BaseAction extends ActionSupport implements Util, ServletResponseAware, ServletRequestAware {
 
 	/**
 	 * メンバ変数
@@ -27,7 +27,7 @@ public class BaseDBAction extends ActionSupport implements Util, ServletResponse
 	 * コンストラクタ
 	 *
 	 */
-	public BaseDBAction() {
+	public BaseAction() {
 		errorMessage = null;
 		session = null;
 	}
@@ -89,6 +89,7 @@ public class BaseDBAction extends ActionSupport implements Util, ServletResponse
 
 	/**
 	 * オーバーライド
+	 *
 	 */
 	@Override
 	public void setServletResponse(HttpServletResponse response) {

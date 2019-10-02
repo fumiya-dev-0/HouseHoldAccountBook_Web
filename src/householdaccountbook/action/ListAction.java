@@ -1,4 +1,4 @@
-package houserholdaccountbook.action;
+package householdaccountbook.action;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -6,16 +6,16 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import houserholdaccountbook.dto.Expense;
-import houserholdaccountbook.dto.HouseHoldAccountBook;
-import houserholdaccountbook.model.HouseHoldAccountBookModel;
+import householdaccountbook.dto.Expense;
+import householdaccountbook.dto.HouseHoldAccountBook;
+import householdaccountbook.model.HouseHoldAccountBookModel;
 
 //==================================================================
 // 一覧画面用アクションクラス
 // 作成日: 2019/09/21
 //
 //==================================================================
-public class ListAction extends BaseDBAction {
+public class ListAction extends BaseAction {
 
 	/**
 	 * メンバ変数

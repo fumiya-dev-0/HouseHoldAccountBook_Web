@@ -1,11 +1,11 @@
-package houserholdaccountbook.dto;
+package householdaccountbook.dto;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import houserholdaccountbook.util.Util;
+import householdaccountbook.util.Util;
 
 public class User {
 
