@@ -1,4 +1,4 @@
-package houserholdaccountbook;
+package houserholdaccountbook.dto;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;

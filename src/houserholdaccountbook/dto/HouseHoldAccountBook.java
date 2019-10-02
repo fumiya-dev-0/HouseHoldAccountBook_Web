@@ -1,4 +1,4 @@
-package houserholdaccountbook;
+package houserholdaccountbook.dto;
 
 public class HouseHoldAccountBook {
 

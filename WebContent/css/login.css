@@ -37,15 +37,13 @@ tr:nth-child(5) label {
 	position: relative;
 }
 
-#login_action input[type="submit"], input[type="text"], input[type="password"]
-	{
+#login_action input[type="submit"], input[type="text"], input[type="password"]{
 	width: 350px;
 }
 
 #login_action input[type="text"], input[type="password"] {
 	height: 25px;
 	padding: 5px;
-	border: 1px solid #D8D8D8;
 }
 
 #login_action input[type="submit"] {

@@ -1,7 +1,8 @@
-package houserholdaccountbook;
+package houserholdaccountbook.action;
 
 import javax.servlet.http.Cookie;
 
+import houserholdaccountbook.dto.User;
 import houserholdaccountbook.model.UserModel;
 
 public class LoginAction extends BaseDBAction{

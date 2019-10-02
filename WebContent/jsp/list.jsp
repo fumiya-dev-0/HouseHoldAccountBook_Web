@@ -7,16 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- CSSファイル読み込み -->
-<link rel="stylesheet" type="text/css"
-	href="<s:property value="@houserholdaccountbook.util.Util$Css@DEFAULT_CSS_PATH.getPath()" />">
+<%@include file="lib.jsp"%>
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@LIST_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css"
 	href="<s:property value="@houserholdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
-<!-- JSファイル読み込み -->
-<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@DATE_COMMON_JS_PATH.getPath()" />"></script>
-<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@DEFAULT_JS_PATH.getPath()" />"></script>
+<!-- モーダルダイアログCSS -->
+<link rel="stylesheet" type="text/css" href="<s:property value="@houserholdaccountbook.util.Util$Css@MODAL_CSS_PATH.getPath()" />">
 <!-- タイトル -->
 <title><s:property value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
 </head>
@@ -27,13 +24,15 @@
 		<s:property
 			value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
 	</h1>
-	<s:submit name="logout" id="logout" value="ログアウト"></s:submit> </header>
+	<s:submit name="logout" id="logout" value="ログアウト" /> </header>
 	<div id="main">
 		<!-- タブメニュー読み込み -->
 		<%@include file="tab.jsp"%>
 		<!-- JSファイル読み込み -->
 		<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
 	</div>
+	<!-- モーダルダイアログ読み込み -->
+	<%@include file="modal.jsp"%>
 	<!-- フッター -->
 	<footer></footer>
 </body>

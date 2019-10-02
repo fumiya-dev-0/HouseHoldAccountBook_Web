@@ -1,4 +1,4 @@
-package houserholdaccountbook;
+package houserholdaccountbook.dto;
 
 public class Expense {
 
@@ -8,13 +8,14 @@ public class Expense {
 	 */
 	private int expenseCode;
 	private String name;
-	private String displayOrder;
+	private int displayOrder;
 
 	public Expense() {
 		expenseCode = -1;
 		name = null;
-		displayOrder = null;
+		displayOrder = -1;
 	}
+
 	/**
 	 * アクセサ
 	 *
@@ -32,10 +33,10 @@ public class Expense {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDisplayOrder() {
+	public int getDisplayOrder() {
 		return displayOrder;
 	}
-	public void setDisplayOrder(String displayOrder) {
+	public void setDisplayOrder(int displayOrder) {
 		this.displayOrder = displayOrder;
 	}
 

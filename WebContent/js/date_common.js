@@ -1,3 +1,8 @@
+// ==================================================================
+// 日付用共通クラス
+// 作成日: 2019/09/21
+//
+// ==================================================================
 function DateCommon(){
 	this.date = new Date();
 }
@@ -26,42 +31,42 @@ DateCommon.prototype.getDay = function() {
 /**
  * 日付から年を取得(数値型)
  */
-DateCommon.prototype.stringConvertIntYear = function(date) {
+DateCommon.prototype.dateConvertIntYear = function(date) {
 	return parseInt(date.substr(0, 4));
 }
 
 /**
  * 日付から月を取得(数値型)
  */
-DateCommon.prototype.stringConvertIntMonth = function(date) {
-	return parseInt(date.substr(5, 2));
+DateCommon.prototype.dateConvertIntMonth = function(date) {
+	return parseInt(date.substr(4, 2));
 }
 
 /**
  * 日付から日を取得(数値型)
  */
-DateCommon.prototype.stringConvertIntDay = function(date) {
-	return parseInt(date.substr(8, 2));
+DateCommon.prototype.dateConvertIntDay = function(date) {
+	return parseInt(date.substr(6, 2));
 }
 
 /**
  * 日付から年を取得(文字列型)
  */
-DateCommon.prototype.stringConvertStringYear = function(date) {
+DateCommon.prototype.dateConvertStringYear = function(date) {
 	return date.substr(0, 4);
 }
 
 /**
  * 日付から月を取得(文字列型)
  */
-DateCommon.prototype.stringConvertStringMonth = function(date) {
-	return date.substr(5, 2);
+DateCommon.prototype.dateConvertStringMonth = function(date) {
+	return date.substr(4, 2);
 }
 
 /**
  * 日付から日を取得(文字列型)
  */
-DateCommon.prototype.stringConvertStringDay = function(date) {
+DateCommon.prototype.dateConvertStringDay = function(date) {
 	return date.substr(6, 2);
 }
 
@@ -71,7 +76,8 @@ DateCommon.prototype.stringConvertStringDay = function(date) {
 DateCommon.prototype.prevDate = function(date) {
 
 	if(this.isDate(date)){
-		return this.stringConvertStringYear(date) + "-" + this.stringConvertStringMonth(date) + "-" + this.toDateDigits((this.stringConvertIntDay(date) - 1), 2);
+		var prevDate = this.prevCalcDate(this.dateConvertStringYear(date), this.dateConvertStringMonth(date), this.toDateDigits((this.dateConvertIntDay(date)), 2));
+		return this.convertToHyphenDateFormat(prevDate);
 	}
 
 	return null;
@@ -83,7 +89,8 @@ DateCommon.prototype.prevDate = function(date) {
 DateCommon.prototype.nextDate = function(date) {
 
 	if(this.isDate(date)){
-		return this.stringConvertStringYear(date) + "-" + this.stringConvertStringMonth(date) + "-" + this.toDateDigits((this.stringConvertIntDay(date) + 1), 2);
+		var nextDate = this.nextCalcDate(this.dateConvertStringYear(date), this.dateConvertStringMonth(date), this.toDateDigits((this.dateConvertIntDay(date)), 2));
+		return this.convertToHyphenDateFormat(nextDate);
 	}
 
 	return null;
@@ -94,9 +101,9 @@ DateCommon.prototype.nextDate = function(date) {
  */
 DateCommon.prototype.isDate = function(date) {
 
-	var year = this.stringConvertIntYear(date);
-	var month = this.stringConvertIntMonth(date) - 1;
-	var day = this.stringConvertIntDay(date);
+	var year = this.dateConvertIntYear(date);
+	var month = this.dateConvertIntMonth(date) - 1;
+	var day = this.dateConvertIntDay(date);
 
 	var dt = new Date(year, month, day);
 
@@ -105,6 +112,62 @@ DateCommon.prototype.isDate = function(date) {
 	}
 
 	return true;
+}
+
+/**
+ * 日付減算処理
+ */
+DateCommon.prototype.prevCalcDate = function(year, month, day) {
+	var date = new Date(year, month - 1, day);
+	date.setDate(date.getDate() - 1);
+
+	return date;
+}
+
+/**
+ * 日付加算処理
+ */
+DateCommon.prototype.nextCalcDate = function(year, month, day) {
+	var date = new Date(year, month - 1, day);
+	date.setDate(date.getDate() + 1);
+
+	return date;
+}
+
+/**
+ * 日付フォーマット変更(スラッシュ): 文字列型
+ */
+DateCommon.prototype.convertToSlashStringFormat = function(date) {
+	return this.dateConvertStringYear(date) + "/" + this.dateConvertStringMonth(date) + "/" + this.dateConvertStringDay(date);
+}
+
+/**
+ * 日付フォーマット変更(ハイフン): 文字列型
+ */
+DateCommon.prototype.convertToHyphenStringFormat = function(date) {
+	return this.dateConvertStringYear(date) + "-" + this.dateConvertStringMonth(date) + "-" + this.dateConvertStringDay(date);
+}
+
+/**
+ * 日付フォーマット変更(スラッシュ): 日付型
+ */
+DateCommon.prototype.convertToHyphenDateFormat = function(date) {
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+
+	return year + "/" + this.toDateDigits(month, 2) + "/" + this.toDateDigits(day, 2);
+}
+
+/**
+ * 日付フォーマット変更(ハイフン): 日付型
+ */
+DateCommon.prototype.convertToHyphenDateFormat = function(date) {
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+
+	return year + "-" + this.toDateDigits(month, 2) + "-" + this.toDateDigits(day, 2);
 }
 
 /**
@@ -122,8 +185,3 @@ DateCommon.prototype.toDateDigits = function(num, digit) {
 
 	return num;
 }
-
-/**
- * 日付の桁数調整 → 0削除(作成予定?)
- */
-

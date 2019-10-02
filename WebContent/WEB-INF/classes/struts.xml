@@ -6,19 +6,23 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.ui.theme" value="simple" />
 	<package name="householdaccountbook_web" extends="struts-default">
+		<!-- ログイン画面 -->
 		<action name="" class="houserholdaccountbook.LoginAction" method="show">
 			<result name="success">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>
 		</action>
+		<!-- ログイン処理 -->
 		<action name="login_action" class="houserholdaccountbook.LoginAction" method="execute">
 			<result name="success" type="chain">list</result>
 			<result name="login_error">/jsp/login.jsp</result>
 		</action>
-		<action name="list" class="houserholdaccountbook.ListAction"
-			method="show">
+		<!-- 一覧画面 -->
+		<action name="list" class="houserholdaccountbook.ListAction" method="show">
 			<result name="success">/jsp/list.jsp</result>
-			<result name="error">/jsp/error.jsp</result>
 		</action>
-
+		<!-- 一覧表示処理 -->
+		<action name="list_action" class="houserholdaccountbook.ListAction" method="execute">
+			<result name="success">/jsp/json.jsp</result>
+		</action>
 	</package>
 </struts>

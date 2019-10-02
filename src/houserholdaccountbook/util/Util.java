@@ -72,11 +72,11 @@ public interface Util {
 	 */
 	public enum Css {
 
-		DEFAULT_CSS_PATH("default.css"),
 		LOGIN_CSS_PATH("login.css"),
 		LIST_CSS_PATH("list.css"),
 		TAB_CSS_PATH("tab.css"),
-		TABBODY_LISTPAGE_CSS_PATH("tabbody_listpage.css");
+		TABBODY_LISTPAGE_CSS_PATH("tabbody_listpage.css"),
+		MODAL_CSS_PATH("modal.css");
 
 		private final String path;
 
@@ -140,9 +140,7 @@ public interface Util {
 	 */
 	public enum JavaScript {
 
-		DEFAULT_JS_PATH("default.js"),
 		TAB_JS_PATH("tab.js"),
-		DATE_COMMON_JS_PATH("date_common.js"),
 		TABBODY_LISTPAGE_JS_PATH("tabbody_listpage.js");
 
 		private final String path;

@@ -7,13 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- CSSファイル読み込み -->
-<link rel="stylesheet" type="text/css"
-	href="<s:property value="@houserholdaccountbook.util.Util$Css@DEFAULT_CSS_PATH.getPath()" />">
-<link rel="stylesheet" type="text/css"
-	href="<s:property value="@houserholdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
-<!-- JSファイル読み込み -->
-<script src="<s:property value="@houserholdaccountbook.util.Util$JavaScript@DEFAULT_JS_PATH.getPath()" />"></script>
+<%@include file="lib.jsp"%>
+<link rel="stylesheet" type="text/css" href="<s:property value="@houserholdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
+
 <!-- タイトル -->
 <title><s:property
 		value="@houserholdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
