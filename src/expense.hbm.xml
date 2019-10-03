@@ -9,6 +9,6 @@
 			<generator class="assigned" />
 		</id>
 		<property name="name" type="string" column="NAME" />
-		<property name="displayOrder" type="string" column="DISPLAY_ORDER" />
+		<property name="displayOrder" type="int" column="DISPLAY_ORDER" />
 	</class>
 </hibernate-mapping>

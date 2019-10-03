@@ -28,7 +28,7 @@ public class User {
 	}
 
 	/**
-	 * アクセサ
+	 * ユーザーコード getter
 	 *
 	 * @return
 	 */
@@ -36,30 +36,65 @@ public class User {
 		return userCode;
 	}
 
+	/**
+	 * ユーザーコード setter
+	 *
+	 * @return
+	 */
 	public void setUserCode(int userCode) {
 		this.userCode = userCode;
 	}
 
+	/**
+	 * ユーザーID getter
+	 *
+	 * @return
+	 */
 	public String getUserId() {
 		return userId;
 	}
 
+	/**
+	 * ユーザーID setter
+	 *
+	 * @return
+	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
+	/**
+	 * パスワード getter
+	 *
+	 * @return
+	 */
 	public String getPassword() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return getPasswordHash();
 	}
 
+	/**
+	 * パスワード setter
+	 *
+	 * @return
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * ログイン状態 getter
+	 *
+	 * @return
+	 */
 	public String getLoginState() {
 		return loginState;
 	}
 
+	/**
+	 * ログイン状態 setter
+	 *
+	 * @return
+	 */
 	public void setLoginState(String loginState) {
 		this.loginState = loginState;
 	}

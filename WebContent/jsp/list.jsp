@@ -28,11 +28,11 @@
 	<div id="main">
 		<!-- タブメニュー読み込み -->
 		<%@include file="tab.jsp"%>
-		<!-- JSファイル読み込み -->
-		<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
 	</div>
 	<!-- モーダルダイアログ読み込み -->
 	<%@include file="modal.jsp"%>
+	<!-- JSファイル読み込み -->
+	<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
 	<!-- フッター -->
 	<footer></footer>
 </body>

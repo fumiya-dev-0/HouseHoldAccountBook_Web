@@ -21,11 +21,12 @@ AjaxCommon.prototype.getCallbackData = function(type, url, callback) {
 		dataType : "json",
 		async: true,
 		success : function(data) {
-			callback(null, data);
+			callback(true, data);
 		},
 		error : function(xmlHttpRequest, textStatus, errorThrown) {
 			var error = textStatus + "\n" + errorThrown + "\n" + xmlHttpRequest;
-			callback(error, data);
+			console.log(error);
+			callback(false, null);
 		}
 	});
 }

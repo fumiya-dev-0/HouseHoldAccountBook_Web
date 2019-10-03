@@ -61,8 +61,8 @@ function show(){
 	loadCurrentDate();
 
 	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.getCallbackData("GET", "list_action", function(error, data) {
-		if(error){
+	ajaxCommon.getCallbackData("GET", "list", function(error, data) {
+		if(!error){
 			return;
 		}
 
@@ -85,6 +85,7 @@ function show(){
 
 		// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
 		data.forEach(function(data){
+
 			// 行の追加
 			tableCommon.addRows(
 					new Array(
@@ -165,8 +166,8 @@ function search(){
 function createAddModal(_this, modalCommon){
 
 	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.getCallbackData("GET", "list_action", function(error, data) {
-		if(error){
+	ajaxCommon.getCallbackData("GET", "list_combo", function(error, data) {
+		if(!error){
 			return;
 		}
 
@@ -193,6 +194,6 @@ function createAddModal(_this, modalCommon){
 		let expenseNameRow = 2;
 		let expenseNameColumn = 1;
 		tableCommon.addFormVertical(options);
-//		tableCommon.setCombobox(expenseNameRow, expenseNameColumn, data);
+		tableCommon.setCombobox(expenseNameRow, expenseNameColumn, data);
 	});
 }

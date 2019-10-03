@@ -29,7 +29,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 家計簿コードの設定
+	 * 家計簿コード getter
 	 *
 	 * @return
 	 */
@@ -38,7 +38,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 家計簿コードの取得
+	 * 家計簿コード setter
 	 *
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 費目テーブルの設定
+	 * 費目テーブル getter
 	 *
 	 * @return
 	 */
@@ -56,7 +56,8 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 費目テーブルの取得
+	 * 費目テーブル setter
+	 *
 	 * @param expense
 	 */
 	public void setExpense(Expense expense) {
@@ -64,7 +65,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * ユーザーテーブルの取得
+	 * ユーザーテーブル getter
 	 *
 	 * @return
 	 */
@@ -73,7 +74,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * ユーザーテーブルの設定
+	 * ユーザーテーブル setter
 	 * @param user
 	 */
 	public void setUser(User user) {
@@ -81,7 +82,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 日付の取得
+	 * 日付 getter
 	 *
 	 * @return
 	 */
@@ -90,7 +91,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 日付の設定
+	 * 日付 setter
 	 *
 	 * @param date
 	 */
@@ -99,7 +100,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 品名の取得
+	 * 品名 getter
 	 *
 	 * @return
 	 */
@@ -108,7 +109,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 日付の設定
+	 * 日付 setter
 	 *
 	 * @param name
 	 */
@@ -117,7 +118,7 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 収入の取得
+	 * 収入 getter
 	 *
 	 * @return
 	 */
@@ -126,7 +127,8 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 収入の設定
+	 * 収入 setter
+	 *
 	 * @param income
 	 */
 	public void setIncome(int income) {
@@ -134,7 +136,8 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 支出の取得
+	 * 支出 getter
+	 *
 	 * @return
 	 */
 	public int getSpending() {
@@ -142,7 +145,8 @@ public class HouseHoldAccountBook {
 	}
 
 	/**
-	 * 支出の設定
+	 * 支出 setter
+	 *
 	 * @param spending
 	 */
 	public void setSpending(int spending) {

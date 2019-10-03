@@ -254,8 +254,8 @@ TableCommon.prototype.setSelectToOption = function(select, data){
 	var defaultOption = this.createOption(new Array("",""));
 	select.appendChild(defaultOption);
 
-	data.forEach(function(val){
-		var option = this.createOption(val);
+	data.forEach(function(obj){
+		var option = this.createOption(obj);
 		select.appendChild(option);
 	}, this)
 }
@@ -264,10 +264,10 @@ TableCommon.prototype.setSelectToOption = function(select, data){
  * オプション作成
  *
  */
-TableCommon.prototype.createOption = function(val){
+TableCommon.prototype.createOption = function(obj){
 	var option = document.createElement("option");
-	option.value = val[0];
-	option.text = val[1];
+	option.value = obj[Object.keys(obj)[0]];
+	option.text = obj[Object.keys(obj)[1]];
 	return option;
 }
 

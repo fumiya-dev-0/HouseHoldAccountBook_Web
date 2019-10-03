@@ -13,15 +13,15 @@
 		</action>
 		<!-- ログイン処理 -->
 		<action name="login_action" class="householdaccountbook.action.LoginAction" method="execute">
-			<result name="success" type="chain">list</result>
+			<result name="success">/jsp/list.jsp</result>
 			<result name="login_error">/jsp/login.jsp</result>
 		</action>
 		<!-- 一覧画面 -->
 		<action name="list" class="householdaccountbook.action.ListAction" method="show">
-			<result name="success">/jsp/list.jsp</result>
+			<result name="success">/jsp/json.jsp</result>
 		</action>
-		<!-- 一覧表示処理 -->
-		<action name="list_action" class="householdaccountbook.action.ListAction" method="execute">
+		<!-- コンボボックス取得処理(モーダルダイアログ) -->
+		<action name="list_combo" class="householdaccountbook.action.ListAction" method="loadCombo">
 			<result name="success">/jsp/json.jsp</result>
 		</action>
 	</package>
