@@ -45,7 +45,7 @@ public interface Util {
 	 * Hibernate設定ファイルパス
 	 *
 	 */
-	public static final String HIBERNATE_CONFIG_PATH = "hibernate.cfg.xml";
+	public static final String HIBERNATE_CONFIG_PATH = "householdaccountbook/hibernate.cfg.xml";
 
 	/**
 	 * ハッシュ関数・ソルト

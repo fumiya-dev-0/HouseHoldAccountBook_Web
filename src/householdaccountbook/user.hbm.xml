@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="houserholdaccountbook.dto.User" table="USER" lazy="false">
+	<class name="householdaccountbook.dto.User" table="USER" lazy="false">
 		<id name="userCode" type="int" unsaved-value="null">
 			<column name="USER_CODE" sql-type="int" />
 			<generator class="assigned" />

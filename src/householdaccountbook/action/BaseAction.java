@@ -58,6 +58,7 @@ public class BaseAction extends ActionSupport implements Util, ServletResponseAw
 
 	/**
 	 * セッション情報の設定
+	 *
 	 * @param key
 	 * @param value
 	 */
@@ -69,6 +70,7 @@ public class BaseAction extends ActionSupport implements Util, ServletResponseAw
 	/**
 	 * セッションの削除
 	 *
+	 * @param key
 	 */
 	protected void sessionRemove(String key) {
 		HttpSession session = getSession();
