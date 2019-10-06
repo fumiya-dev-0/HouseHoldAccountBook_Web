@@ -7,11 +7,17 @@ window.onload = function() {
 	this.TabbodyListpage();
 }
 
-// 費目コンボボックス定数
+/**
+ * 費目コンボボックス定数
+ *
+ */
 TabbodyListpage.prototype.EXPENSE_NAME_ROW = 2;
 TabbodyListpage.prototype.EXPENSE_NAME_COLUMN = 1;
 
-// 初期表示テーブル
+/**
+ * 初期表示
+ *
+ */
 TabbodyListpage.prototype.tableColumns = [
 	{ text : "家計簿コード", css : { width : "0px", display : "none" } },
 	{ text : "費用コード", css : { width : "0px", display : "none" } },
@@ -24,8 +30,17 @@ TabbodyListpage.prototype.tableColumns = [
 	];
 TabbodyListpage.prototype.tableId = { attr : { id : "table" } };
 
-// 追加モーダルウィンドウ表示テーブル
-TabbodyListpage.prototype.addModalFooter = { element : "input", attr : { type : "button", value : "登録", id : "add_button" }, css : { width : "60px", height : "30px" } };
+/**
+ * モーダルウィンドウ(新規ボタンから)
+ */
+// 登録ボタン処理
+TabbodyListpage.prototype.addEventButton = function(){
+	TabbodyListpage.prototype.add();
+}
+
+// モーダルダイアログのフッター(新規ボタンから)
+TabbodyListpage.prototype.addModalFooter = { element : "input", event : TabbodyListpage.prototype.addEventButton, attr : { type : "button", value : "登録", id : "add_button" }, css : { width : "60px", height : "30px" } };
+// モーダルダイアログのテーブルカラム(新規ボタンから)
 TabbodyListpage.prototype.addModalColumns = [
 	{ text : "名前", css : { padding : "8px" }, next : { element : "input", attr : { type : "text" }, css : { width : "200px", padding : "4px" } } },
 	{ text : "日付", css : { padding : "8px" }, next : { element : "input", attr : { type : "date", id : "date" }, css : { width : "200px", padding : "4px" } } },
@@ -33,7 +48,6 @@ TabbodyListpage.prototype.addModalColumns = [
 	{ text : "所得", css : { padding : "8px" }, next : { element : "input", attr : { type : "number" }, css : { width : "200px", padding : "4px" } } },
 	{ text : "出費", css : { padding : "8px" }, next : { element : "input", attr : { type : "number" }, css : { width : "200px", padding : "4px" } } }
 	];
-
 
 function TabbodyListpage(){
 
@@ -58,7 +72,6 @@ TabbodyListpage.prototype.init = function(){
 	/**
 	 * 新規ボタン処理
 	 *
-	 * @returns
 	 */
 	$("#new_button").on("click", $.proxy(function(){
 
@@ -73,22 +86,16 @@ TabbodyListpage.prototype.init = function(){
 	/**
 	 * 日付ボタン処理
 	 *
-	 * @returns
 	 */
 	$("#prev_button, #next_button").on("click", $.proxy(function(){
 		this.dateChangeWithSearch(this);
 	}, this));
-
-	$("add_button").on("click"), $.proxy(function(){
-		console.log("追加ボタン");
-	}, this);
 
 }
 
 /**
  * 画面表示
  *
- * @returns
  */
 TabbodyListpage.prototype.show = function(){
 
@@ -183,7 +190,7 @@ TabbodyListpage.prototype.search = function(){
 }
 
 /**
- * 追加モーダルダイアログのテーブル表示
+ * 新規モーダルダイアログのテーブル表示
  *
  * @param modalCommon
  */
@@ -201,4 +208,20 @@ TabbodyListpage.prototype.addModalLoadTable = function(modalCommon){
 		tableCommon.addFormVertical(page.addModalColumns);
 		tableCommon.setCombobox(page.EXPENSE_NAME_ROW, page.EXPENSE_NAME_COLUMN, data);
 	});
+}
+
+/**
+ * 登録処理
+ *
+ */
+TabbodyListpage.prototype.add = function(){
+
+//	var ajaxCommon = new AjaxCommon();
+//	ajaxCommon.getCallbackData("POST", "list_combo", function(error, data) {
+//		if(!error){
+//			return;
+//		}
+//
+//	});
+
 }

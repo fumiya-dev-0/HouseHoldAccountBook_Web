@@ -135,6 +135,10 @@ ModalCommon.prototype.setProperty = function(option, element){
 		element.css(option.css);
 	}
 
+	if(option.event){
+		element[0].addEventListener("click", option.event);
+	}
+
 	if(this.hasAttr(option)){
 		element.attr(option.attr);
 	}
