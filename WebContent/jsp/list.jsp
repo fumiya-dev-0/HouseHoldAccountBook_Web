@@ -21,10 +21,10 @@
 	<!-- ヘッダー -->
 	<header>
 	<h1>
-		<s:property
-			value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
+		<s:property value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
 	</h1>
-	<s:submit name="logout" id="logout" value="ログアウト" /> </header>
+	<s:submit name="logout" id="logout" value="ログアウト" />
+	</header>
 	<div id="main">
 		<!-- タブメニュー読み込み -->
 		<%@include file="tab.jsp"%>

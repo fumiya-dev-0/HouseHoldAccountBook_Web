@@ -3,7 +3,9 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <div id="modal-content">
-	<div id="header"><input type="submit" name="close_button" id="close_button" value="閉じる"></div>
+	<div id="modal-header">
+	<input type="submit" id="modal_close_button" value="×">
+	</div>
 	<div id="modal-main"></div>
-	<div id="footer"></div>
+	<div id="modal-footer"></div>
 </div>

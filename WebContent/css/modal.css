@@ -1,8 +1,6 @@
 @charset "utf-8";
 
 #modal-content {
-	width: 50%;
-	height: 600px;
 	margin: auto;
 	padding: 0;
 	border: 2px solid #aaa;
@@ -23,18 +21,16 @@
 	background-color: rgba(0,0,0,0.75); /* 背景色(半透明) */
 }
 
-#header {
+#modal-header {
 	text-align: right;
 	border-bottom: 2px solid #aaa;
-	padding: 5px;
+	padding: 10px;
 }
 
-#footer {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
+#modal-footer {
 	text-align: right;
 	border-top: 2px solid #aaa;
+	padding: 10px;
 }
 
 
@@ -42,6 +38,12 @@
 	padding: 20px;
 }
 
-#close_button {
-
+#modal_close_button {
+	margin-top: -8px;
+	background: none;
+	border: 0;
+	font-size: 24px;
+	cursor: pointer;
+	opacity: 0.5;
+	outline: none;
 }

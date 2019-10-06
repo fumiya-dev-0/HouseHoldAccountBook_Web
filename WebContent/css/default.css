@@ -30,7 +30,7 @@ footer {
 }
 
 input[type="submit"], input[type="text"], input[type="password"], input[type="date"],
-	textarea, select, input[type="number"] {
+	textarea, select, input[type="number"], input[type="button"] {
 	border-radius: 5px;
 }
 

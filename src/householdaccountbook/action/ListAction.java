@@ -62,7 +62,7 @@ public class ListAction extends BaseAction {
 	}
 
 	/**
-	 * 実行
+	 * コンボボックスデータ読み込み
 	 *
 	 */
 	public String loadCombo() {

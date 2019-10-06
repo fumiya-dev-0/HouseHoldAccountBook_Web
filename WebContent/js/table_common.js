@@ -13,13 +13,16 @@ function TableCommon(elementId){
 	var table = document.createElement("table");
 
 	var element = document.getElementById(elementId);
-	if(element.hasChildNodes()){
-		element.removeChild(element.children[0]);
-	}
-	element.appendChild(table);
+
+	this.updateChild(element, table);
 	this.table = element.children[0];
 }
 
+TableCommon.prototype = new ElementCommon();
+
+TableCommon.prototype.setTableId = function(option){
+	this.setAttr(option, this.table);
+}
 /**
  * ヘッダー部分制御
  *
@@ -29,23 +32,13 @@ TableCommon.prototype.setColumns = function(options){
 	var tr = document.createElement("tr");
 	options.forEach(function(option){
 
-		if(this.isId(option)){
-			this.setId(option);
-			return;
-		}
 		var th = document.createElement("th");
 
-		if(this.isTitle(option)){
-			this.setTitle(option, th);
+		if(this.setTableProperty(option, this.table)){
+			return;
 		}
 
-		if(this.isCss(option)){
-			this.setCss(option, th);
-		}
-
-		if(this.isAttr(option)){
-			this.setAttr(option, th);
-		}
+		this.setColumnProperty(option, th);
 
 		tr.appendChild(th);
 	}, this)
@@ -107,24 +100,13 @@ TableCommon.prototype.addFormVertical = function(options){
 
 	options.forEach(function(option){
 		var tr = document.createElement("tr");
-
-		if(this.isId(option)){
-			this.setId(option);
-			return;
-		}
 		var th = document.createElement("th");
 
-		if(this.isTitle(option)){
-			this.setTitle(option, th);
+		if(this.setTableProperty(option, this.table)){
+			return;
 		}
 
-		if(this.isCss(option)){
-			this.setCss(option, th);
-		}
-
-		if(this.isAttr(option)){
-			this.setAttr(option, th);
-		}
+		this.setColumnProperty(option, th);
 
 		tr.appendChild(th);
 
@@ -135,74 +117,6 @@ TableCommon.prototype.addFormVertical = function(options){
 		this.table.appendChild(tr);
 	}, this)
 
-}
-
-/**
- * セレクタ(Id)存在チェック
- *
- */
-TableCommon.prototype.isId = function(option){
-	return option.id ? true : false;
-}
-
-/**
- * セレクタ(Id)設定
- *
- */
-TableCommon.prototype.setId = function(option){
-	this.table.setAttribute("id", option.id);
-}
-
-/**
- * タイトル存在チェック
- *
- */
-TableCommon.prototype.isTitle = function(option){
-	return option.title ? true : false;
-}
-
-/**
- * タイトル設定
- *
- */
-TableCommon.prototype.setTitle = function(option, column){
-	column.textContent = option.title;
-}
-
-/**
- * CSS存在チェック
- *
- */
-TableCommon.prototype.isCss = function(option){
-	return option.css ? true : false;
-}
-
-/**
- * CSS設定
- *
- */
-TableCommon.prototype.setCss = function(option, column){
-	Object.keys(option.css).forEach(function(prop, val){
-		column.style[prop] = option.css[prop];
-	})
-}
-
-/**
- * 属性存在チェック
- *
- */
-TableCommon.prototype.isAttr = function(option){
-	return option.attr ? true : false;
-}
-
-/**
- * 属性設定
- *
- */
-TableCommon.prototype.setAttr = function(option, column){
-	Object.keys(option.attr).forEach(function(prop, val){
-		column.setAttribute(prop, option.attr[prop]);
-	})
 }
 
 /**
@@ -222,13 +136,7 @@ TableCommon.prototype.setNext = function(option, tr){
 		var element = document.createElement(option.next.element);
 		var td = document.createElement("td");
 
-		if(this.isAttr(option.next)){
-			this.setAttr(option.next, element);
-		}
-
-		if(this.isCss(option.next)){
-			this.setCss(option.next, element);
-		}
+		this.setColumnProperty(option.next, element);
 
 		td.appendChild(element);
 		tr.appendChild(td);
@@ -261,7 +169,7 @@ TableCommon.prototype.setSelectToOption = function(select, data){
 }
 
 /**
- * オプション作成
+ * オプション作成(コンボボックス)
  *
  */
 TableCommon.prototype.createOption = function(obj){
@@ -271,3 +179,35 @@ TableCommon.prototype.createOption = function(obj){
 	return option;
 }
 
+/**
+ * テーブルプロパティの設定
+ *
+ */
+TableCommon.prototype.setTableProperty = function(option, table){
+
+	if(this.hasAttr(option)){
+		this.setAttr(option, table);
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * カラムプロパティの設定
+ *
+ */
+TableCommon.prototype.setColumnProperty = function(option, column){
+
+	if(this.hasText(option)){
+		this.setText(option, column);
+	}
+
+	if(this.hasCss(option)){
+		this.setCss(option, column);
+	}
+
+	if(this.hasAttr(option)){
+		this.setAttr(option, column);
+	}
+}

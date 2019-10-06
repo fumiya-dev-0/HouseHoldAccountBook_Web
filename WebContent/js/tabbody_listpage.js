@@ -1,23 +1,57 @@
 //==================================================================
-//一覧画面
-//作成日: 2019/09/21
+// 一覧画面
+// 作成日: 2019/09/21
 //
 //==================================================================
 window.onload = function() {
+	this.TabbodyListpage();
+}
+
+// 費目コンボボックス定数
+TabbodyListpage.prototype.EXPENSE_NAME_ROW = 2;
+TabbodyListpage.prototype.EXPENSE_NAME_COLUMN = 1;
+
+// 初期表示テーブル
+TabbodyListpage.prototype.tableColumns = [
+	{ text : "家計簿コード", css : { width : "0px", display : "none" } },
+	{ text : "費用コード", css : { width : "0px", display : "none" } },
+	{ text : "名前", css : { width : "200px" } },
+	{ text : "表示順", css : { width : "0px", display : "none" } },
+	{ text : "日付", css : { width : "150px" } },
+	{ text : "費目", css : { width : "100px" } },
+	{ text : "所得", css : { width : "100px" } },
+	{ text : "出費", css : { width : "100px" } }
+	];
+TabbodyListpage.prototype.tableId = { attr : { id : "table" } };
+
+// 追加モーダルウィンドウ表示テーブル
+TabbodyListpage.prototype.addModalFooter = { element : "input", attr : { type : "button", value : "登録", id : "add_button" }, css : { width : "60px", height : "30px" } };
+TabbodyListpage.prototype.addModalColumns = [
+	{ text : "名前", css : { padding : "8px" }, next : { element : "input", attr : { type : "text" }, css : { width : "200px", padding : "4px" } } },
+	{ text : "日付", css : { padding : "8px" }, next : { element : "input", attr : { type : "date", id : "date" }, css : { width : "200px", padding : "4px" } } },
+	{ text : "費目", css : { padding : "8px" }, next : { element : "select", css : { width : "200px", padding : "4px" } } },
+	{ text : "所得", css : { padding : "8px" }, next : { element : "input", attr : { type : "number" }, css : { width : "200px", padding : "4px" } } },
+	{ text : "出費", css : { padding : "8px" }, next : { element : "input", attr : { type : "number" }, css : { width : "200px", padding : "4px" } } }
+	];
+
+
+function TabbodyListpage(){
+
+	var page = TabbodyListpage.prototype;
 
 	// 初期処理
-	init();
+	page.init();
 
 	// 画面表示
-	show();
+	page.show();
+
 }
 
 /**
  * 開始処理
  *
- * @returns
  */
-function init(){
+TabbodyListpage.prototype.init = function(){
 
 	var modalCommon = new ModalCommon();
 
@@ -26,28 +60,24 @@ function init(){
 	 *
 	 * @returns
 	 */
-	$("#add_button").on("click", function(){
-		createAddModal(this, modalCommon);
-	});
+	$("#add_button").on("click", $.proxy(function(){
 
-	/**
-	 * 閉じるボタン処理(モーダルダイアログ)
-	 *
-	 * @returns
-	 */
-	$("#close_button").on("click", function(){
-		// モーダルダイアログを閉じる
-		modalCommon.hide();
-	});
+		modalCommon.setWidth("50%");
+		modalCommon.setHeight("300px");
+		modalCommon.show(this);
+		modalCommon.setFooter(this.addModalFooter);
+
+		this.addModalLoadTable(modalCommon);
+	}, this));
 
 	/**
 	 * 日付ボタン処理
 	 *
 	 * @returns
 	 */
-	$("#prev_button, #next_button").on("click", function(){
-		dateChangeWithSearch(this);
-	});
+	$("#prev_button, #next_button").on("click", $.proxy(function(){
+		this.dateChangeWithSearch(this);
+	}, this));
 
 }
 
@@ -56,10 +86,11 @@ function init(){
  *
  * @returns
  */
-function show(){
+TabbodyListpage.prototype.show = function(){
 
-	loadCurrentDate();
+	this.loadCurrentDate();
 
+	var page = TabbodyListpage.prototype;
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.getCallbackData("GET", "list", function(error, data) {
 		if(!error){
@@ -70,18 +101,8 @@ function show(){
 		var stringCommon = new StringCommon();
 		var dateCommon = new DateCommon();
 
-		var options = [
-			{ id : "table" },
-			{ title : "家計簿コード", css : { width : "0px", display : "none" } },
-			{ title : "費用コード", css : { width : "0px", display : "none" } },
-			{ title : "名前", css : { width : "200px" } },
-			{ title : "表示順", css : { width : "0px", display : "none" } },
-			{ title : "日付", css : { width : "150px" } },
-			{ title : "費目", css : { width : "100px" } },
-			{ title : "所得", css : { width : "100px" } },
-			{ title : "出費", css : { width : "100px" } }
-			];
-		tableCommon.setColumns(options);
+		tableCommon.setTableId(page.tableId);
+		tableCommon.setColumns(page.tableColumns);
 
 		// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
 		data.forEach(function(data){
@@ -107,7 +128,7 @@ function show(){
  * 現在日時を表示
  *
  */
-function loadCurrentDate(){
+TabbodyListpage.prototype.loadCurrentDate = function(){
 
 	var dateCommon = new DateCommon();
 
@@ -123,7 +144,7 @@ function loadCurrentDate(){
  * 日付変更ボタン処理
  *
  */
-function dateChangeWithSearch(_this){
+TabbodyListpage.prototype.dateChangeWithSearch = function(_this){
 
 	// 日付変更処理
 	dateChange(_this);
@@ -136,7 +157,7 @@ function dateChangeWithSearch(_this){
  * 日付変更処理
  *
  */
-function dateChange(_this){
+TabbodyListpage.prototype.dateChange = function(_this){
 
 	var dValue = $("#date").val().replace(/-/g, "");
 	var dateCommon = new DateCommon();
@@ -153,47 +174,27 @@ function dateChange(_this){
  * 検索処理
  *
  */
-function search(){
+TabbodyListpage.prototype.search = function(){
 
 }
 
 /**
- * モーダルダイアログ追加
+ * 追加モーダルダイアログのテーブル表示
  *
- * @param _this
- * @returns
+ * @param modalCommon
  */
-function createAddModal(_this, modalCommon){
+TabbodyListpage.prototype.addModalLoadTable = function(modalCommon){
 
+	var page = TabbodyListpage.prototype;
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.getCallbackData("GET", "list_combo", function(error, data) {
 		if(!error){
 			return;
 		}
 
-		// ボタンからフォーカスを外す
-		$(_this).blur();
-
-		modalCommon.show();
-
 		var tableCommon = new TableCommon("modal-main");
 
-		var _padding = "8px";
-		var _width = "200px";
-		var _height = "25px";
-
-		var options = [
-//			{ id : "table" },
-			{ title : "名前", css : { padding : _padding }, next : { element : "input", attr : { type : "text" }, css : { width : _width, height : _height } } },
-			{ title : "日付", css : { padding : _padding }, next : { element : "input", attr : { type : "date", id : "date" }, css : { width : _width, height : _height } } },
-			{ title : "費目", css : { padding : _padding }, next : { element : "select", css : { width : _width, height : _height } } },
-			{ title : "所得", css : { padding : _padding }, next : { element : "input", attr : { type : "number" }, css : { width : _width, height : _height } } },
-			{ title : "出費", css : { padding : _padding }, next : { element : "input", attr : { type : "number" }, css : { width : _width, height : _height } } }
-			];
-
-		let expenseNameRow = 2;
-		let expenseNameColumn = 1;
-		tableCommon.addFormVertical(options);
-		tableCommon.setCombobox(expenseNameRow, expenseNameColumn, data);
+		tableCommon.addFormVertical(page.addModalColumns);
+		tableCommon.setCombobox(page.EXPENSE_NAME_ROW, page.EXPENSE_NAME_COLUMN, data);
 	});
 }
