@@ -2,8 +2,9 @@ package householdaccountbook.model;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
+import org.hibernate.criterion.Order;
 
 import householdaccountbook.dto.Expense;
 
@@ -21,26 +22,18 @@ public class ExpenseModel extends BaseModel {
 	public ExpenseModel() {}
 
 	/**
-	 * コンボボックス用読み込み処理
+	 * 読み込み処理
 	 *
-	 * @return
+	 * @return list 費目データのリスト
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Expense> loadCombo() {
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Expense> load() {
 
 		Session session = getSession();
 
-		StringBuilder sql = new StringBuilder();
-		sql.append("select ");
-		sql.append("       expense.EXPENSE_CODE");
-		sql.append("      ,expense.NAME");
-		sql.append("      ,expense.DISPLAY_ORDER");
-		// 費目テーブル
-		sql.append(" from EXPENSE expense");
-
-		Query<Expense> query = session.createSQLQuery(sql.toString()).addEntity(Expense.class);
-
-		List<Expense> list = query.list();
+		Criteria criteria = session.createCriteria(Expense.class);
+		criteria.addOrder(Order.asc("displayOrder"));
+		List<Expense> list = criteria.list();
 
 		session.close();
 

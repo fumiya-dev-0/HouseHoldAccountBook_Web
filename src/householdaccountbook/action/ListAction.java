@@ -52,7 +52,6 @@ public class ListAction extends BaseAction {
 		try {
 			List<HouseHoldAccountBook> houseHoldAccountBooks = model.load(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)));
 			json = gson.toJson(houseHoldAccountBooks);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			setErrorMessage(SQL_ERROR);
@@ -64,13 +63,14 @@ public class ListAction extends BaseAction {
 	/**
 	 * コンボボックスデータ読み込み
 	 *
+	 * @return
 	 */
 	public String loadCombo() {
 
 		Gson gson = new Gson();
 		ExpenseModel model = new ExpenseModel();
 
-		List<Expense> expenses = model.loadCombo();
+		List<Expense> expenses = model.load();
 		json = gson.toJson(expenses);
 
 		return ACTION_SUCCESS;

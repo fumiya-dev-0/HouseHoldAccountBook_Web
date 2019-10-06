@@ -1,12 +1,16 @@
 package householdaccountbook.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.hibernate.type.StandardBasicTypes;
 
+import householdaccountbook.dto.Expense;
 import householdaccountbook.dto.HouseHoldAccountBook;
+import householdaccountbook.dto.User;
 
 //==================================================================
 // 一覧画面用モデルクラス
@@ -49,10 +53,37 @@ public class ListModel extends BaseModel {
 		sql.append(" on hhab.EXPENSE_CODE = expense.EXPENSE_CODE");
 		sql.append(" where hhab.USER_CODE = :userCode");
 
-		Query<HouseHoldAccountBook> query = session.createSQLQuery(sql.toString()).addEntity(HouseHoldAccountBook.class);
+		List<HouseHoldAccountBook> list = new ArrayList<HouseHoldAccountBook>();
 
-		query.setParameter("userCode", userCode);
-		List<HouseHoldAccountBook> list = query.list();
+		Query<Object[]> query = session
+				.createSQLQuery(sql.toString())
+				.addScalar("USER_CODE", StandardBasicTypes.INTEGER)
+				.addScalar("HOUSEHOLDACCOUNTBOOK_CODE", StandardBasicTypes.INTEGER)
+				.addScalar("HOUSEHOLDACCOUNTBOOK_NAME", StandardBasicTypes.STRING)
+				.addScalar("EXPENSE_CODE", StandardBasicTypes.INTEGER)
+				.addScalar("NAME", StandardBasicTypes.STRING)
+				.addScalar("DATE", StandardBasicTypes.STRING)
+				.addScalar("INCOME", StandardBasicTypes.INTEGER)
+				.addScalar("SPENDING", StandardBasicTypes.INTEGER)
+//				.addEntity(HouseHoldAccountBook.class)
+				.setParameter("userCode", userCode);
+
+		for(Object[] obj : query.list()) {
+
+			HouseHoldAccountBook houseHoldAccountBook = new HouseHoldAccountBook();
+			houseHoldAccountBook.setUser(new User());
+			houseHoldAccountBook.getUser().setUserCode((int) obj[0]);
+			houseHoldAccountBook.setHouseHoldAccountBookCode((int) obj[1]);
+			houseHoldAccountBook.setName((String) obj[2]);
+			houseHoldAccountBook.setExpense(new Expense());
+			houseHoldAccountBook.getExpense().setExpenseCode((int) obj[3]);
+			houseHoldAccountBook.getExpense().setName((String) obj[4]);
+			houseHoldAccountBook.setDate((String) obj[5]);
+			houseHoldAccountBook.setIncome((int) obj[6]);
+			houseHoldAccountBook.setSpending((int) obj[7]);
+
+			list.add(houseHoldAccountBook);
+		}
 
 		session.close();
 
