@@ -56,11 +56,11 @@ TabbodyListpage.prototype.init = function(){
 	var modalCommon = new ModalCommon();
 
 	/**
-	 * 追加ボタン処理
+	 * 新規ボタン処理
 	 *
 	 * @returns
 	 */
-	$("#add_button").on("click", $.proxy(function(){
+	$("#new_button").on("click", $.proxy(function(){
 
 		modalCommon.setWidth("50%");
 		modalCommon.setHeight("300px");
@@ -78,6 +78,10 @@ TabbodyListpage.prototype.init = function(){
 	$("#prev_button, #next_button").on("click", $.proxy(function(){
 		this.dateChangeWithSearch(this);
 	}, this));
+
+	$("add_button").on("click"), $.proxy(function(){
+		console.log("追加ボタン");
+	}, this);
 
 }
 
