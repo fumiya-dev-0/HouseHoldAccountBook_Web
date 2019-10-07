@@ -24,5 +24,11 @@
 		<action name="list_combo" class="householdaccountbook.action.ListAction" method="loadCombo">
 			<result name="success">/jsp/json.jsp</result>
 		</action>
+		<!-- 追加処理(モーダルダイアログ) -->
+		<action name="insert" class="householdaccountbook.action.AddAction" method="insert">
+			<result name="success">/jsp/json.jsp</result>
+			<!--type="json"-->
+		</action>
+
 	</package>
 </struts>

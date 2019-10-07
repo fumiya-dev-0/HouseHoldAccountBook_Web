@@ -216,12 +216,14 @@ TabbodyListpage.prototype.addModalLoadTable = function(modalCommon){
  */
 TabbodyListpage.prototype.add = function(){
 
-//	var ajaxCommon = new AjaxCommon();
-//	ajaxCommon.getCallbackData("POST", "list_combo", function(error, data) {
-//		if(!error){
-//			return;
-//		}
-//
-//	});
+	var formData = {"data" : "テスト"}
+	var ajaxCommon = new AjaxCommon();
+	ajaxCommon.addCallbackData("POST", "insert", formData, function(error, data) {
+		if(!error){
+			return;
+		}
+
+		console.log(data);
+	});
 
 }
