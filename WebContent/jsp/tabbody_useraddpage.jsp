@@ -20,24 +20,7 @@
 </div>
 
 <div id="tableArea">
-	<table>
-		<tr>
-			<th>日付</th>
-			<th>品名</th>
-			<th>収入</th>
-			<th>支出</th>
-			<th>費目</th>
-			<th>合計</th>
-		</tr>
-		<tr>
-			<td>yyyy/mm/dd</td>
-			<td>xxx</td>
-			<td>0</td>
-			<td>0</td>
-			<td>0</td>
-			<td>0</td>
-		</tr>
-	</table>
+
 </div>
 <div id="memoArea">
 	<s:textarea name="memo" placeholder="メモ" />

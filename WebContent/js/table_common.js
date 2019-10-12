@@ -3,7 +3,7 @@
 // 作成日: 2019/09/21
 //
 //==================================================================
-TableCommon.prototype.table = null;
+TableCommon.prototype.gTable = null;
 
 /**
  * コンストラクタ
@@ -15,37 +15,31 @@ function TableCommon(elementId){
 	var element = document.getElementById(elementId);
 
 	this.updateChild(element, table);
-	this.table = element.children[0];
+	this.gTable = element.children[0];
 }
 
 TableCommon.prototype = new ElementCommon();
 
-TableCommon.prototype.setTableId = function(option){
-	this.setAttr(option, this.table);
-}
 /**
- * ヘッダー部分制御
+ * 初期設定
  *
  */
-TableCommon.prototype.setColumns = function(options){
+TableCommon.prototype.table = function(options){
+
+	this.setTableProperty(options, this.gTable);
 
 	var tr = document.createElement("tr");
-	options.forEach(function(option){
+	options.columns.forEach(function(column){
 
 		var th = document.createElement("th");
 
-		if(this.setTableProperty(option, this.table)){
-			return;
-		}
-
-		this.setColumnProperty(option, th);
+		this.setColumnProperty(column, th);
 
 		tr.appendChild(th);
 	}, this)
 
-	this.table.appendChild(tr);
+	this.gTable.appendChild(tr);
 }
-
 
 /**
  * 行の追加
@@ -65,7 +59,7 @@ TableCommon.prototype.addRows = function(valueArray){
 		}
 		tr.append(td);
 
-		this.table.appendChild(tr);
+		this.gTable.appendChild(tr);
 		idx++;
 	}, this)
 }
@@ -76,7 +70,7 @@ TableCommon.prototype.addRows = function(valueArray){
  */
 TableCommon.prototype.isTargetHidden = function(idx){
 
-	var th = this.table.rows[0].cells[idx];
+	var th = this.gTable.rows[0].cells[idx];
 
 	if(th.style.display == "none"){
 		return true;
@@ -96,25 +90,25 @@ TableCommon.prototype.setColumnHidden = function(element){
  * 表の作成(入力フォーム)
  *
  */
-TableCommon.prototype.addFormVertical = function(options){
+TableCommon.prototype.form = function(options){
 
-	options.forEach(function(option){
+	var form = document.createElement("form");
+	form.appendChild(this.gTable);
+	this.updateChild(document.getElementById("modal-main"), form);
+
+	options.rows.forEach(function(rows){
 		var tr = document.createElement("tr");
 		var th = document.createElement("th");
 
-		if(this.setTableProperty(option, this.table)){
-			return;
-		}
-
-		this.setColumnProperty(option, th);
+		this.setColumnProperty(rows, th);
 
 		tr.appendChild(th);
 
-		if(this.isNext(option)){
-			this.setNext(option, tr);
+		if(this.isNext(rows)){
+			this.setNext(rows, tr);
 		}
 
-		this.table.appendChild(tr);
+		this.gTable.appendChild(tr);
 	}, this)
 
 }
@@ -148,7 +142,7 @@ TableCommon.prototype.setNext = function(option, tr){
  *
  */
 TableCommon.prototype.setCombobox = function(rowIdx, columnIdx, data){
-	var select = this.table.rows[rowIdx].cells[columnIdx].children[0];
+	var select = this.gTable.rows[rowIdx].cells[columnIdx].children[0];
 	this.setSelectToOption(select, data);
 }
 
@@ -187,10 +181,11 @@ TableCommon.prototype.setTableProperty = function(option, table){
 
 	if(this.hasAttr(option)){
 		this.setAttr(option, table);
-		return true;
 	}
 
-	return false;
+	if(this.hasCss(option)){
+		this.setCss(option, table);
+	}
 }
 
 /**

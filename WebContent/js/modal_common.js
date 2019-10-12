@@ -26,6 +26,42 @@ function ModalCommon(){
 ModalCommon.prototype = new ElementCommon();
 
 /**
+ * ダイアログ初期設定
+ *
+ */
+ModalCommon.prototype.dialog = function(option){
+
+	if(option.buttons){
+
+		$("#modal-footer").empty();
+		option.buttons.forEach(function(button){
+			var input = $("<input>")
+						.val(button.text)
+						.attr("type", "button")
+						.on("click", button.click);
+
+			if(this.hasAttr(button)){
+				input.attr(button.attr);
+			}
+
+			if(this.hasCss(button)){
+				input.css(button.css);
+			}
+
+			$("#modal-footer").append(input);
+		}, this)
+	}
+
+	if(option.width){
+		$("#modal-content").css("width", option.width);
+	}
+
+	if(option.height){
+		$("#modal-main").css("height", option.height);
+	}
+
+}
+/**
  * モーダルダイアログの表示
  */
 ModalCommon.prototype.show = function(_this){
@@ -90,57 +126,5 @@ ModalCommon.prototype.centeringModalSyncer = function(){
 		"top" : pxTop + "px"
 	});
 
-}
-
-/**
- * 横幅の設定
- *
- */
-ModalCommon.prototype.setWidth = function(width){
-	$("#modal-content").css("width", width);
-}
-
-/**
- * 縦幅の設定
- *
- */
-ModalCommon.prototype.setHeight = function(height){
-	$("#modal-main").css("height", height);
-}
-
-/**
- * フッダーの設定
- *
- */
-ModalCommon.prototype.setFooter = function(option){
-	var element = null;
-	if(this.hasElement(option)){
-		element = $("<" + option.element + ">");
-	}
-	this.setProperty(option, element);
-	$("#modal-footer").html(element);
-}
-
-/**
- * プロパティの設定
- *
- */
-ModalCommon.prototype.setProperty = function(option, element){
-
-	if(this.hasText(option)){
-		element.text(option.text);
-	}
-
-	if(this.hasCss(option)){
-		element.css(option.css);
-	}
-
-	if(option.event){
-		element[0].addEventListener("click", option.event);
-	}
-
-	if(this.hasAttr(option)){
-		element.attr(option.attr);
-	}
 }
 

@@ -3,51 +3,9 @@
 // 作成日: 2019/09/21
 //
 //==================================================================
-window.onload = function() {
-	this.TabbodyListpage();
-}
-
-/**
- * 費目コンボボックス定数
- *
- */
+// 費目コンボボックス定数
 TabbodyListpage.prototype.EXPENSE_NAME_ROW = 2;
 TabbodyListpage.prototype.EXPENSE_NAME_COLUMN = 1;
-
-/**
- * 初期表示
- *
- */
-TabbodyListpage.prototype.tableColumns = [
-	{ text : "家計簿コード", css : { width : "0px", display : "none" } },
-	{ text : "費用コード", css : { width : "0px", display : "none" } },
-	{ text : "名前", css : { width : "200px" } },
-	{ text : "表示順", css : { width : "0px", display : "none" } },
-	{ text : "日付", css : { width : "150px" } },
-	{ text : "費目", css : { width : "100px" } },
-	{ text : "所得", css : { width : "100px" } },
-	{ text : "出費", css : { width : "100px" } }
-	];
-TabbodyListpage.prototype.tableId = { attr : { id : "table" } };
-
-/**
- * モーダルウィンドウ(新規ボタンから)
- */
-// 登録ボタン処理
-TabbodyListpage.prototype.addEventButton = function(){
-	TabbodyListpage.prototype.add();
-}
-
-// モーダルダイアログのフッター(新規ボタンから)
-TabbodyListpage.prototype.addModalFooter = { element : "input", event : TabbodyListpage.prototype.addEventButton, attr : { type : "button", value : "登録", id : "add_button" }, css : { width : "60px", height : "30px" } };
-// モーダルダイアログのテーブルカラム(新規ボタンから)
-TabbodyListpage.prototype.addModalColumns = [
-	{ text : "名前", css : { padding : "8px" }, next : { element : "input", attr : { type : "text" }, css : { width : "200px", padding : "4px" } } },
-	{ text : "日付", css : { padding : "8px" }, next : { element : "input", attr : { type : "date", id : "date" }, css : { width : "200px", padding : "4px" } } },
-	{ text : "費目", css : { padding : "8px" }, next : { element : "select", css : { width : "200px", padding : "4px" } } },
-	{ text : "所得", css : { padding : "8px" }, next : { element : "input", attr : { type : "number" }, css : { width : "200px", padding : "4px" } } },
-	{ text : "出費", css : { padding : "8px" }, next : { element : "input", attr : { type : "number" }, css : { width : "200px", padding : "4px" } } }
-	];
 
 function TabbodyListpage(){
 
@@ -62,12 +20,44 @@ function TabbodyListpage(){
 }
 
 /**
- * 開始処理
+ * 初期処理
  *
  */
 TabbodyListpage.prototype.init = function(){
 
 	var modalCommon = new ModalCommon();
+	modalCommon.dialog({
+		width: "50%",
+		height: "300px",
+		buttons: [
+			{
+				text: "登録",
+				click: function(){
+					page.insert();
+				},
+				attr: {
+					id: "add_button"
+				},
+				css: {
+					width: "60px",
+					height: "30px"
+				}
+			},
+			{
+				text: "閉じる",
+				click: function(){
+					modalCommon.hide();
+				},
+				attr: {
+					id: "close_button"
+				},
+				css: {
+					width: "60px",
+					height: "30px"
+				}
+			},
+		]
+	});
 
 	/**
 	 * 新規ボタン処理
@@ -75,12 +65,8 @@ TabbodyListpage.prototype.init = function(){
 	 */
 	$("#new_button").on("click", $.proxy(function(){
 
-		modalCommon.setWidth("50%");
-		modalCommon.setHeight("300px");
 		modalCommon.show(this);
-		modalCommon.setFooter(this.addModalFooter);
-
-		this.addModalLoadTable(modalCommon);
+		this.load();
 	}, this));
 
 	/**
@@ -110,10 +96,66 @@ TabbodyListpage.prototype.show = function(){
 
 		var tableCommon = new TableCommon("tableArea");
 		var stringCommon = new StringCommon();
-		var dateCommon = new DateCommon();
+		var dateCommon = new DateCommon();;
 
-		tableCommon.setTableId(page.tableId);
-		tableCommon.setColumns(page.tableColumns);
+		tableCommon.table({
+			attr: {
+				id: "table"
+			},
+			columns: [
+				{
+					text: "家計簿コード",
+					css: {
+						width: "0px",
+						display: "none"
+					}
+				},
+				{
+					text: "費用コード",
+					css: {
+						width: "0px",
+						display: "none"
+					}
+				},
+				{
+					text: "名前",
+					css: {
+						width: "200px"
+					}
+				},
+				{
+					text: "表示順",
+					css: {
+						width: "0px",
+						display: "none"
+					}
+				},
+				{
+					text: "日付",
+					css: {
+						width: "150px"
+					}
+				},
+				{
+					text: "費目",
+					css: {
+						width: "100px"
+					}
+				},
+				{
+					text: "所得",
+					css: {
+						width: "100px"
+					}
+				},
+				{
+					text: "出費",
+					css: {
+						width: "100px"
+					}
+				}
+			]
+		});
 
 		// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
 		data.forEach(function(data){
@@ -194,7 +236,7 @@ TabbodyListpage.prototype.search = function(){
  *
  * @param modalCommon
  */
-TabbodyListpage.prototype.addModalLoadTable = function(modalCommon){
+TabbodyListpage.prototype.load = function(){
 
 	var page = TabbodyListpage.prototype;
 	var ajaxCommon = new AjaxCommon();
@@ -204,8 +246,88 @@ TabbodyListpage.prototype.addModalLoadTable = function(modalCommon){
 		}
 
 		var tableCommon = new TableCommon("modal-main");
-
-		tableCommon.addFormVertical(page.addModalColumns);
+		tableCommon.form({
+			rows: [
+				{
+					text: "名前",
+					css: {
+						padding: "8px"
+					},
+					next: {
+						element: "input",
+						attr: {
+							type: "text"
+						},
+						css: {
+							width : "200px",
+							padding : "4px"
+						}
+					}
+				},
+				{
+					text: "日付",
+					css: {
+						padding: "8px"
+					},
+					next: {
+						element: "input",
+						attr: {
+							type: "date",
+							id: "date"
+						},
+						css: {
+							width: "200px",
+							padding : "4px"
+						}
+					}
+				},
+				{
+					text: "費目",
+					css: {
+						padding: "8px"
+					},
+					next: {
+						element: "select",
+						css: {
+							width: "200px",
+							padding: "4px"
+						}
+					}
+				},
+				{
+					text: "所得",
+					css: {
+						padding: "8px"
+					},
+					next: {
+						element: "input",
+						attr: {
+							type: "number"
+						},
+						css: {
+							width: "200px",
+							padding: "4px"
+						}
+					}
+				},
+				{
+					text: "出費",
+					css: {
+						padding: "8px"
+					},
+					next: {
+						element: "input",
+						attr: {
+							type: "number"
+						},
+						css: {
+							width: "200px",
+							padding : "4px"
+						}
+					}
+				}
+			]
+		});
 		tableCommon.setCombobox(page.EXPENSE_NAME_ROW, page.EXPENSE_NAME_COLUMN, data);
 	});
 }
@@ -214,7 +336,7 @@ TabbodyListpage.prototype.addModalLoadTable = function(modalCommon){
  * 登録処理
  *
  */
-TabbodyListpage.prototype.add = function(){
+TabbodyListpage.prototype.insert = function(){
 
 	var formData = {"data" : "テスト"}
 	var ajaxCommon = new AjaxCommon();
