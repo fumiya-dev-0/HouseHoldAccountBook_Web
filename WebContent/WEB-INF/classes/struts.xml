@@ -25,7 +25,7 @@
 			<result name="success">/jsp/json.jsp</result>
 		</action>
 		<!-- 追加処理(モーダルダイアログ) -->
-		<action name="insert" class="householdaccountbook.action.AddAction" method="insert">
+		<action name="insert" class="householdaccountbook.action.ListAction" method="insert">
 			<result name="success">/jsp/json.jsp</result>
 			<!--type="json"-->
 		</action>

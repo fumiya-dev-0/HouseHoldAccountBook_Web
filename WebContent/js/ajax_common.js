@@ -35,6 +35,7 @@ AjaxCommon.prototype.addCallbackData = function(type, url, formData, callback) {
 		type: type,
 		url : url,
 		data : formData,
+		processData: false,
 		dataType : "json",
 		async: true,
 		success : function(data) {

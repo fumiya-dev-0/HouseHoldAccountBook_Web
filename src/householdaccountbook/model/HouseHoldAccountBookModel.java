@@ -28,12 +28,10 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	@SuppressWarnings("deprecation")
 	public int findHouseHoldAccountBookCode() {
 
-		int houseHoldAccountBookCode = -1;
-
 		Session session = getSession();
 
 		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
-		houseHoldAccountBookCode = (int) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		int houseHoldAccountBookCode = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		session.close();
 
 		return houseHoldAccountBookCode;

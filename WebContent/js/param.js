@@ -72,7 +72,8 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 				next: {
 					element: "input",
 					attr: {
-						type: "text"
+						type: "text",
+						id: "name"
 					},
 					css: {
 						width : "200px",
@@ -104,6 +105,9 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 				},
 				next: {
 					element: "select",
+					attr: {
+						id: "expenseName"
+					},
 					css: {
 						width: "200px",
 						padding: "4px"
@@ -118,7 +122,8 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 				next: {
 					element: "input",
 					attr: {
-						type: "number"
+						type: "number",
+						id: "income"
 					},
 					css: {
 						width: "200px",
@@ -134,7 +139,8 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 				next: {
 					element: "input",
 					attr: {
-						type: "number"
+						type: "number",
+						id: "spending"
 					},
 					css: {
 						width: "200px",

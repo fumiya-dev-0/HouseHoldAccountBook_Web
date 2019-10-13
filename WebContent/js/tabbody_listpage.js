@@ -25,6 +25,7 @@ function TabbodyListpage(){
  */
 TabbodyListpage.prototype.init = function(){
 
+	var page = TabbodyListpage.prototype;
 	var modalCommon = new ModalCommon();
 	modalCommon.dialog({
 		width: "50%",
@@ -201,7 +202,10 @@ TabbodyListpage.prototype.load = function(){
  */
 TabbodyListpage.prototype.insert = function(){
 
-	var formData = {"data" : "テスト"}
+	var formData = new FormData();
+	var json = this.inputData();
+	formData.append("data", json);
+
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.addCallbackData("POST", "insert", formData, function(error, data) {
 		if(!error){
@@ -210,5 +214,18 @@ TabbodyListpage.prototype.insert = function(){
 
 		console.log(data);
 	});
+}
 
+/**
+ * 入力データ取得
+ *
+ */
+TabbodyListpage.prototype.inputData = function(){
+	return {
+		name: $("#name").val(),
+		date: $("#date").val(),
+		expenseName: $("#expenseName").val(),
+		income: $("#income").val(),
+		spending: $("#spending").val()
+	};
 }
