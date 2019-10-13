@@ -32,10 +32,12 @@ footer {
 input[type="submit"], input[type="text"], input[type="password"], input[type="date"],
 	textarea, select, input[type="number"], input[type="button"] {
 	border-radius: 5px;
+	outline: none;
 }
 
 input[type="text"], input[type="password"], input[type="date"], select, input[type="number"] {
 	border: 1px solid #D8D8D8;
+	outline: none;
 }
 
 /* メインフレーム */

@@ -40,7 +40,8 @@ TabbodyListpage.prototype.init = function(){
 				},
 				css: {
 					width: "60px",
-					height: "30px"
+					height: "30px",
+					margin: "0 5px 0 0"
 				}
 			},
 			{
@@ -98,64 +99,7 @@ TabbodyListpage.prototype.show = function(){
 		var stringCommon = new StringCommon();
 		var dateCommon = new DateCommon();;
 
-		tableCommon.table({
-			attr: {
-				id: "table"
-			},
-			columns: [
-				{
-					text: "家計簿コード",
-					css: {
-						width: "0px",
-						display: "none"
-					}
-				},
-				{
-					text: "費用コード",
-					css: {
-						width: "0px",
-						display: "none"
-					}
-				},
-				{
-					text: "名前",
-					css: {
-						width: "200px"
-					}
-				},
-				{
-					text: "表示順",
-					css: {
-						width: "0px",
-						display: "none"
-					}
-				},
-				{
-					text: "日付",
-					css: {
-						width: "150px"
-					}
-				},
-				{
-					text: "費目",
-					css: {
-						width: "100px"
-					}
-				},
-				{
-					text: "所得",
-					css: {
-						width: "100px"
-					}
-				},
-				{
-					text: "出費",
-					css: {
-						width: "100px"
-					}
-				}
-			]
-		});
+		tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
 
 		// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
 		data.forEach(function(data){
@@ -246,88 +190,7 @@ TabbodyListpage.prototype.load = function(){
 		}
 
 		var tableCommon = new TableCommon("modal-main");
-		tableCommon.form({
-			rows: [
-				{
-					text: "名前",
-					css: {
-						padding: "8px"
-					},
-					next: {
-						element: "input",
-						attr: {
-							type: "text"
-						},
-						css: {
-							width : "200px",
-							padding : "4px"
-						}
-					}
-				},
-				{
-					text: "日付",
-					css: {
-						padding: "8px"
-					},
-					next: {
-						element: "input",
-						attr: {
-							type: "date",
-							id: "date"
-						},
-						css: {
-							width: "200px",
-							padding : "4px"
-						}
-					}
-				},
-				{
-					text: "費目",
-					css: {
-						padding: "8px"
-					},
-					next: {
-						element: "select",
-						css: {
-							width: "200px",
-							padding: "4px"
-						}
-					}
-				},
-				{
-					text: "所得",
-					css: {
-						padding: "8px"
-					},
-					next: {
-						element: "input",
-						attr: {
-							type: "number"
-						},
-						css: {
-							width: "200px",
-							padding: "4px"
-						}
-					}
-				},
-				{
-					text: "出費",
-					css: {
-						padding: "8px"
-					},
-					next: {
-						element: "input",
-						attr: {
-							type: "number"
-						},
-						css: {
-							width: "200px",
-							padding : "4px"
-						}
-					}
-				}
-			]
-		});
+		tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
 		tableCommon.setCombobox(page.EXPENSE_NAME_ROW, page.EXPENSE_NAME_COLUMN, data);
 	});
 }

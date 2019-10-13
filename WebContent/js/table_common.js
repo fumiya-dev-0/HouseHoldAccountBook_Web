@@ -5,10 +5,6 @@
 //==================================================================
 TableCommon.prototype.gTable = null;
 
-/**
- * コンストラクタ
- *
- */
 function TableCommon(elementId){
 	var table = document.createElement("table");
 
