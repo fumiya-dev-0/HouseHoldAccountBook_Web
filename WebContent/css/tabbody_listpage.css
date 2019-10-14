@@ -60,7 +60,7 @@
 
 /* テキストエリア*/
 #memoArea textarea{
-	width: 95%;
+	width: 98%;
 	padding: 10px;
 	height: 100px;
 	resize: none; /* 右下の//を消す */

@@ -7,6 +7,7 @@
 TabbodyListpage.prototype.ROW_EXPENSE_NAME = 2;
 TabbodyListpage.prototype.COL_EXPENSE_NAME = 1;
 
+// エラーメッセージ
 TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
 TabbodyListpage.prototype.DATE_ERROR_MESSAGE = "日付を入力してください。";
 TabbodyListpage.prototype.EXPENSE_ERROR_MESSAGE = "費目を選択してください。";
@@ -63,7 +64,7 @@ TabbodyListpage.prototype.init = function(){
 					width: "60px",
 					height: "30px"
 				}
-			},
+			}
 		]
 	});
 
@@ -86,7 +87,7 @@ TabbodyListpage.prototype.init = function(){
 	}, this));
 
 }
-
+7
 /**
  * 画面表示
  *
@@ -130,7 +131,7 @@ TabbodyListpage.prototype.show = function(){
 
 /**
  * 現在日時を表示
- *
+ 7*
  */
 TabbodyListpage.prototype.loadCurrentDate = function(){
 
@@ -185,7 +186,6 @@ TabbodyListpage.prototype.search = function(){
 /**
  * 新規モーダルダイアログのテーブル表示
  *
- * @param modalCommon
  */
 TabbodyListpage.prototype.load = function(){
 
@@ -210,7 +210,7 @@ TabbodyListpage.prototype.insert = function(){
 
 	var formData = new FormData();
 	var json = this.inputData();
-	formData.append("data", json);
+	formData.append("data", JSON.stringify(json));
 
 	this.clear();
 	if(!this.checkData()){
@@ -222,7 +222,6 @@ TabbodyListpage.prototype.insert = function(){
 		if(!error){
 			return;
 		}
-
 		console.log(data);
 	});
 }

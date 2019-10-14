@@ -3,6 +3,10 @@
 // 作成日: 2019/10/13
 //
 //==================================================================
+/**
+ * 一覧画面
+ *
+ */
 var TABBODY_LISTPAGE_PARAM_TABLE = {
 		attr: {
 			id: "table"
@@ -144,7 +148,7 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 							id: "expense-name"
 						},
 						css: {
-							width: "200px",
+							width: "210px",
 							padding: "4px"
 						}
 					},
