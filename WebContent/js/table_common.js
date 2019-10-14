@@ -96,12 +96,12 @@ TableCommon.prototype.form = function(options){
 		var tr = document.createElement("tr");
 		var th = document.createElement("th");
 
-		this.setColumnProperty(rows, th);
+		this.setColumnProperty(rows.textArea, th);
 
 		tr.appendChild(th);
 
-		if(this.isNext(rows)){
-			this.setNext(rows, tr);
+		if(this.isInputArea(rows)){
+			this.setInputArea(rows, tr);
 		}
 
 		this.gTable.appendChild(tr);
@@ -110,27 +110,30 @@ TableCommon.prototype.form = function(options){
 }
 
 /**
- * 次表示存在チェック
+ * 入力部分存在チェック
  *
  */
-TableCommon.prototype.isNext = function(option){
-	return option.next ? true : false;
+TableCommon.prototype.isInputArea = function(option){
+	return option.inputArea ? true : false;
 }
 
 /**
- * 次要素設定
+ * 入力部分設定
  *
  */
-TableCommon.prototype.setNext = function(option, tr){
-	if(option.next.element){
-		var element = document.createElement(option.next.element);
-		var td = document.createElement("td");
+TableCommon.prototype.setInputArea = function(option, tr){
 
-		this.setColumnProperty(option.next, element);
+	var td = document.createElement("td");
+	option.inputArea.forEach(function(inputArea){
+		if(inputArea.element){
+			var element = document.createElement(inputArea.element);
 
-		td.appendChild(element);
-		tr.appendChild(td);
-	}
+			this.setColumnProperty(inputArea, element);
+
+			td.appendChild(element);
+			tr.appendChild(td);
+		}
+	}, this)
 }
 
 /**

@@ -42,3 +42,9 @@ input[type="text"], input[type="password"], input[type="date"], select, input[ty
 #main {
 
 }
+
+/* 入力要素の色(エラー時) */
+.error {
+	background-color: #ffb6c1;
+	border-color: red!important;
+}

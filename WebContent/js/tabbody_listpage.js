@@ -4,8 +4,8 @@
 //
 //==================================================================
 // 費目コンボボックス定数
-TabbodyListpage.prototype.EXPENSE_NAME_ROW = 2;
-TabbodyListpage.prototype.EXPENSE_NAME_COLUMN = 1;
+TabbodyListpage.prototype.ROW_EXPENSE_NAME = 2;
+TabbodyListpage.prototype.COL_EXPENSE_NAME = 1;
 
 TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
 TabbodyListpage.prototype.DATE_ERROR_MESSAGE = "日付を入力してください。";
@@ -151,10 +151,10 @@ TabbodyListpage.prototype.loadCurrentDate = function(){
 TabbodyListpage.prototype.dateChangeWithSearch = function(_this){
 
 	// 日付変更処理
-	dateChange(_this);
+	this.dateChange(_this);
 
 	// 検索処理
-	search();
+	this.search();
 }
 
 /**
@@ -198,7 +198,7 @@ TabbodyListpage.prototype.load = function(){
 
 		var tableCommon = new TableCommon("modal-main");
 		tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
-		tableCommon.setCombobox(page.EXPENSE_NAME_ROW, page.EXPENSE_NAME_COLUMN, data);
+		tableCommon.setCombobox(page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
 	});
 }
 
@@ -212,9 +212,8 @@ TabbodyListpage.prototype.insert = function(){
 	var json = this.inputData();
 	formData.append("data", json);
 
-	var msg = this.checkData();
-	if(msg){
-		alert(msg);
+	this.clear();
+	if(!this.checkData()){
 		return;
 	}
 
@@ -236,7 +235,7 @@ TabbodyListpage.prototype.inputData = function(){
 	return {
 		name: $("#name").val(),
 		date: $("#date").val(),
-		expenseName: $("#expenseName").val(),
+		expenseName: $("#expense-name").val(),
 		income: $("#income").val(),
 		spending: $("#spending").val()
 	};
@@ -247,27 +246,56 @@ TabbodyListpage.prototype.inputData = function(){
  *
  */
 TabbodyListpage.prototype.checkData = function(){
-	var stringCommon = new StringCommon();
 
+	var checkFlg = true;
+	var stringCommon = new StringCommon();
 	if(stringCommon.isEmpty($("#name").val())){
-		return this.NAME_ERROR_MESSAGE;
+		$("#name-error").text(this.NAME_ERROR_MESSAGE);
+		$("#name").addClass("error");
+		checkFlg = false;
 	}
 
 	if(stringCommon.isEmpty($("#date").val())){
-		return this.DATE_ERROR_MESSAGE;
+		$("#date-error").text(this.DATE_ERROR_MESSAGE);
+		$("#date").addClass("error");
+		checkFlg = false;
 	}
 
-	if(stringCommon.isEmpty($("#expenseName").val())){
-		return this.EXPENSE_ERROR_MESSAGE;
+	if(stringCommon.isEmpty($("#expense-name").val())){
+		$("#expense-name-error").text(this.EXPENSE_ERROR_MESSAGE);
+		$("#expense-name").addClass("error");
+		checkFlg = false;
 	}
 
 	if(stringCommon.isEmpty($("#income").val())){
-		return this.INCOME_ERROR_MESSAGE;
+		$("#income-error").text(this.INCOME_ERROR_MESSAGE);
+		$("#income").addClass("error");
+		checkFlg = false;
 	}
 
 	if(stringCommon.isEmpty($("#spending").val())){
-		return this.SPENDING_ERROR_MESSAGE;
+		$("#spending-error").text(this.SPENDING_ERROR_MESSAGE);
+		$("#spending").addClass("error");
+		checkFlg = false;
 	}
 
-	return "";
+	return checkFlg;
+}
+
+/**
+ * 入力チェックエリアのクリア
+ *
+ */
+TabbodyListpage.prototype.clear = function(){
+
+	$("#name-error").text("");
+	$("#name").removeClass("error");
+	$("#date-error").text("");
+	$("#date").removeClass("error");
+	$("#expense-name-error").text("");
+	$("#expense-name").removeClass("error");
+	$("#income-error").text("");
+	$("#income").removeClass("error");
+	$("#spending-error").text("");
+	$("#spending").removeClass("error");
 }

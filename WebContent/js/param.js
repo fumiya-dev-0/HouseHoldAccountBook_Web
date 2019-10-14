@@ -65,88 +65,168 @@ var TABBODY_LISTPAGE_PARAM_TABLE = {
 var TABBODY_LISTPAGE_PARAM_FORM = {
 		rows: [
 			{
-				text: "名前",
-				css: {
-					padding: "8px"
-				},
-				next: {
-					element: "input",
-					attr: {
-						type: "text",
-						id: "name"
-					},
+				textArea: {
+					text: "名前",
 					css: {
-						width : "200px",
-						padding : "4px"
+						padding: "8px"
 					}
-				}
+				},
+				inputArea: [
+					{
+						element: "input",
+						attr: {
+							type: "text",
+							id: "name"
+						},
+						css: {
+							width : "200px",
+							padding : "4px"
+						}
+					},
+					{
+						element: "span",
+						attr: {
+							id: "name-error"
+						},
+						css: {
+							width : "300px",
+							color: "red",
+							"font-size": "12px",
+							"margin-left": "10px"
+						}
+					}
+				]
 			},
 			{
-				text: "日付",
-				css: {
-					padding: "8px"
-				},
-				next: {
-					element: "input",
-					attr: {
-						type: "date",
-						id: "date"
-					},
+				textArea: {
+					text: "日付",
 					css: {
-						width: "200px",
-						padding : "4px"
+						padding: "8px"
 					}
-				}
+				},
+				inputArea: [
+					{
+						element: "input",
+						attr: {
+							type: "date",
+							id: "date"
+						},
+						css: {
+							width: "200px",
+							padding : "4px"
+						}
+					},
+					{
+						element: "span",
+						attr: {
+							id: "date-error"
+						},
+						css: {
+							width : "300px",
+							color: "red",
+							"font-size": "12px",
+							"margin-left": "10px"
+						}
+					}
+				]
 			},
 			{
-				text: "費目",
-				css: {
-					padding: "8px"
-				},
-				next: {
-					element: "select",
-					attr: {
-						id: "expenseName"
-					},
+				textArea: {
+					text: "費目",
 					css: {
-						width: "200px",
-						padding: "4px"
+						padding: "8px"
 					}
-				}
+				},
+				inputArea: [
+					{
+						element: "select",
+						attr: {
+							id: "expense-name"
+						},
+						css: {
+							width: "200px",
+							padding: "4px"
+						}
+					},
+					{
+						element: "span",
+						attr: {
+							id: "expense-name-error"
+						},
+						css: {
+							width : "300px",
+							color: "red",
+							"font-size": "12px",
+							"margin-left": "10px"
+						}
+					}
+				]
 			},
 			{
-				text: "所得",
-				css: {
-					padding: "8px"
-				},
-				next: {
-					element: "input",
-					attr: {
-						type: "number",
-						id: "income"
-					},
+				textArea: {
+					text: "所得",
 					css: {
-						width: "200px",
-						padding: "4px"
+						padding: "8px"
 					}
-				}
+				},
+				inputArea: [
+					{
+						element: "input",
+						attr: {
+							type: "number",
+							id: "income"
+						},
+						css: {
+							width: "200px",
+							padding: "4px"
+						}
+					},
+					{
+						element: "span",
+						attr: {
+							id: "income-error"
+						},
+						css: {
+							width : "300px",
+							color: "red",
+							"font-size": "12px",
+							"margin-left": "10px"
+						}
+					}
+				]
 			},
 			{
-				text: "出費",
-				css: {
-					padding: "8px"
-				},
-				next: {
-					element: "input",
-					attr: {
-						type: "number",
-						id: "spending"
-					},
+				textArea: {
+					text: "出費",
 					css: {
-						width: "200px",
-						padding : "4px"
+						padding: "8px"
 					}
-				}
+				},
+				inputArea: [
+					{
+						element: "input",
+						attr: {
+							type: "number",
+							id: "spending"
+						},
+						css: {
+							width: "200px",
+							padding : "4px"
+						}
+					},
+					{
+						element: "span",
+						attr: {
+							id: "spending-error"
+						},
+						css: {
+							width : "300px",
+							color: "red",
+							"font-size": "12px",
+							"margin-left": "10px"
+						}
+					}
+				]
 			}
 		]
 };
