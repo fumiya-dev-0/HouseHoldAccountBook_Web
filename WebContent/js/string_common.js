@@ -24,3 +24,11 @@ StringCommon.prototype.separate = function(num){
         return num;
     }
 }
+
+/**
+ * 文字列入力チェック
+ * @param str 入力文字列
+ */
+StringCommon.prototype.isEmpty = function(str){
+	return str.trim() == "" ? true : false;
+}

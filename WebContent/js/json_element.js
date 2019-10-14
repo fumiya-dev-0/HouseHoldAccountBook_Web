@@ -3,13 +3,13 @@
 // 作成日: 2019/10/05
 //
 //==================================================================
-function ElementCommon(){}
+function JsonElement(){}
 
 /**
  * テキスト存在チェック
  *
  */
-ElementCommon.prototype.hasText = function(option){
+JsonElement.prototype.hasText = function(option){
 	return option.text ? true : false;
 }
 
@@ -17,7 +17,7 @@ ElementCommon.prototype.hasText = function(option){
  * 要素のテキストを設定
  *
  */
-ElementCommon.prototype.setText = function(option, element){
+JsonElement.prototype.setText = function(option, element){
 	element.textContent = option.text;
 }
 
@@ -25,7 +25,7 @@ ElementCommon.prototype.setText = function(option, element){
  * CSS存在チェック
  *
  */
-ElementCommon.prototype.hasCss = function(option){
+JsonElement.prototype.hasCss = function(option){
 	return option.css ? true : false;
 }
 
@@ -33,7 +33,7 @@ ElementCommon.prototype.hasCss = function(option){
  * CSS設定
  *
  */
-ElementCommon.prototype.setCss = function(option, element){
+JsonElement.prototype.setCss = function(option, element){
 	Object.keys(option.css).forEach(function(prop, val){
 		element.style[prop] = option.css[prop];
 	})
@@ -43,7 +43,7 @@ ElementCommon.prototype.setCss = function(option, element){
 * 属性存在チェック
 *
 */
-ElementCommon.prototype.hasAttr = function(option){
+JsonElement.prototype.hasAttr = function(option){
 	return option.attr ? true : false;
 }
 
@@ -51,7 +51,7 @@ ElementCommon.prototype.hasAttr = function(option){
 * 属性設定
 *
 */
-ElementCommon.prototype.setAttr = function(option, element){
+JsonElement.prototype.setAttr = function(option, element){
 	Object.keys(option.attr).forEach(function(prop, val){
 		element.setAttribute(prop, option.attr[prop]);
 	})
@@ -61,7 +61,7 @@ ElementCommon.prototype.setAttr = function(option, element){
 * 要素存在チェック
 *
 */
-ElementCommon.prototype.hasElement = function(option){
+JsonElement.prototype.hasElement = function(option){
 	return option.element ? true : false;
 }
 
@@ -70,7 +70,7 @@ ElementCommon.prototype.hasElement = function(option){
  * 要素内の更新
  *
  */
-ElementCommon.prototype.updateChild = function(element, child){
+JsonElement.prototype.updateChild = function(element, child){
 
 	if(element.hasChildNodes()){
 		element.removeChild(element.children[0]);

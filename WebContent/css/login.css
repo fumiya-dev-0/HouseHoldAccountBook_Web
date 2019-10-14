@@ -5,6 +5,11 @@
 	padding: 60px 15px;
 }
 
+footer {
+	position: absolute;
+	bottom: 0;
+}
+
 /* エラー表示 */
 #error {
 	color: red;

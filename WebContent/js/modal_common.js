@@ -19,7 +19,7 @@ function ModalCommon(){
 	});
 }
 
-ModalCommon.prototype = new ElementCommon();
+ModalCommon.prototype = new JsonElement();
 
 /**
  * ダイアログ初期設定
@@ -121,6 +121,12 @@ ModalCommon.prototype.centeringModalSyncer = function(){
 		"left" : pxLeft + "px",
 		"top" : pxTop + "px"
 	});
-
 }
 
+/**
+ * エラーメッセージの表示
+ *
+ */
+ModalCommon.prototype.error = function(text){
+
+}

@@ -7,6 +7,12 @@
 TabbodyListpage.prototype.EXPENSE_NAME_ROW = 2;
 TabbodyListpage.prototype.EXPENSE_NAME_COLUMN = 1;
 
+TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
+TabbodyListpage.prototype.DATE_ERROR_MESSAGE = "日付を入力してください。";
+TabbodyListpage.prototype.EXPENSE_ERROR_MESSAGE = "費目を選択してください。";
+TabbodyListpage.prototype.INCOME_ERROR_MESSAGE = "所得を入力してください。";
+TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してください。";
+
 function TabbodyListpage(){
 
 	var page = TabbodyListpage.prototype;
@@ -206,6 +212,12 @@ TabbodyListpage.prototype.insert = function(){
 	var json = this.inputData();
 	formData.append("data", json);
 
+	var msg = this.checkData();
+	if(msg){
+		alert(msg);
+		return;
+	}
+
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.addCallbackData("POST", "insert", formData, function(error, data) {
 		if(!error){
@@ -228,4 +240,34 @@ TabbodyListpage.prototype.inputData = function(){
 		income: $("#income").val(),
 		spending: $("#spending").val()
 	};
+}
+
+/**
+ * 入力チェック
+ *
+ */
+TabbodyListpage.prototype.checkData = function(){
+	var stringCommon = new StringCommon();
+
+	if(stringCommon.isEmpty($("#name").val())){
+		return this.NAME_ERROR_MESSAGE;
+	}
+
+	if(stringCommon.isEmpty($("#date").val())){
+		return this.DATE_ERROR_MESSAGE;
+	}
+
+	if(stringCommon.isEmpty($("#expenseName").val())){
+		return this.EXPENSE_ERROR_MESSAGE;
+	}
+
+	if(stringCommon.isEmpty($("#income").val())){
+		return this.INCOME_ERROR_MESSAGE;
+	}
+
+	if(stringCommon.isEmpty($("#spending").val())){
+		return this.SPENDING_ERROR_MESSAGE;
+	}
+
+	return "";
 }

@@ -3,31 +3,27 @@
 /* タブ */
 #tab_controll {
 	margin: 0;
+	padding: 14px 8px 0 8px;
+	background-color: #4488b3;
+	border-radius: 5px 5px 0 0;
 }
 
 /* タブ a要素 */
 #tab_controll a {
 	display: inline-block;
-	border-width: 1px 1px 0px 1px;
-	border-style: solid;
-	border-color: black;
 	padding: 5px 20px;
 	text-decoration: none;
-	color: black;
-	background-color: white;
-	margin-right: -1px;
-}
-
-/* タブにマウスポインタが載った時 */
-#tab_controll a:hover {
-	text-decoration: underline;
+	color: white;
+	margin-right: 5px;
 }
 
 #tab_body {
-	border-top: 1px solid black;
 	margin-top: -1px;
 	padding: 1em;
 	background-color: white;
 	position: relative;
 	z-index: 0;
+	background-color: #f2f2f2;
+	height: 90%;
+	border-radius: 0 0 10px 10px;
 }

@@ -14,7 +14,7 @@ function TableCommon(elementId){
 	this.gTable = element.children[0];
 }
 
-TableCommon.prototype = new ElementCommon();
+TableCommon.prototype = new JsonElement();
 
 /**
  * 初期設定
