@@ -93,18 +93,18 @@ public class ListAction extends BaseAction {
 	}
 
 	/**
-	 * 追加処理
+	 * 登録処理
 	 *
 	 */
 	public String insert() {
 
-		System.out.println(data);
 		Gson gson = new Gson();
 
 		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
 		int houseAccountBookCode = model.findHouseHoldAccountBookCode();
-//		HouseHoldAccountBook houseHoldAccountBook = gson.fromJson(data, HouseHoldAccountBook.class);
-		//		model.insert();
+		HouseHoldAccountBook houseHoldAccountBook = gson.fromJson(data, HouseHoldAccountBook.class);
+		houseHoldAccountBook.setHouseHoldAccountBookCode(houseAccountBookCode);
+		model.insert(houseHoldAccountBook);
 
 		List<String> list = new ArrayList<String>();
 		json = gson.toJson(list);

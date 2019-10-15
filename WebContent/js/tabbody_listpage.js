@@ -220,8 +220,11 @@ TabbodyListpage.prototype.insert = function(){
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.addCallbackData("POST", "insert", formData, function(error, data) {
 		if(!error){
+			alert("登録に失敗しました。");
 			return;
 		}
+
+		alert("登録が完了しました。");
 		console.log(data);
 	});
 }
@@ -233,8 +236,10 @@ TabbodyListpage.prototype.insert = function(){
 TabbodyListpage.prototype.inputData = function(){
 	return {
 		name: $("#name").val(),
-		date: $("#date").val(),
-		expenseName: $("#expense-name").val(),
+		date: $("#date").val().replace(/-/g,""),
+		expense: {
+			expenseCode: $("#expense-name").val()
+		},
 		income: $("#income").val(),
 		spending: $("#spending").val()
 	};

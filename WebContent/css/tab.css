@@ -23,6 +23,7 @@
 	background-color: white;
 	position: relative;
 	z-index: 0;
-	height: 90%;
 	border-radius: 0 0 10px 10px;
+	height: 980px;
+	overflow: auto;
 }

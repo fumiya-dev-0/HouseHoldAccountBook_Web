@@ -31,7 +31,7 @@ public class HouseHoldAccountBookModel extends BaseModel {
 		Session session = getSession();
 
 		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
-		int houseHoldAccountBookCode = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		int houseHoldAccountBookCode = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue() + 1;
 		session.close();
 
 		return houseHoldAccountBookCode;
@@ -56,8 +56,10 @@ public class HouseHoldAccountBookModel extends BaseModel {
 			isSuccess = false;
 			transaction.rollback();
 		} finally {
-			session.flush();
-			session.close();
+			if(session != null) {
+				session.flush();
+				session.close();
+			}
 		}
 		return isSuccess;
 	}
