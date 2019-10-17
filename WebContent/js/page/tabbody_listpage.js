@@ -41,7 +41,7 @@ TabbodyListpage.prototype.init = function(){
 			{
 				text: "登録",
 				click: function(){
-					page.insert();
+					page.insert(modalCommon);
 				},
 				attr: {
 					id: "add_button"
@@ -206,7 +206,7 @@ TabbodyListpage.prototype.load = function(){
  * 登録処理
  *
  */
-TabbodyListpage.prototype.insert = function(){
+TabbodyListpage.prototype.insert = function(modalCommon){
 
 	var formData = new FormData();
 	var json = this.inputData();
@@ -225,7 +225,7 @@ TabbodyListpage.prototype.insert = function(){
 		}
 
 		alert("登録が完了しました。");
-		console.log(data);
+		modalCommon.hide();
 	});
 }
 

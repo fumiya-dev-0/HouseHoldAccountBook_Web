@@ -38,7 +38,7 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	}
 
 	/**
-	 * 追加処理
+	 * 登録処理
 	 *
 	 * @return isSuccess 処理成功フラグ
 	 */
@@ -49,15 +49,15 @@ public class HouseHoldAccountBookModel extends BaseModel {
 		Session session = getSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			session.saveOrUpdate(houseHoldAccountBook);
+			session.save(houseHoldAccountBook);
+			session.flush();
 			transaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			isSuccess = false;
 			transaction.rollback();
+			isSuccess = false;
 		} finally {
 			if(session != null) {
-				session.flush();
 				session.close();
 			}
 		}

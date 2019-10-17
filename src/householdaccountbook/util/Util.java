@@ -75,8 +75,8 @@ public interface Util {
 		LOGIN_CSS_PATH("login.css"),
 		LIST_CSS_PATH("list.css"),
 		TAB_CSS_PATH("tab.css"),
-		TABBODY_LISTPAGE_CSS_PATH("tabbody_listpage.css"),
-		MODAL_CSS_PATH("modal.css");
+		TABBODY_LISTPAGE_CSS_PATH("/page/tabbody_listpage.css"),
+		MODAL_CSS_PATH("/common/modal.css");
 
 		private final String path;
 
@@ -140,7 +140,7 @@ public interface Util {
 	public enum JavaScript {
 
 		TAB_JS_PATH("tab.js"),
-		TABBODY_LISTPAGE_JS_PATH("tabbody_listpage.js");
+		TABBODY_LISTPAGE_JS_PATH("/page/tabbody_listpage.js");
 
 		private final String path;
 

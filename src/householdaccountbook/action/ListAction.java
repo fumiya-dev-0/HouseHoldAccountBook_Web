@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import householdaccountbook.dto.Expense;
 import householdaccountbook.dto.HouseHoldAccountBook;
+import householdaccountbook.dto.User;
 import householdaccountbook.model.ExpenseModel;
 import householdaccountbook.model.HouseHoldAccountBookModel;
 import householdaccountbook.model.ListModel;
@@ -104,7 +105,13 @@ public class ListAction extends BaseAction {
 		int houseAccountBookCode = model.findHouseHoldAccountBookCode();
 		HouseHoldAccountBook houseHoldAccountBook = gson.fromJson(data, HouseHoldAccountBook.class);
 		houseHoldAccountBook.setHouseHoldAccountBookCode(houseAccountBookCode);
-		model.insert(houseHoldAccountBook);
+		houseHoldAccountBook.setUser(new User());
+		houseHoldAccountBook.getUser().setUserCode(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)));
+
+		// 登録処理
+		if(!model.insert(houseHoldAccountBook)) {
+			return ACTION_ERROR;
+		}
 
 		List<String> list = new ArrayList<String>();
 		json = gson.toJson(list);
