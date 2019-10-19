@@ -9,19 +9,19 @@ function AjaxCommon(){}
  * コールバック(SELECT)
  *
  */
-AjaxCommon.prototype.getCallbackData = function(type, url, callback) {
+AjaxCommon.prototype.getCallbackData = function(option) {
 	$.ajax({
-		type: type,
-		url : url,
-		dataType : "json",
+		type: option.type,
+		url: option.url,
+		dataType: "json",
 		async: true,
 		success : function(data) {
-			callback(true, data);
+			option.callback(true, data);
 		},
 		error : function(xmlHttpRequest, textStatus, errorThrown) {
 			var error = textStatus + "\n" + errorThrown + "\n" + xmlHttpRequest;
 			console.log(error);
-			callback(false, null);
+			option.callback(false, null);
 		}
 	});
 }
@@ -30,22 +30,22 @@ AjaxCommon.prototype.getCallbackData = function(type, url, callback) {
  * コールバック(INSERT)
  *
  */
-AjaxCommon.prototype.addCallbackData = function(type, url, formData, callback) {
+AjaxCommon.prototype.addCallbackData = function(option) {
 	$.ajax({
-		type: type,
-		url : url,
-		data : formData,
+		type: option.type,
+		url: option.url,
+		data: option.data,
 		contentType: false,
 		processData: false,
 		dataType : "json",
 		async: true,
-		success : function(data) {
-			callback(true, data);
+		success: function(data) {
+			option.callback(true, data);
 		},
-		error : function(xmlHttpRequest, textStatus, errorThrown) {
+		error: function(xmlHttpRequest, textStatus, errorThrown) {
 			var error = textStatus + "\n" + errorThrown + "\n" + xmlHttpRequest;
 			console.log(error);
-			callback(false, null);
+			option.callback(false, null);
 		}
 	});
 }

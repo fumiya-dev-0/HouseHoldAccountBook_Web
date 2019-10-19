@@ -4,19 +4,9 @@
 //
 //==================================================================
 function ModalCommon(){
-
-	$("#modal_close_button")
-	.off("click")
-	.on("click", $.proxy(function(){
-		// モーダルダイアログを閉じる
-		this.hide();
-	}, this))
-	.hover(function(){
-		$(this).css("opacity", "1");
-	})
-	.mouseout(function(){
-		$(this).css("opacity", "0.5");
-	});
+	this.content = $("#modal-content");
+	this.header = null;
+	this.footer = null;
 }
 
 ModalCommon.prototype = new JsonElement();
@@ -27,14 +17,87 @@ ModalCommon.prototype = new JsonElement();
  */
 ModalCommon.prototype.dialog = function(option){
 
-	if(option.buttons){
+	// ヘッダー作成
+	this.createHeader();
 
-		$("#modal-footer").empty();
-		option.buttons.forEach(function(button){
+	// ヘッダー内子要素作成
+	if(this.header) this.createHeaderChild();
+
+	// フッター作成
+	this.createFooter();
+
+	// フッター内子要素作成
+	if(this.footer) this.createFooterChild(option.buttons);
+
+	if(option.width) this.content.css("width", option.width);
+
+	if(option.height) $("#modal-main").css("height", option.height);
+
+}
+
+/**
+ * ヘッダーの作成
+ *
+ */
+ModalCommon.prototype.createHeader = function(){
+	// ヘッダーが存在しない場合のみ作成する
+	if(this.content.find("#modal-header").length == 0) {
+		var div = $("<div>").attr("id","modal-header");
+		this.content.prepend(div);
+		this.header = $("#modal-header");
+	}
+}
+
+/**
+ * ヘッダー内(子要素)の作成
+ *
+ */
+ModalCommon.prototype.createHeaderChild = function(){
+	this.header.empty();
+	var input =
+		$("<input>")
+		.attr({"type" : "button", "id" : "modal-close"})
+		.val("×")
+		.off("click")
+		.on("click", $.proxy(function(){
+			// モーダルダイアログを閉じる
+			this.hide();
+		}, this))
+		.hover(function(){
+			$(this).css("opacity", "1");
+		})
+		.mouseout(function(){
+			$(this).css("opacity", "0.5");
+		});
+	this.header.append(input);
+}
+
+/**
+ * フッターの作成
+ *
+ */
+ModalCommon.prototype.createFooter = function(){
+	// フッターが存在しない場合のみ作成する
+	if(this.content.find("#modal-footer").length == 0){
+		var div = $("<div>").attr("id","modal-footer");
+		this.content.append(div);
+		this.footer = $("#modal-footer");
+	}
+}
+
+/**
+ * フッター内(子要素)の作成
+ *
+ */
+ModalCommon.prototype.createFooterChild = function(buttons){
+	if(buttons){
+
+		this.footer.empty();
+		buttons.forEach(function(button){
 			var input = $("<input>")
-						.val(button.text)
-						.attr("type", "button")
-						.on("click", button.click);
+			.val(button.text)
+			.attr("type", "button")
+			.on("click", button.click);
 
 			if(this.hasAttr(button)){
 				input.attr(button.attr);
@@ -44,21 +107,14 @@ ModalCommon.prototype.dialog = function(option){
 				input.css(button.css);
 			}
 
-			$("#modal-footer").append(input);
+			this.footer.append(input);
 		}, this)
 	}
-
-	if(option.width){
-		$("#modal-content").css("width", option.width);
-	}
-
-	if(option.height){
-		$("#modal-main").css("height", option.height);
-	}
-
 }
+
 /**
  * モーダルダイアログの表示
+ *
  */
 ModalCommon.prototype.show = function(_this){
 
@@ -82,6 +138,7 @@ ModalCommon.prototype.show = function(_this){
 
 /**
  * モーダルダイアログを閉じる
+ *
  */
 ModalCommon.prototype.hide = function(){
 
@@ -105,10 +162,10 @@ ModalCommon.prototype.centeringModalSyncer = function(){
 	var height = $(window).height();
 
 	// モーダルダイアログの幅を取得
-	var contentWidth = $("#modal-content").outerWidth();
+	var contentWidth = this.content.outerWidth();
 
 	// モーダルダイアログの高さを取得
-	var contentHeight = $("#modal-content").outerHeight();
+	var contentHeight = this.content.outerHeight();
 
 	// モーダルダイアログの左端ピクセルを計算
 	var pxLeft = ( ( width - contentWidth ) / 2 );
@@ -117,16 +174,8 @@ ModalCommon.prototype.centeringModalSyncer = function(){
 	var pxTop = ( ( height - contentHeight ) / 2 ) - 48;
 
 	// CSSの追加: left, top
-	$("#modal-content").css({
+	this.content.css({
 		"left" : pxLeft + "px",
 		"top" : pxTop + "px"
 	});
-}
-
-/**
- * エラーメッセージの表示
- *
- */
-ModalCommon.prototype.error = function(text){
-
 }

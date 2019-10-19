@@ -98,35 +98,40 @@ TabbodyListpage.prototype.show = function(){
 
 	var page = TabbodyListpage.prototype;
 	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.getCallbackData("GET", "list", function(error, data) {
-		if(!error){
-			return;
+	ajaxCommon.getCallbackData({
+		type: "GET",
+		url: "list",
+		callback: function(error, data) {
+			if(!error){
+				return;
+			}
+
+			var tableCommon = new TableCommon("tableArea");
+			var stringCommon = new StringCommon();
+			var dateCommon = new DateCommon();;
+
+			tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
+
+			// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
+			data.forEach(function(data){
+
+				// 行の追加
+				tableCommon.addRows(
+						new Array(
+								data["HouseHoldAccountBookCode"],
+								data["expense"]["expenseCode"],
+								data["name"],
+								data["expense"]["displayOrder"],
+								dateCommon.convertToSlashStringFormat(data["date"]),
+								data["expense"]["name"],
+								stringCommon.separate(data["income"]),
+								stringCommon.separate(data["spending"])
+						)
+				);
+			}, data)
 		}
-
-		var tableCommon = new TableCommon("tableArea");
-		var stringCommon = new StringCommon();
-		var dateCommon = new DateCommon();;
-
-		tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
-
-		// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
-		data.forEach(function(data){
-
-			// 行の追加
-			tableCommon.addRows(
-					new Array(
-							data["HouseHoldAccountBookCode"],
-							data["expense"]["expenseCode"],
-							data["name"],
-							data["expense"]["displayOrder"],
-							dateCommon.convertToSlashStringFormat(data["date"]),
-							data["expense"]["name"],
-							stringCommon.separate(data["income"]),
-							stringCommon.separate(data["spending"])
-					)
-			);
-		}, data);
 	});
+
 }
 
 /**
@@ -191,15 +196,20 @@ TabbodyListpage.prototype.load = function(){
 
 	var page = TabbodyListpage.prototype;
 	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.getCallbackData("GET", "list_combo", function(error, data) {
-		if(!error){
-			return;
-		}
+	ajaxCommon.getCallbackData({
+		type: "GET",
+		url: "list_combo",
+		callback: function(error, data) {
+			if(!error){
+				return;
+			}
 
-		var tableCommon = new TableCommon("modal-main");
-		tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
-		tableCommon.setCombobox(page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
+			var tableCommon = new TableCommon("modal-main");
+			tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
+			tableCommon.setCombobox(page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
+		}
 	});
+
 }
 
 /**
@@ -208,25 +218,31 @@ TabbodyListpage.prototype.load = function(){
  */
 TabbodyListpage.prototype.insert = function(modalCommon){
 
-	var formData = new FormData();
-	var json = this.inputData();
-	formData.append("data", JSON.stringify(json));
-
 	this.clear();
 	if(!this.checkData()){
 		return;
 	}
 
-	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.addCallbackData("POST", "insert", formData, function(error, data) {
-		if(!error){
-			alert("登録に失敗しました。");
-			return;
-		}
+	var formData = new FormData();
+	var json = this.inputData();
+	formData.append("data", JSON.stringify(json));
 
-		alert("登録が完了しました。");
-		modalCommon.hide();
+	var ajaxCommon = new AjaxCommon();
+	ajaxCommon.addCallbackData({
+		type: "POST",
+		url: "insert",
+		data: formData,
+		callback: function(error, data) {
+			if(!error){
+				alert("登録に失敗しました。");
+				return;
+			}
+
+			alert("登録が完了しました。");
+			modalCommon.hide();
+		}
 	});
+
 }
 
 /**
