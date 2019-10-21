@@ -8,6 +8,7 @@ TableCommon.prototype.gTable = null;
 function TableCommon(elementId){
 	var table = document.createElement("table");
 
+	this.elementId = elementId;
 	var element = document.getElementById(elementId);
 
 	this.updateChild(element, table);
@@ -90,7 +91,7 @@ TableCommon.prototype.form = function(options){
 
 	var form = document.createElement("form");
 	form.appendChild(this.gTable);
-	this.updateChild(document.getElementById("modal-main"), form);
+	this.updateChild(document.getElementById(this.elementId), form);
 
 	options.rows.forEach(function(rows){
 		var tr = document.createElement("tr");

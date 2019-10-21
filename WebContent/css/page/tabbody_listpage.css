@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-#dlt_button, #new_button, #upd_button, #print_button, #add_button, #close_button {
+.button-border {
 	border: 1px solid;
 }
 
@@ -18,36 +18,36 @@
 }
 
 /* ボタン */
-#print_button, #new_button, #upd_button, #add_button {
+.button-info {
 	background-color: #81BEF7;
 	color: white;
 	border-color: #81BEF7;
 }
 
-#dlt_button, #close_button {
+.button-warning {
 	background-color: #eea236;
 	color: white;
 	border-color: #eea236;
 }
 
 /* ボタンがカーソルに置かれた時に色変更 */
-#print_button:hover, #new_button:hover, #upd_button:hover, #add_button:hover {
+.button-info:hover {
 	background: #58ACFA;
 	border: solid 1px #58ACFA;
 }
 
-#dlt_button:hover, #close_button:hover {
+.button-warning:hover {
 	background: #ffa500;
 	border: solid 1px #ffa500;
 }
 
 /* ボタンがクリックされた時に色変更 */
-#print_button:active, #new_button:active, #upd_button:active, #add_button:active {
+.button-info:active {
 	background: #2E9AFE;
 	border: solid 1px #2E9AFE;
 }
 
-#dlt_button:active, #close_button:active {
+.button-warning:active {
 	background: #ff8c00;
 	border: solid 1px #ff8c00;
 }

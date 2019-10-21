@@ -41,10 +41,13 @@ TabbodyListpage.prototype.init = function(){
 			{
 				text: "登録",
 				click: function(){
-					page.insert(modalCommon);
+					modalCommon.confirm("確認", "登録しますか?", function(){
+						page.insert(modalCommon);
+					});
 				},
 				attr: {
-					id: "add_button"
+					id: "add_button",
+					class: "button-border button-info"
 				},
 				css: {
 					width: "60px",
@@ -55,10 +58,11 @@ TabbodyListpage.prototype.init = function(){
 			{
 				text: "閉じる",
 				click: function(){
-					modalCommon.hide();
+					modalCommon.close();
 				},
 				attr: {
-					id: "close_button"
+					id: "close_button",
+					class: "button-border button-warning"
 				},
 				css: {
 					width: "60px",
@@ -74,8 +78,8 @@ TabbodyListpage.prototype.init = function(){
 	 */
 	$("#new_button").on("click", $.proxy(function(){
 
-		modalCommon.show(this);
-		this.load();
+		modalCommon.show();
+		this.loadDialog();
 	}, this));
 
 	/**
@@ -96,7 +100,32 @@ TabbodyListpage.prototype.show = function(){
 
 	this.loadCurrentDate();
 
-	var page = TabbodyListpage.prototype;
+	this.load();
+
+}
+
+/**
+ * 現在日時を表示
+ 7*
+ */
+TabbodyListpage.prototype.loadCurrentDate = function(){
+
+	var dateCommon = new DateCommon();
+
+	var year = dateCommon.toDateDigits(dateCommon.getYear(), 4);
+	var month = dateCommon.toDateDigits(dateCommon.getMonth(), 2);
+	var day = dateCommon.toDateDigits(dateCommon.getDay(), 2);
+
+	$("#date").val(dateCommon.convertToHyphenStringFormat(year + month + day));
+
+}
+
+/**
+ * 読み込み処理
+ *
+ */
+TabbodyListpage.prototype.load = function(){
+
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.getCallbackData({
 		type: "GET",
@@ -108,7 +137,7 @@ TabbodyListpage.prototype.show = function(){
 
 			var tableCommon = new TableCommon("tableArea");
 			var stringCommon = new StringCommon();
-			var dateCommon = new DateCommon();;
+			var dateCommon = new DateCommon();
 
 			tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
 
@@ -128,26 +157,9 @@ TabbodyListpage.prototype.show = function(){
 								stringCommon.separate(data["spending"])
 						)
 				);
-			}, data)
+			}, data);
 		}
 	});
-
-}
-
-/**
- * 現在日時を表示
- 7*
- */
-TabbodyListpage.prototype.loadCurrentDate = function(){
-
-	var dateCommon = new DateCommon();
-
-	var year = dateCommon.toDateDigits(dateCommon.getYear(), 4);
-	var month = dateCommon.toDateDigits(dateCommon.getMonth(), 2);
-	var day = dateCommon.toDateDigits(dateCommon.getDay(), 2);
-
-	$("#date").val(dateCommon.convertToHyphenStringFormat(year + month + day));
-
 }
 
 /**
@@ -192,7 +204,7 @@ TabbodyListpage.prototype.search = function(){
  * 新規モーダルダイアログのテーブル表示
  *
  */
-TabbodyListpage.prototype.load = function(){
+TabbodyListpage.prototype.loadDialog = function(){
 
 	var page = TabbodyListpage.prototype;
 	var ajaxCommon = new AjaxCommon();
@@ -204,7 +216,7 @@ TabbodyListpage.prototype.load = function(){
 				return;
 			}
 
-			var tableCommon = new TableCommon("modal-main");
+			var tableCommon = new TableCommon("modal-content");
 			tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
 			tableCommon.setCombobox(page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
 		}
@@ -227,6 +239,7 @@ TabbodyListpage.prototype.insert = function(modalCommon){
 	var json = this.inputData();
 	formData.append("data", JSON.stringify(json));
 
+	var page = this;
 	var ajaxCommon = new AjaxCommon();
 	ajaxCommon.addCallbackData({
 		type: "POST",
@@ -234,12 +247,15 @@ TabbodyListpage.prototype.insert = function(modalCommon){
 		data: formData,
 		callback: function(error, data) {
 			if(!error){
-				alert("登録に失敗しました。");
+				modalCommon.alert("失敗", "登録に失敗しました。", null);
 				return;
 			}
 
-			alert("登録が完了しました。");
-			modalCommon.hide();
+			modalCommon.alert("完了", "登録が完了しました。", function(){
+				modalCommon.close();
+				page.load();
+			});
+
 		}
 	});
 

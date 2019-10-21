@@ -8,6 +8,7 @@
 html {
 	height: 100%;
 }
+
 body {
 	height: 100%;
 	margin: 0;
@@ -42,9 +43,8 @@ input[type="text"], input[type="password"], input[type="date"], select, input[ty
 	outline: none;
 }
 
-/* メインフレーム */
-#main {
-
+input[type="submit"], input[type="button"] {
+	cursor: pointer;
 }
 
 /* 入力要素の色(エラー時) */

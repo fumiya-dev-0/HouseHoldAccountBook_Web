@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-#modal-content {
+.modal {
 	margin: auto;
 	padding: 0;
 	border: 2px solid #aaa;
@@ -10,7 +10,7 @@
 	display: none;
 }
 
-#modal-overlay {
+#modal-overlay, #confirm-overlay, #alert-overlay {
 	z-index: 1;
 	display: none; /* 要素を非表示(フェードインさせるために記述) */
 	position: fixed; /* 要素の位置を固定 */
@@ -18,23 +18,25 @@
 	left: 0;
 	width: 100%; /* 要素の幅 */
 	height: 120%; /* 要素の高さ(スマホ対策のため、120%) */
+}
+
+#modal-overlay {
 	background-color: rgba(0,0,0,0.75); /* 背景色(半透明) */
 }
 
-#modal-header {
+.modal-header {
 	text-align: right;
 	border-bottom: 2px solid #aaa;
 	padding: 10px;
 }
 
-#modal-footer {
+.modal-footer {
 	text-align: right;
 	border-top: 2px solid #aaa;
 	padding: 10px;
 }
 
-
-#modal-main {
+.modal-content {
 	padding: 20px;
 }
 
@@ -43,7 +45,6 @@
 	background: none;
 	border: 0;
 	font-size: 24px;
-	cursor: pointer;
 	opacity: 0.5;
 	outline: none;
 }
