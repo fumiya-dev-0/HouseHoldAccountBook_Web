@@ -185,7 +185,7 @@ TabbodyListpage.prototype.dateChange = function(_this){
 	var dateCommon = new DateCommon();
 
 	if($(_this).attr("id") == "prev_button"){
-		$("#date").val(dateCommon.prevDate(dValue));;
+		$("#date").val(dateCommon.prevDate(dValue));
 	}else{
 		$("#date").val(dateCommon.nextDate(dValue));
 	}

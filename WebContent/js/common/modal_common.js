@@ -134,10 +134,13 @@ ModalCommon.prototype.create = function(option, modal, overlay, content, header,
 	// フッター内子要素作成
 	if(this.footer) this.createFooterChild(option.buttons);
 
+	// タイトル作成
 	if(option.text) content.html("<span>" + option.text + "</span>");
 
+	// 横幅設定
 	if(option.width) modal.css("width", option.width);
 
+	// 高さ設定
 	if(option.height) content.css("height", option.height);
 
 }
