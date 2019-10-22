@@ -9,7 +9,7 @@ function AjaxCommon(){}
  * コールバック(SELECT)
  *
  */
-AjaxCommon.prototype.getCallbackData = function(option) {
+AjaxCommon.getCallbackData = function(option) {
 	$.ajax({
 		type: option.type,
 		url: option.url,
@@ -30,7 +30,7 @@ AjaxCommon.prototype.getCallbackData = function(option) {
  * コールバック(INSERT)
  *
  */
-AjaxCommon.prototype.addCallbackData = function(option) {
+AjaxCommon.addCallbackData = function(option) {
 	$.ajax({
 		type: option.type,
 		url: option.url,

@@ -17,6 +17,7 @@ TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してくだ�
 function TabbodyListpage(){
 
 	var page = TabbodyListpage.prototype;
+	DateCommon.newInstance();
 
 	// 初期処理
 	page.init();
@@ -32,7 +33,7 @@ function TabbodyListpage(){
  */
 TabbodyListpage.prototype.init = function(){
 
-	var page = TabbodyListpage.prototype;
+	var page = this;
 	var modalCommon = new ModalCommon();
 	modalCommon.dialog({
 		width: "50%",
@@ -82,114 +83,71 @@ TabbodyListpage.prototype.init = function(){
 		this.loadDialog();
 	}, this));
 
-	/**
-	 * 日付ボタン処理
-	 *
-	 */
-	$("#prev_button, #next_button").on("click", $.proxy(function(){
-		this.dateChangeWithSearch(this);
-	}, this));
-
 }
-7
+
 /**
  * 画面表示
  *
  */
 TabbodyListpage.prototype.show = function(){
 
-	this.loadCurrentDate();
+	this.loadDate();
 
 	this.load();
 
 }
 
 /**
- * 現在日時を表示
- 7*
+ * 年月情報読み込み
+ *
  */
-TabbodyListpage.prototype.loadCurrentDate = function(){
+TabbodyListpage.prototype.loadDate = function(){
 
-	var dateCommon = new DateCommon();
-
-	var year = dateCommon.toDateDigits(dateCommon.getYear(), 4);
-	var month = dateCommon.toDateDigits(dateCommon.getMonth(), 2);
-	var day = dateCommon.toDateDigits(dateCommon.getDay(), 2);
-
-	$("#date").val(dateCommon.convertToHyphenStringFormat(year + month + day));
-
+	this.loadCombo();
 }
 
 /**
- * 読み込み処理
+ * 年月コンボボックス読み込み
  *
  */
-TabbodyListpage.prototype.load = function(){
+TabbodyListpage.prototype.loadCombo = function(){
 
-	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.getCallbackData({
-		type: "GET",
-		url: "list",
-		callback: function(error, data) {
-			if(!error){
-				return;
+	var year = 2000;
+	var option = this.createOption(year);
+
+	$("#date_combo").html(option);
+}
+
+/**
+ * オプション要素の生成
+ *
+ */
+TabbodyListpage.prototype.createOption = function(year){
+
+	var month = null;
+	var option = null;
+	for(var i = 0; i < 30; i++){
+		year++;
+		month = 1;
+		for(var j = 0; j < 12; j++){
+			if(this.isNow(year, month)){
+				option += "<option value='" + year + "/" + month + "' selected>" + year + "年" + DateCommon.toDateDigits(month, 2) + "月"  + "</option>";
+			}else{
+				option += "<option value='" + year + "/" + month + "'>" + year + "年" + DateCommon.toDateDigits(month, 2) + "月"  + "</option>";
 			}
-
-			var tableCommon = new TableCommon("tableArea");
-			var stringCommon = new StringCommon();
-			var dateCommon = new DateCommon();
-
-			tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
-
-			// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
-			data.forEach(function(data){
-
-				// 行の追加
-				tableCommon.addRows(
-						new Array(
-								data["HouseHoldAccountBookCode"],
-								data["expense"]["expenseCode"],
-								data["name"],
-								data["expense"]["displayOrder"],
-								dateCommon.convertToSlashStringFormat(data["date"]),
-								data["expense"]["name"],
-								stringCommon.separate(data["income"]),
-								stringCommon.separate(data["spending"])
-						)
-				);
-			}, data);
+			month++;
 		}
-	});
-}
-
-/**
- * 日付変更ボタン処理
- *
- */
-TabbodyListpage.prototype.dateChangeWithSearch = function(_this){
-
-	// 日付変更処理
-	this.dateChange(_this);
-
-	// 検索処理
-	this.search();
-}
-
-/**
- * 日付変更処理
- *
- */
-TabbodyListpage.prototype.dateChange = function(_this){
-
-	var dValue = $("#date").val().replace(/-/g, "");
-	var dateCommon = new DateCommon();
-
-	if($(_this).attr("id") == "prev_button"){
-		$("#date").val(dateCommon.prevDate(dValue));
-	}else{
-		$("#date").val(dateCommon.nextDate(dValue));
 	}
 
+	return option;
+}
+
+/**
+ * 現在日付であるかチェック
+ *
+ */
+TabbodyListpage.prototype.isNow = function(year, month){
+	return year == DateCommon.getYear() && month == DateCommon.getMonth() ? true : false;
 }
 
 /**
@@ -201,14 +159,51 @@ TabbodyListpage.prototype.search = function(){
 }
 
 /**
+ * 読み込み処理
+ *
+ */
+TabbodyListpage.prototype.load = function(){
+
+	var page = this;
+	AjaxCommon.getCallbackData({
+		type: "GET",
+		url: "list",
+		callback: function(error, data) {
+			if(!error){
+				return;
+			}
+
+			var tableCommon = new TableCommon("tableArea");
+			tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
+			// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
+			data.forEach(function(data){
+
+				// 行の追加
+				tableCommon.addRows(
+						new Array(
+								data["HouseHoldAccountBookCode"],
+								data["expense"]["expenseCode"],
+								data["name"],
+								data["expense"]["displayOrder"],
+								DateCommon.convertToSlashStringFormat(data["date"]),
+								data["expense"]["name"],
+								StringCommon.separate(data["income"]),
+								StringCommon.separate(data["spending"])
+						)
+				);
+			}, data);
+		}
+	});
+}
+
+/**
  * 新規モーダルダイアログのテーブル表示
  *
  */
 TabbodyListpage.prototype.loadDialog = function(){
 
-	var page = TabbodyListpage.prototype;
-	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.getCallbackData({
+	var page = this;
+	AjaxCommon.getCallbackData({
 		type: "GET",
 		url: "list_combo",
 		callback: function(error, data) {
@@ -237,11 +232,11 @@ TabbodyListpage.prototype.insert = function(modalCommon){
 
 	var formData = new FormData();
 	var json = this.inputData();
+
 	formData.append("data", JSON.stringify(json));
 
 	var page = this;
-	var ajaxCommon = new AjaxCommon();
-	ajaxCommon.addCallbackData({
+	AjaxCommon.addCallbackData({
 		type: "POST",
 		url: "insert",
 		data: formData,
@@ -268,7 +263,7 @@ TabbodyListpage.prototype.insert = function(modalCommon){
 TabbodyListpage.prototype.inputData = function(){
 	return {
 		name: $("#name").val(),
-		date: $("#date").val().replace(/-/g,""),
+		date: DateCommon.convertToHyphenDeleteStringFormat($("#date").val()),
 		expense: {
 			expenseCode: $("#expense-name").val()
 		},
@@ -284,32 +279,31 @@ TabbodyListpage.prototype.inputData = function(){
 TabbodyListpage.prototype.checkData = function(){
 
 	var checkFlg = true;
-	var stringCommon = new StringCommon();
-	if(stringCommon.isEmpty($("#name").val())){
+	if(StringCommon.isEmpty($("#name").val())){
 		$("#name-error").text(this.NAME_ERROR_MESSAGE);
 		$("#name").addClass("error");
 		checkFlg = false;
 	}
 
-	if(stringCommon.isEmpty($("#date").val())){
+	if(StringCommon.isEmpty($("#date").val())){
 		$("#date-error").text(this.DATE_ERROR_MESSAGE);
 		$("#date").addClass("error");
 		checkFlg = false;
 	}
 
-	if(stringCommon.isEmpty($("#expense-name").val())){
+	if(StringCommon.isEmpty($("#expense-name").val())){
 		$("#expense-name-error").text(this.EXPENSE_ERROR_MESSAGE);
 		$("#expense-name").addClass("error");
 		checkFlg = false;
 	}
 
-	if(stringCommon.isEmpty($("#income").val())){
+	if(StringCommon.isEmpty($("#income").val())){
 		$("#income-error").text(this.INCOME_ERROR_MESSAGE);
 		$("#income").addClass("error");
 		checkFlg = false;
 	}
 
-	if(stringCommon.isEmpty($("#spending").val())){
+	if(StringCommon.isEmpty($("#spending").val())){
 		$("#spending-error").text(this.SPENDING_ERROR_MESSAGE);
 		$("#spending").addClass("error");
 		checkFlg = false;

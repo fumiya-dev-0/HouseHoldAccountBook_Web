@@ -7,9 +7,10 @@ function StringCommon(){}
 
 /**
  * 数値をカンマ区切りにする
+ *
  * @param num
  */
-StringCommon.prototype.separate = function(num){
+StringCommon.separate = function(num){
 
     // 文字列にする
     num = String(num);
@@ -27,8 +28,9 @@ StringCommon.prototype.separate = function(num){
 
 /**
  * 文字列入力チェック
+ *
  * @param str 入力文字列
  */
-StringCommon.prototype.isEmpty = function(str){
+StringCommon.isEmpty = function(str){
 	return str.trim() == "" ? true : false;
 }

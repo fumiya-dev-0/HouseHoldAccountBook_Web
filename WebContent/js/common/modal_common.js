@@ -255,7 +255,7 @@ ModalCommon.prototype.show = function(modal, overlay){
 	}
 
 	// モーダルダイアログのセンタリング
-	this.centeringModalSyncer(modal);
+	this.centering(modal);
 
 	// オーバーレイ、モーダルダイアログをフェードインさせる
 	$(modal.selector + ", " + overlay.selector).fadeIn("slow");
@@ -291,7 +291,7 @@ ModalCommon.prototype.close = function(modal, overlay, bool){
  * モーダルダイアログのセンタリングを行う
  *
  */
-ModalCommon.prototype.centeringModalSyncer = function(modal){
+ModalCommon.prototype.centering = function(modal){
 
 	// ウィンドウの幅を取得
 	var width = $(window).width();
@@ -322,5 +322,5 @@ ModalCommon.prototype.centeringModalSyncer = function(modal){
  *
  */
 ModalCommon.prototype.isAlert = function(modal, overlay){
-	return (modal == this.alertModal && overlay == this.alertOverlay) ? true : false;
+	return (modal == this.alertModal && overlay == this.alertOverlay && this.callback) ? true : false;
 }
