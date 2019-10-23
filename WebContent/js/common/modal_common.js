@@ -83,7 +83,7 @@ ModalCommon.prototype.confirm = function(title, text, callback){
 }
 
 /**
- * ダイアログ作成
+ * アラートダイアログ作成
  *
  */
 ModalCommon.prototype.alert = function(title, text, callback){
@@ -92,6 +92,7 @@ ModalCommon.prototype.alert = function(title, text, callback){
 	var option = {
 			title: title,
 			text: text,
+			close: false,
 			width: "10%",
 			height: "100px",
 			buttons: [
@@ -122,17 +123,21 @@ ModalCommon.prototype.alert = function(title, text, callback){
  */
 ModalCommon.prototype.create = function(option, modal, overlay, content, header, footer){
 
-	// ヘッダー作成
-	this.createHeader(modal, header);
+	if(header){
+		// ヘッダー作成
+		this.createHeader(modal, header);
 
-	// ヘッダー内子要素作成
-	if(this.header) this.createHeaderChild(option, modal, overlay);
+		// ヘッダー内子要素作成
+		if(this.header) this.createHeaderChild(option, modal, overlay);
+	}
 
-	// フッター作成
-	this.createFooter(modal, footer);
+	if(footer){
+		// フッター作成
+		this.createFooter(modal, footer);
 
-	// フッター内子要素作成
-	if(this.footer) this.createFooterChild(option.buttons);
+		// フッター内子要素作成
+		if(this.footer) this.createFooterChild(option);
+	}
 
 	// タイトル作成
 	if(option.text) content.html("<span>" + option.text + "</span>");
@@ -168,23 +173,29 @@ ModalCommon.prototype.createHeaderChild = function(option, modal, overlay){
 
 	this.header.empty();
 	if(option){
-		if(option.title) this.header.prepend("<span style='position: absolute; left: 10px'>" + option.title + "</span>");
+		if(option.close === false) {
+			this.header.css("text-align", "left");
+			if(option.title) this.header.prepend("<span>" + option.title + "</span>");
+			return;
+		}else{
+			if(option.title) this.header.prepend("<span style='position: absolute; left: 10px'>" + option.title + "</span>");
+		}
+		var input =
+			$("<input>")
+			.attr({"type" : "button", "id" : "modal-close"})
+			.val("×")
+			.off("click")
+			.on("click", $.proxy(function(){
+				this.close(modal, overlay);
+			}, this))
+			.hover(function(){
+				$(this).css("opacity", "1");
+			})
+			.mouseout(function(){
+				$(this).css("opacity", "0.5");
+			});
+		this.header.append(input);
 	}
-	var input =
-		$("<input>")
-		.attr({"type" : "button", "id" : "modal-close"})
-		.val("×")
-		.off("click")
-		.on("click", $.proxy(function(){
-			this.close(modal, overlay);
-		}, this))
-		.hover(function(){
-			$(this).css("opacity", "1");
-		})
-		.mouseout(function(){
-			$(this).css("opacity", "0.5");
-		});
-	this.header.append(input);
 }
 
 /**
@@ -205,11 +216,11 @@ ModalCommon.prototype.createFooter = function(modal, footer){
  * フッター内(子要素)の作成
  *
  */
-ModalCommon.prototype.createFooterChild = function(buttons){
-	if(buttons){
+ModalCommon.prototype.createFooterChild = function(option){
+	if(option.buttons){
 
 		this.footer.empty();
-		buttons.forEach(function(button){
+		option.buttons.forEach(function(button){
 			var input = $("<input>")
 			.val(button.text)
 			.attr("type", "button")
@@ -280,7 +291,7 @@ ModalCommon.prototype.close = function(modal, overlay, bool){
 		$(overlay.selector).remove();
 	});
 
-	if((this.callback && bool) || this.isAlert(modal, overlay)){
+	if(this.callback && bool){
 		this.callback();
 	}
 
@@ -315,12 +326,4 @@ ModalCommon.prototype.centering = function(modal){
 		"left" : pxLeft + "px",
 		"top" : pxTop + "px"
 	});
-}
-
-/**
- * アラートダイアログであるかチェック
- *
- */
-ModalCommon.prototype.isAlert = function(modal, overlay){
-	return (modal == this.alertModal && overlay == this.alertOverlay && this.callback) ? true : false;
 }

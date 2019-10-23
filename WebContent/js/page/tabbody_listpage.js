@@ -83,6 +83,13 @@ TabbodyListpage.prototype.init = function(){
 		this.loadDialog();
 	}, this));
 
+	/**
+	 * 年月コンボボックス処理
+	 */
+	$("#date_combo").on("change", $.proxy(function(){
+		this.search();
+	}, this));
+
 }
 
 /**
@@ -91,19 +98,10 @@ TabbodyListpage.prototype.init = function(){
  */
 TabbodyListpage.prototype.show = function(){
 
-	this.loadDate();
+	this.loadCombo();
 
 	this.load();
 
-}
-
-/**
- * 年月情報読み込み
- *
- */
-TabbodyListpage.prototype.loadDate = function(){
-
-	this.loadCombo();
 }
 
 /**
@@ -112,8 +110,9 @@ TabbodyListpage.prototype.loadDate = function(){
  */
 TabbodyListpage.prototype.loadCombo = function(){
 
-	var year = 2000;
-	var option = this.createOption(year);
+	var year = DateCommon.getYear();
+	var month = DateCommon.getMonth();
+	var option = this.createOption(year, month);
 
 	$("#date_combo").html(option);
 }
@@ -122,32 +121,23 @@ TabbodyListpage.prototype.loadCombo = function(){
  * オプション要素の生成
  *
  */
-TabbodyListpage.prototype.createOption = function(year){
+TabbodyListpage.prototype.createOption = function(year, month){
 
-	var month = null;
 	var option = null;
-	for(var i = 0; i < 30; i++){
-		year++;
-		month = 1;
+	option = "<option value=''></option>"
+	for(var i = 0; i < 10; i++){
 		for(var j = 0; j < 12; j++){
-			if(this.isNow(year, month)){
-				option += "<option value='" + year + "/" + month + "' selected>" + year + "年" + DateCommon.toDateDigits(month, 2) + "月"  + "</option>";
+			option += "<option value='" + year + "/" + month + "'>" + year + "年" + DateCommon.toDateDigits(month, 2) + "月"  + "</option>";
+			if(month <= 1){
+				break;
 			}else{
-				option += "<option value='" + year + "/" + month + "'>" + year + "年" + DateCommon.toDateDigits(month, 2) + "月"  + "</option>";
+				month--;
 			}
-			month++;
 		}
+		month = 12;
+		year--;
 	}
-
 	return option;
-}
-
-/**
- * 現在日付であるかチェック
- *
- */
-TabbodyListpage.prototype.isNow = function(year, month){
-	return year == DateCommon.getYear() && month == DateCommon.getMonth() ? true : false;
 }
 
 /**
@@ -155,6 +145,12 @@ TabbodyListpage.prototype.isNow = function(year, month){
  *
  */
 TabbodyListpage.prototype.search = function(){
+	var val = $("#date_combo").val();
+
+	if(!val){
+		return;
+	}
+
 
 }
 
@@ -164,7 +160,6 @@ TabbodyListpage.prototype.search = function(){
  */
 TabbodyListpage.prototype.load = function(){
 
-	var page = this;
 	AjaxCommon.getCallbackData({
 		type: "GET",
 		url: "list",

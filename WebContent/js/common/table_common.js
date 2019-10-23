@@ -3,8 +3,6 @@
 // 作成日: 2019/09/21
 //
 //==================================================================
-TableCommon.prototype.gTable = null;
-
 function TableCommon(elementId){
 	var table = document.createElement("table");
 
@@ -23,15 +21,23 @@ TableCommon.prototype = new JsonElement();
  */
 TableCommon.prototype.table = function(options){
 
-	this.setTableProperty(options, this.gTable);
+	// テーブル設定(id)
+	this.setProperty(options, this.gTable);
+
+	this.header(options);
+}
+
+/**
+ * ヘッダーの作成
+ *
+ */
+TableCommon.prototype.header = function(options){
 
 	var tr = document.createElement("tr");
 	options.columns.forEach(function(column){
 
 		var th = document.createElement("th");
-
-		this.setColumnProperty(column, th);
-
+		this.setProperty(column, th);
 		tr.appendChild(th);
 	}, this)
 
@@ -66,13 +72,8 @@ TableCommon.prototype.addRows = function(valueArray){
  *
  */
 TableCommon.prototype.isTargetHidden = function(idx){
-
 	var th = this.gTable.rows[0].cells[idx];
-
-	if(th.style.display == "none"){
-		return true;
-	}
-	return false;
+	return th.style.display == "none" ? true : false;
 }
 
 /**
@@ -97,7 +98,7 @@ TableCommon.prototype.form = function(options){
 		var tr = document.createElement("tr");
 		var th = document.createElement("th");
 
-		this.setColumnProperty(rows.textArea, th);
+		this.setProperty(rows.textArea, th);
 
 		tr.appendChild(th);
 
@@ -129,7 +130,7 @@ TableCommon.prototype.setInputArea = function(option, tr){
 		if(inputArea.element){
 			var element = document.createElement(inputArea.element);
 
-			this.setColumnProperty(inputArea, element);
+			this.setProperty(inputArea, element);
 
 			td.appendChild(element);
 			tr.appendChild(td);
@@ -174,35 +175,20 @@ TableCommon.prototype.createOption = function(obj){
 }
 
 /**
- * テーブルプロパティの設定
+ * プロパティの設定
  *
  */
-TableCommon.prototype.setTableProperty = function(option, table){
-
-	if(this.hasAttr(option)){
-		this.setAttr(option, table);
-	}
-
-	if(this.hasCss(option)){
-		this.setCss(option, table);
-	}
-}
-
-/**
- * カラムプロパティの設定
- *
- */
-TableCommon.prototype.setColumnProperty = function(option, column){
+TableCommon.prototype.setProperty = function(option, element){
 
 	if(this.hasText(option)){
-		this.setText(option, column);
+		this.setText(option, element);
 	}
 
 	if(this.hasCss(option)){
-		this.setCss(option, column);
+		this.setCss(option, element);
 	}
 
 	if(this.hasAttr(option)){
-		this.setAttr(option, column);
+		this.setAttr(option, element);
 	}
 }
