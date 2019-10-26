@@ -5,9 +5,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import householdaccountbook.util.Util;
-
 public class User {
+
+	// ハッシュ関数・ソルト
+	public static final String HASH_ALGORITHM = "SHA-512";
+	public static final String SALT = "bbksadasvgsrsferccadsefg44wefKYTJRBaawf356";
 
 	/**
 	 * メンバ変数
@@ -127,8 +129,8 @@ public class User {
 	 * @throws UnsupportedEncodingException
 	 */
 	private String getPasswordHash() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		MessageDigest digest = MessageDigest.getInstance(Util.HASH_ALGORITHM);
-		String target = password + userId + Util.SALT;
+		MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+		String target = password + userId + SALT;
 		digest.update(target.getBytes("utf8"));
 
 		return String.format("%064x", new BigInteger(1, digest.digest()));

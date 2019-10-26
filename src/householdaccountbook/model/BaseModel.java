@@ -4,13 +4,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import householdaccountbook.util.Util;
+import householdaccountbook.util.ModelCommon;
 
-public class BaseModel implements Util {
+public class BaseModel implements ModelCommon {
 
-	public BaseModel() {
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
+	public BaseModel() {}
 
 	/**
 	 * セッションの取得
