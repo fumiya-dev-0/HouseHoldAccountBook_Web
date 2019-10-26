@@ -22,5 +22,5 @@
 <script src="js/common/date_common.js"></script>
 <script src="js/common/string_common.js"></script>
 <script src="js/common/table_common.js"></script>
-<script src="js/common/modal_common.js"></script>
-
+<script src="js/common/modal_helper.js"></script>
+<script src="js/common/progress_util.js"></script>

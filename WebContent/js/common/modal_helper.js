@@ -1,9 +1,9 @@
 //==================================================================
-// モーダルダイアログ用共通クラス
+// モーダルダイアログ用ヘルパークラス
 // 作成日: 2019/09/23
 //
 //==================================================================
-function ModalCommon(){
+function ModalHelper(){
 
 	this.body = $("body");
 	this.modal = $("#modal");
@@ -24,13 +24,13 @@ function ModalCommon(){
 	this.callback = null;
 }
 
-ModalCommon.prototype = new JsonElement();
+ModalHelper.prototype = new JsonElement();
 
 /**
  * ダイアログ初期設定
  *
  */
-ModalCommon.prototype.dialog = function(option){
+ModalHelper.prototype.dialog = function(option){
 	this.create(option, this.modal, this.overlay, this.content, "#modal-header", "#modal-footer");
 }
 
@@ -38,7 +38,7 @@ ModalCommon.prototype.dialog = function(option){
  * 確認ダイアログ作成
  *
  */
-ModalCommon.prototype.confirm = function(title, text, callback){
+ModalHelper.prototype.confirm = function(title, text, callback){
 
 	if(!this.callback) this.callback = callback;
 	var option = {
@@ -86,7 +86,7 @@ ModalCommon.prototype.confirm = function(title, text, callback){
  * アラートダイアログ作成
  *
  */
-ModalCommon.prototype.alert = function(title, text, callback){
+ModalHelper.prototype.alert = function(title, text, callback){
 
 	if(!this.callback) this.callback = callback;
 	var option = {
@@ -118,10 +118,28 @@ ModalCommon.prototype.alert = function(title, text, callback){
 }
 
 /**
+ * プログレスダイアログ作成
+ *
+ */
+ModalHelper.prototype.progress = function(callback){
+
+	if(!this.callback) this.callback = callback;
+	var option = {
+			title: "処理を実行中です...",
+			close: false,
+			width: "50%",
+			height: "100px"
+	};
+	this.create(option, this.alertModal, this.alertOverlay, this.alertContent, "#progress-header", null);
+
+	this.show(this.alertModal, this.alertOverlay);
+}
+
+/**
  * ダイアログの作成
  *
  */
-ModalCommon.prototype.create = function(option, modal, overlay, content, header, footer){
+ModalHelper.prototype.create = function(option, modal, overlay, content, header, footer){
 
 	if(header){
 		// ヘッダー作成
@@ -154,7 +172,7 @@ ModalCommon.prototype.create = function(option, modal, overlay, content, header,
  * ヘッダーの作成
  *
  */
-ModalCommon.prototype.createHeader = function(modal, header){
+ModalHelper.prototype.createHeader = function(modal, header){
 	// ヘッダーが存在しない場合のみ作成する
 	if(modal.find(header).length == 0) {
 		// id名の#を抜き出す
@@ -169,7 +187,7 @@ ModalCommon.prototype.createHeader = function(modal, header){
  * ヘッダー内(子要素)の作成
  *
  */
-ModalCommon.prototype.createHeaderChild = function(option, modal, overlay){
+ModalHelper.prototype.createHeaderChild = function(option, modal, overlay){
 
 	this.header.empty();
 	if(option){
@@ -202,7 +220,7 @@ ModalCommon.prototype.createHeaderChild = function(option, modal, overlay){
  * フッターの作成
  *
  */
-ModalCommon.prototype.createFooter = function(modal, footer){
+ModalHelper.prototype.createFooter = function(modal, footer){
 	// フッターが存在しない場合のみ作成する
 	if(modal.find(footer).length == 0){
 		var footerId = footer.substring(footer.indexOf("#") + 1, footer.length);
@@ -216,7 +234,7 @@ ModalCommon.prototype.createFooter = function(modal, footer){
  * フッター内(子要素)の作成
  *
  */
-ModalCommon.prototype.createFooterChild = function(option){
+ModalHelper.prototype.createFooterChild = function(option){
 	if(option.buttons){
 
 		this.footer.empty();
@@ -243,7 +261,7 @@ ModalCommon.prototype.createFooterChild = function(option){
  * モーダルダイアログの表示
  *
  */
-ModalCommon.prototype.show = function(modal, overlay){
+ModalHelper.prototype.show = function(modal, overlay){
 
 	if(!modal){
 		modal = this.modal;
@@ -276,7 +294,7 @@ ModalCommon.prototype.show = function(modal, overlay){
  * オーバーレイを削除し、モーダルダイアログを閉じる
  *
  */
-ModalCommon.prototype.close = function(modal, overlay, bool){
+ModalHelper.prototype.close = function(modal, overlay, bool){
 
 	if(!modal){
 		modal = this.modal;
@@ -302,7 +320,7 @@ ModalCommon.prototype.close = function(modal, overlay, bool){
  * モーダルダイアログのセンタリングを行う
  *
  */
-ModalCommon.prototype.centering = function(modal){
+ModalHelper.prototype.centering = function(modal){
 
 	// ウィンドウの幅を取得
 	var width = $(window).width();

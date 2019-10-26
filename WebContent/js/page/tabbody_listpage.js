@@ -34,16 +34,16 @@ function TabbodyListpage(){
 TabbodyListpage.prototype.init = function(){
 
 	var page = this;
-	var modalCommon = new ModalCommon();
-	modalCommon.dialog({
+	var modalHelper = new ModalHelper();
+	modalHelper.dialog({
 		width: "50%",
 		height: "300px",
 		buttons: [
 			{
 				text: "登録",
 				click: function(){
-					modalCommon.confirm("確認", "登録しますか?", function(){
-						page.insert(modalCommon);
+					modalHelper.confirm("確認", "登録しますか?", function(){
+						page.insert(modalHelper);
 					});
 				},
 				attr: {
@@ -59,7 +59,7 @@ TabbodyListpage.prototype.init = function(){
 			{
 				text: "閉じる",
 				click: function(){
-					modalCommon.close();
+					modalHelper.close();
 				},
 				attr: {
 					id: "close_button",
@@ -79,7 +79,7 @@ TabbodyListpage.prototype.init = function(){
 	 */
 	$("#new_button").on("click", $.proxy(function(){
 
-		modalCommon.show();
+		modalHelper.show();
 		this.loadDialog();
 	}, this));
 
@@ -218,7 +218,7 @@ TabbodyListpage.prototype.loadDialog = function(){
  * 登録処理
  *
  */
-TabbodyListpage.prototype.insert = function(modalCommon){
+TabbodyListpage.prototype.insert = function(modalHelper){
 
 	this.clear();
 	if(!this.checkData()){
@@ -237,12 +237,12 @@ TabbodyListpage.prototype.insert = function(modalCommon){
 		data: formData,
 		callback: function(error, data) {
 			if(!error){
-				modalCommon.alert("失敗", "登録に失敗しました。", null);
+				modalHelper.alert("失敗", "登録に失敗しました。", null);
 				return;
 			}
 
-			modalCommon.alert("完了", "登録が完了しました。", function(){
-				modalCommon.close();
+			modalHelper.alert("完了", "登録が完了しました。", function(){
+				modalHelper.close();
 				page.load();
 			});
 

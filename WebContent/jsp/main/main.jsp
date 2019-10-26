@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="lib.jsp"%>
+<%@include file="../lib.jsp"%>
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@LIST_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
 <!-- モーダルダイアログCSS -->
@@ -31,7 +31,9 @@
 		<%@include file="tab.jsp"%>
 	</div>
 	<!-- モーダルダイアログ読み込み -->
-	<%@include file="modal.jsp"%>
+	<%@include file="../common/modal.jsp"%>
+	<!-- プログレスダイアログ読み込み -->
+	<%@include file="../common/progress.jsp"%>
 	<!-- JSファイル読み込み -->
 	<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
 	<!-- フッター -->

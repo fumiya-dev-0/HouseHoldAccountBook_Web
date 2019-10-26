@@ -76,7 +76,8 @@ public interface Util {
 		LIST_CSS_PATH("list.css"),
 		TAB_CSS_PATH("tab.css"),
 		TABBODY_LISTPAGE_CSS_PATH("/page/tabbody_listpage.css"),
-		MODAL_CSS_PATH("/common/modal.css");
+		MODAL_CSS_PATH("/common/modal.css"),
+		PROGRESS_CSS_PATH("/common/progress.css");
 
 		private final String path;
 
