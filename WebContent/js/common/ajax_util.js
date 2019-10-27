@@ -61,5 +61,5 @@ AjaxUtil.addCallbackData = function(option) {
 }
 
 AjaxUtil.progress = function(option) {
-	if(option.progress !== false) ProgressUtil.progress();
+	if(option.progress === true) ProgressUtil.progress();
 }

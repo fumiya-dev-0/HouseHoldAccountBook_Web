@@ -3,14 +3,14 @@
 // 作成日: 2019/09/21
 //
 // ==================================================================
-function StringCommon(){}
+function StringUtil(){}
 
 /**
  * 数値をカンマ区切りにする
  *
  * @param num
  */
-StringCommon.separate = function(num){
+StringUtil.separate = function(num){
 
     // 文字列にする
     num = String(num);
@@ -31,6 +31,6 @@ StringCommon.separate = function(num){
  *
  * @param str 入力文字列
  */
-StringCommon.isEmpty = function(str){
+StringUtil.isEmpty = function(str){
 	return str.trim() == "" ? true : false;
 }

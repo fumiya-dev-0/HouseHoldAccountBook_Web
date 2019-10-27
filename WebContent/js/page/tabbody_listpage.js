@@ -17,7 +17,6 @@ TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してくだ�
 function TabbodyListpage(){
 
 	var page = TabbodyListpage.prototype;
-	DateCommon.newInstance();
 
 	// 初期処理
 	page.init();
@@ -110,8 +109,8 @@ TabbodyListpage.prototype.show = function(){
  */
 TabbodyListpage.prototype.loadCombo = function(){
 
-	var year = DateCommon.getYear();
-	var month = DateCommon.getMonth();
+	var year = DateUtil.getYear();
+	var month = DateUtil.getMonth();
 	var option = this.createOption(year, month);
 
 	$("#date_combo").html(option);
@@ -127,7 +126,7 @@ TabbodyListpage.prototype.createOption = function(year, month){
 	option = "<option value=''></option>"
 	for(var i = 0; i < 10; i++){
 		for(var j = 0; j < 12; j++){
-			option += "<option value='" + year + "/" + month + "'>" + year + "年" + DateCommon.toDateDigits(month, 2) + "月"  + "</option>";
+			option += "<option value='" + year + "/" + month + "'>" + year + "年" + DateUtil.toDateDigits(month, 2) + "月"  + "</option>";
 			if(month <= 1){
 				break;
 			}else{
@@ -163,7 +162,6 @@ TabbodyListpage.prototype.load = function(){
 	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list",
-		progress: false,
 		callback: function(error, data) {
 			if(!error){
 				return;
@@ -181,10 +179,10 @@ TabbodyListpage.prototype.load = function(){
 								data["expense"]["expenseCode"],
 								data["name"],
 								data["expense"]["displayOrder"],
-								DateCommon.convertToSlashStringFormat(data["date"]),
+								DateUtil.convertToSlashStringFormat(data["date"]),
 								data["expense"]["name"],
-								StringCommon.separate(data["income"]),
-								StringCommon.separate(data["spending"])
+								StringUtil.separate(data["income"]),
+								StringUtil.separate(data["spending"])
 						)
 				);
 			}, data);
@@ -202,7 +200,6 @@ TabbodyListpage.prototype.loadDialog = function(){
 	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list_combo",
-		progress: false,
 		callback: function(error, data) {
 			if(!error){
 				return;
@@ -236,6 +233,7 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 	AjaxUtil.addCallbackData({
 		type: "POST",
 		url: "insert",
+		progress: true,
 		data: formData,
 		callback: function(error, data) {
 			if(!error){
@@ -260,7 +258,7 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 TabbodyListpage.prototype.inputData = function(){
 	return {
 		name: $("#name").val(),
-		date: DateCommon.convertToHyphenDeleteStringFormat($("#date").val()),
+		date: DateUtil.convertToHyphenDeleteStringFormat($("#date").val()),
 		expense: {
 			expenseCode: $("#expense-name").val()
 		},
@@ -276,31 +274,31 @@ TabbodyListpage.prototype.inputData = function(){
 TabbodyListpage.prototype.checkData = function(){
 
 	var checkFlg = true;
-	if(StringCommon.isEmpty($("#name").val())){
+	if(StringUtil.isEmpty($("#name").val())){
 		$("#name-error").text(this.NAME_ERROR_MESSAGE);
 		$("#name").addClass("error");
 		checkFlg = false;
 	}
 
-	if(StringCommon.isEmpty($("#date").val())){
+	if(StringUtil.isEmpty($("#date").val())){
 		$("#date-error").text(this.DATE_ERROR_MESSAGE);
 		$("#date").addClass("error");
 		checkFlg = false;
 	}
 
-	if(StringCommon.isEmpty($("#expense-name").val())){
+	if(StringUtil.isEmpty($("#expense-name").val())){
 		$("#expense-name-error").text(this.EXPENSE_ERROR_MESSAGE);
 		$("#expense-name").addClass("error");
 		checkFlg = false;
 	}
 
-	if(StringCommon.isEmpty($("#income").val())){
+	if(StringUtil.isEmpty($("#income").val())){
 		$("#income-error").text(this.INCOME_ERROR_MESSAGE);
 		$("#income").addClass("error");
 		checkFlg = false;
 	}
 
-	if(StringCommon.isEmpty($("#spending").val())){
+	if(StringUtil.isEmpty($("#spending").val())){
 		$("#spending-error").text(this.SPENDING_ERROR_MESSAGE);
 		$("#spending").addClass("error");
 		checkFlg = false;
