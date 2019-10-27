@@ -8,9 +8,46 @@ ProgressUtil.WIDTH_MAX = 100;
 ProgressUtil.WIDTH_MIN = 0;
 ProgressUtil.INTERVAL = 1000;
 
-var width = 0;
 
 function ProgressUtil(){}
+
+/**
+ * プログレスダイアログ実行
+ *
+ */
+ProgressUtil.progress = function() {
+
+	this.progressModal = $("#progress-modal");
+	this.progressOverlay = $("#progress-overlay");
+	this.progressContent = $("#progress-content");
+	this.setProgressBar($("#progress-bar"));
+
+	this.width = 50;
+	this.interval = null;
+	this.update();
+
+	this.modalHelper = new ModalHelper();
+	var option = {
+			title: "処理を実行しています...",
+			close: false,
+			width: "15%",
+	};
+	this.modalHelper.create(option, this.progressModal, this.progressOverlay, this.progressContent, "#progress-header", null);
+	this.modalHelper.show(this.progressModal, this.progressOverlay);
+
+	this.autoProcessCntUp();
+}
+
+/**
+ * プログレスダイアログを閉じる
+ *
+ */
+ProgressUtil.close = function() {
+
+	this.clearAutoProcess();
+
+	if(this.modalHelper) this.modalHelper.close(this.progressModal, this.progressOverlay);
+}
 
 /**
  * プログレスバーの設定
@@ -25,7 +62,7 @@ ProgressUtil.setProgressBar = function(progressBar) {
  *
  */
 ProgressUtil.update = function() {
-	this.progressBar.css("width", width + "%");
+	if(this.width) this.progressBar.css("width", this.width + "%");
 }
 
 /**
@@ -33,7 +70,7 @@ ProgressUtil.update = function() {
  *
  */
 ProgressUtil.cntUp = function() {
-	if(width < this.WIDTH_MAX) width += this.WIDTH_POINT;
+	if(this.width < this.WIDTH_MAX - 5) this.width += this.WIDTH_POINT;
 	this.update();
 }
 
@@ -42,7 +79,7 @@ ProgressUtil.cntUp = function() {
  *
  */
 ProgressUtil.cntDown = function() {
-	if(width > this.WIDTH_MIN) width -= this.WIDTH_POINT;
+	if(this.width > this.WIDTH_MIN) this.width -= this.WIDTH_POINT;
 	this.update();
 }
 
@@ -51,7 +88,7 @@ ProgressUtil.cntDown = function() {
  *
  */
 ProgressUtil.autoProcessCntUp = function() {
-	setInterval((this.cntUp).bind(this), this.INTERVAL);
+	this.interval = setInterval((this.cntUp).bind(this), this.INTERVAL);
 }
 
 /**
@@ -59,7 +96,15 @@ ProgressUtil.autoProcessCntUp = function() {
  *
  */
 ProgressUtil.autoProcessCntDown = function() {
-	setInterval((this.cntDown).bind(this), this.INTERVAL);
+	this.interval = setInterval((this.cntDown).bind(this), this.INTERVAL);
+}
+
+/**
+ * 自動実行取り消し
+ *
+ */
+ProgressUtil.clearAutoProcess = function() {
+	if(this.interval) clearInterval(this.interval);
 }
 
 /**
@@ -67,6 +112,15 @@ ProgressUtil.autoProcessCntDown = function() {
  *
  */
 ProgressUtil.isSetWidthMax = function() {
-	if(width < this.WIDTH_MAX) width = this.WIDTH_MAX;
+	if(this.width < this.WIDTH_MAX) this.width = this.WIDTH_MAX;
+	this.update();
+}
+
+/**
+ * プログレスバー更新(最小値)
+ *
+ */
+ProgressUtil.isSetWidthMin = function() {
+	if(this.width > this.WIDTH_MIN) this.width = this.WIDTH_MIN;
 	this.update();
 }

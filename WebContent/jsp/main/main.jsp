@@ -11,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
 <!-- モーダルダイアログCSS -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MODAL_CSS_PATH.getPath()" />">
+<!-- プログレスダイアログCSS -->
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PROGRESS_CSS_PATH.getPath()" />">
 <!-- タブ画面のCSS・JS -->
 <!-- 一覧画面 -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TABBODY_LISTPAGE_CSS_PATH.getPath()" />">

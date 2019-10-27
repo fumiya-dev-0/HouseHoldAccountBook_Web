@@ -24,14 +24,96 @@ function ModalHelper(){
 	this.callback = null;
 }
 
-ModalHelper.prototype = new JsonElement();
-
 /**
  * ダイアログ初期設定
  *
  */
 ModalHelper.prototype.dialog = function(option){
 	this.create(option, this.modal, this.overlay, this.content, "#modal-header", "#modal-footer");
+}
+
+/**
+ * モーダルダイアログの表示
+ *
+ */
+ModalHelper.prototype.show = function(modal, overlay){
+
+	if(!modal) modal = this.modal;
+
+	if(!overlay) overlay = this.overlay;
+
+	// オーバーレイが存在する場合は、新しくモーダルウィンドウを起動しない
+	if(overlay[0]) return;
+
+	// オーバーレイの追加
+	this.addOverlay(overlay);
+
+	// モーダルダイアログのセンタリング
+	this.centering(modal);
+
+	// オーバーレイ、モーダルダイアログをフェードインさせる
+	$(modal.selector + ", " + overlay.selector).fadeIn("slow");
+}
+
+/**
+ * オーバーレイを削除し、モーダルダイアログを閉じる
+ *
+ */
+ModalHelper.prototype.close = function(modal, overlay, bool){
+
+	if(!modal){
+		modal = this.modal;
+	}
+
+	if(!overlay){
+		overlay = this.overlay;
+	}
+
+	// モーダルダイアログとオーバーレイをフェードアウト
+	$(modal.selector + ", " + overlay.selector).fadeOut("slow", function(){
+		$(overlay.selector).remove();
+	});
+
+	if(this.callback && bool){
+		this.callback();
+	}
+
+	if(this.callback) this.callback = null;
+}
+
+/**
+ * アラートダイアログ作成
+ *
+ */
+ModalHelper.prototype.alert = function(title, text, callback){
+
+	if(!this.callback) this.callback = callback;
+	var option = {
+			title: title,
+			text: text,
+			close: false,
+			width: "10%",
+			height: "100px",
+			buttons: [
+				{
+					text: "ＯＫ",
+					click: $.proxy(function(){
+						this.close(this.alertModal, this.alertOverlay, true);
+					}, this),
+					attr: {
+						class: "button-border button-info"
+					},
+					css: {
+						width: "60px",
+						height: "30px",
+						margin: "0 5px 0 0"
+					}
+				}
+			]
+	};
+	this.create(option, this.alertModal, this.alertOverlay, this.alertContent, "#alert-header", "#alert-footer");
+
+	this.show(this.alertModal, this.alertOverlay);
 }
 
 /**
@@ -83,59 +165,6 @@ ModalHelper.prototype.confirm = function(title, text, callback){
 }
 
 /**
- * アラートダイアログ作成
- *
- */
-ModalHelper.prototype.alert = function(title, text, callback){
-
-	if(!this.callback) this.callback = callback;
-	var option = {
-			title: title,
-			text: text,
-			close: false,
-			width: "10%",
-			height: "100px",
-			buttons: [
-				{
-					text: "ＯＫ",
-					click: $.proxy(function(){
-						this.close(this.alertModal, this.alertOverlay, true);
-					}, this),
-					attr: {
-						class: "button-border button-info"
-					},
-					css: {
-						width: "60px",
-						height: "30px",
-						margin: "0 5px 0 0"
-					}
-				}
-			]
-	};
-	this.create(option, this.alertModal, this.alertOverlay, this.alertContent, "#alert-header", "#alert-footer");
-
-	this.show(this.alertModal, this.alertOverlay);
-}
-
-/**
- * プログレスダイアログ作成
- *
- */
-ModalHelper.prototype.progress = function(callback){
-
-	if(!this.callback) this.callback = callback;
-	var option = {
-			title: "処理を実行中です...",
-			close: false,
-			width: "50%",
-			height: "100px"
-	};
-	this.create(option, this.alertModal, this.alertOverlay, this.alertContent, "#progress-header", null);
-
-	this.show(this.alertModal, this.alertOverlay);
-}
-
-/**
  * ダイアログの作成
  *
  */
@@ -169,10 +198,26 @@ ModalHelper.prototype.create = function(option, modal, overlay, content, header,
 }
 
 /**
+ * オーバーレイの追加
+ *
+ */
+ModalHelper.prototype.addOverlay = function(overlay){
+
+	var selector = overlay.selector;
+	var overlayId = selector.substring(selector.indexOf("#") + 1, selector.length);
+	if(!this.callback){
+		this.body.append("<div id='" + overlayId + "' class='overlay overlay-translucent'></div>");
+	}else{
+		this.modal.append("<div id='" + overlayId + "' class='overlay'></div>");
+	}
+}
+
+/**
  * ヘッダーの作成
  *
  */
 ModalHelper.prototype.createHeader = function(modal, header){
+
 	// ヘッダーが存在しない場合のみ作成する
 	if(modal.find(header).length == 0) {
 		// id名の#を抜き出す
@@ -244,76 +289,17 @@ ModalHelper.prototype.createFooterChild = function(option){
 			.attr("type", "button")
 			.on("click", button.click);
 
-			if(this.hasAttr(button)){
+			if(button.attr){
 				input.attr(button.attr);
 			}
 
-			if(this.hasCss(button)){
+			if(button.css){
 				input.css(button.css);
 			}
 
 			this.footer.append(input);
 		}, this)
 	}
-}
-
-/**
- * モーダルダイアログの表示
- *
- */
-ModalHelper.prototype.show = function(modal, overlay){
-
-	if(!modal){
-		modal = this.modal;
-	}
-
-	if(!overlay){
-		overlay = this.overlay;
-	}
-
-	// オーバーレイが存在する場合は、新しくモーダルウィンドウを起動しない
-	if(overlay[0]) return;
-
-	// オーバーレイの追加
-	var selector = overlay.selector;
-	var overlayId = selector.substring(selector.indexOf("#") + 1, selector.length);
-	if(!this.callback){
-		this.body.append("<div id='" + overlayId + "'></div>");
-	}else{
-		this.modal.append("<div id='" + overlayId + "'></div>");
-	}
-
-	// モーダルダイアログのセンタリング
-	this.centering(modal);
-
-	// オーバーレイ、モーダルダイアログをフェードインさせる
-	$(modal.selector + ", " + overlay.selector).fadeIn("slow");
-}
-
-/**
- * オーバーレイを削除し、モーダルダイアログを閉じる
- *
- */
-ModalHelper.prototype.close = function(modal, overlay, bool){
-
-	if(!modal){
-		modal = this.modal;
-	}
-
-	if(!overlay){
-		overlay = this.overlay;
-	}
-
-	// モーダルダイアログとオーバーレイをフェードアウト
-	$(modal.selector + ", " + overlay.selector).fadeOut("slow", function(){
-		$(overlay.selector).remove();
-	});
-
-	if(this.callback && bool){
-		this.callback();
-	}
-
-	if(this.callback) this.callback = null;
 }
 
 /**

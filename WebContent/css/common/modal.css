@@ -10,7 +10,7 @@
 	display: none;
 }
 
-#modal-overlay, #confirm-overlay, #alert-overlay {
+.overlay {
 	z-index: 1;
 	display: none; /* 要素を非表示(フェードインさせるために記述) */
 	position: fixed; /* 要素の位置を固定 */
@@ -20,7 +20,7 @@
 	height: 120%; /* 要素の高さ(スマホ対策のため、120%) */
 }
 
-#modal-overlay {
+.overlay-translucent {
 	background-color: rgba(0,0,0,0.75); /* 背景色(半透明) */
 }
 

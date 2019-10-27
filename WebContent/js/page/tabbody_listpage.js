@@ -160,9 +160,10 @@ TabbodyListpage.prototype.search = function(){
  */
 TabbodyListpage.prototype.load = function(){
 
-	AjaxCommon.getCallbackData({
+	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list",
+		progress: false,
 		callback: function(error, data) {
 			if(!error){
 				return;
@@ -198,9 +199,10 @@ TabbodyListpage.prototype.load = function(){
 TabbodyListpage.prototype.loadDialog = function(){
 
 	var page = this;
-	AjaxCommon.getCallbackData({
+	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list_combo",
+		progress: false,
 		callback: function(error, data) {
 			if(!error){
 				return;
@@ -231,7 +233,7 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 	formData.append("data", JSON.stringify(json));
 
 	var page = this;
-	AjaxCommon.addCallbackData({
+	AjaxUtil.addCallbackData({
 		type: "POST",
 		url: "insert",
 		data: formData,

@@ -18,7 +18,7 @@
 <script src="js/define.js"></script>
 <script src="js/param.js"></script>
 <script src="js/common/json_element.js"></script>
-<script src="js/common/ajax_common.js"></script>
+<script src="js/common/ajax_util.js"></script>
 <script src="js/common/date_common.js"></script>
 <script src="js/common/string_common.js"></script>
 <script src="js/common/table_common.js"></script>

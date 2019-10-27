@@ -4,8 +4,8 @@ public interface Util {
 
 	/**
 	 * CSSファイルパスの列挙型クラス
-	 * @author
 	 *
+	 * @author
 	 */
 	public enum Css {
 
