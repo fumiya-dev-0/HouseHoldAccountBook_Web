@@ -162,11 +162,7 @@ TabbodyListpage.prototype.load = function(){
 	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list",
-		callback: function(error, data) {
-			if(!error){
-				return;
-			}
-
+		callback: function(data) {
 			var tableCommon = new TableCommon("tableArea");
 			tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
 			// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
@@ -200,11 +196,7 @@ TabbodyListpage.prototype.loadDialog = function(){
 	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list_combo",
-		callback: function(error, data) {
-			if(!error){
-				return;
-			}
-
+		callback: function(data) {
 			var tableCommon = new TableCommon("modal-content");
 			tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
 			tableCommon.setCombobox(page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
@@ -235,11 +227,7 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 		url: "insert",
 		progress: true,
 		data: formData,
-		callback: function(error, data) {
-			if(!error){
-				modalHelper.alert("失敗", "登録に失敗しました。", null);
-				return;
-			}
+		callback: function(data){
 
 			modalHelper.alert("完了", "登録が完了しました。", function(){
 				modalHelper.close();
