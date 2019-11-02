@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 
 import householdaccountbook.dto.User;
 import householdaccountbook.model.UserModel;
+import householdaccountbook.util.StringUtil;
 
 public class LoginAction extends BaseAction{
 
@@ -60,7 +61,7 @@ public class LoginAction extends BaseAction{
 		user.setPassword(password);
 		loginModel = new UserModel(this, user);
 
-		if(!isValidate()) {
+		if(!isCheck()) {
 			return ACTION_LOGIN_ERROR;
 		}
 
@@ -124,63 +125,29 @@ public class LoginAction extends BaseAction{
 	 *
 	 * @return
 	 */
-	private boolean isValidate() {
+	private boolean isCheck() {
 
-		if(user.isValidateUserId(userId)) {
+		if(!StringUtil.isEmpty(userId)) {
 			setErrorMessage(EMPTY_USERID_ERROR_MESSAGE);
 			return false;
 		}
-		if(user.isValidatePassword(password)) {
+
+		if(!StringUtil.isEmpty(password)) {
 			setErrorMessage(EMPTY_PASSWORD_ERROR_MESSAGE);
 			return false;
 		}
-		if(!isAlphaOrDigit(userId)) {
+
+		if(!StringUtil.isAlphaOrDigit(userId)) {
 			setErrorMessage(ALPHA_USERID_ERROR_MESSAGE);
 			return false;
 		}
 
-		if(!isAlphaOrDigit(password)) {
+		if(!StringUtil.isAlphaOrDigit(password)) {
 			setErrorMessage(ALPHA_PASSWORD_ERROR_MESSAGE);
 			return false;
 		}
 
 		return true;
-	}
-
-	/**
-	 * 文字列が半角英数字から構成されているかどうかチェック
-	 *
-	 * @param s
-	 * @return
-	 */
-	private boolean isAlphaOrDigit(String s) {
-		for(int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-			if(!isAlphaOrDigit(c)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * 文字が半角英数字から構成されているかどうかチェック
-	 *
-	 * @param c
-	 * @return
-	 */
-	private boolean isAlphaOrDigit(char c) {
-		if('A' <= c && c <= 'Z') {
-			return true;
-		}
-		if('a' <= c && c <= 'z') {
-			return true;
-		}
-		if('0' <= c && c <= '9') {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

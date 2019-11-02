@@ -40,15 +40,15 @@ var TABBODY_LISTPAGE_PARAM_TABLE = {
 				}
 			},
 			{
-				text: "日付",
-				css: {
-					width: "150px"
-				}
-			},
-			{
 				text: "費目",
 				css: {
 					width: "100px"
+				}
+			},
+			{
+				text: "日付",
+				css: {
+					width: "150px"
 				}
 			},
 			{

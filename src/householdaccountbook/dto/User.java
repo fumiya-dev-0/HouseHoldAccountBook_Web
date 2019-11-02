@@ -102,26 +102,6 @@ public class User {
 	}
 
 	/**
-	 * ユーザID空文字チェック
-	 *
-	 * @param userId
-	 * @return
-	 */
-	public boolean isValidateUserId(String userId) {
-		return userId.trim().isEmpty();
-	}
-
-	/**
-	 * パスワード空文字チェック
-	 *
-	 * @param password
-	 * @return
-	 */
-	public boolean isValidatePassword(String password) {
-		return password.trim().isEmpty();
-	}
-
-	/**
 	 * ハッシュの取得(パスワード)
 	 *
 	 * @return

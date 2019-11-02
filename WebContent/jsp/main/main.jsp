@@ -7,12 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="../lib.jsp"%>
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@LIST_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MAIN_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
 <!-- モーダルダイアログCSS -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MODAL_CSS_PATH.getPath()" />">
 <!-- プログレスダイアログCSS -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PROGRESS_CSS_PATH.getPath()" />">
+<!-- ページャCSS -->
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PAGER_CSS_PATH.getPath()" />">
 <!-- タブ画面のCSS・JS -->
 <!-- 一覧画面 -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TABBODY_LISTPAGE_CSS_PATH.getPath()" />">

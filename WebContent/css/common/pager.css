@@ -1,0 +1,30 @@
+.pager, .pager-none {
+	line-height: 40px;
+	padding: 0 15px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	border-radius: 8px;
+}
+
+.pager {
+	text-decoration: none;
+	background-color: #225588;
+	color: white;
+}
+
+.pager-none {
+	background-color: #ccf;
+}
+
+.pager-page {
+	margin: 0 3px;
+}
+
+.pager-left {
+	margin: 0 3px 0 6px;
+}
+
+.pager-right {
+	margin: 0 6px 0 3px;
+}

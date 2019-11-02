@@ -14,15 +14,20 @@ TabbodyListpage.prototype.EXPENSE_ERROR_MESSAGE = "費目を選択してくだ�
 TabbodyListpage.prototype.INCOME_ERROR_MESSAGE = "所得を入力してください。";
 TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してください。";
 
+// ページャ用
+TabbodyListpage.prototype.PAGER_MAX = 15;
+TabbodyListpage.prototype.DEFAULT_NOW_PAGE = 1;
+
 function TabbodyListpage(){
 
-	var page = TabbodyListpage.prototype;
+	var self = TabbodyListpage.prototype;
+	self.accountBookData = null;
 
 	// 初期処理
-	page.init();
+	self.init();
 
 	// 画面表示
-	page.show();
+	self.show();
 
 }
 
@@ -126,7 +131,7 @@ TabbodyListpage.prototype.createOption = function(year, month){
 	option = "<option value=''></option>"
 	for(var i = 0; i < 10; i++){
 		for(var j = 0; j < 12; j++){
-			option += "<option value='" + year + "/" + month + "'>" + year + "年" + DateUtil.toDateDigits(month, 2) + "月"  + "</option>";
+			option += "<option value='" + year + "/" + DateUtil.toDateDigits(month, 2) + "'>" + year + "年" + DateUtil.toDateDigits(month, 2) + "月"  + "</option>";
 			if(month <= 1){
 				break;
 			}else{
@@ -159,31 +164,30 @@ TabbodyListpage.prototype.search = function(){
  */
 TabbodyListpage.prototype.load = function(){
 
+	var self = this;
 	AjaxUtil.getCallbackData({
 		type: "GET",
 		url: "list",
 		callback: function(data) {
-			var tableCommon = new TableCommon("tableArea");
-			tableCommon.table(TABBODY_LISTPAGE_PARAM_TABLE);
-			// [ 家計簿コード, 費用コード, 名前, 表示順, 日付, 費目, 取得, 出費 ]
-			data.forEach(function(data){
-
-				// 行の追加
-				tableCommon.addRows(
-						new Array(
-								data["HouseHoldAccountBookCode"],
-								data["expense"]["expenseCode"],
-								data["name"],
-								data["expense"]["displayOrder"],
-								DateUtil.convertToSlashStringFormat(data["date"]),
-								data["expense"]["name"],
-								StringUtil.separate(data["income"]),
-								StringUtil.separate(data["spending"])
-						)
-				);
-			}, data);
+			self.accountBookData = data;
+			// テーブルとページャの作成
+			self.createTableWithPager(this.DEFAULT_NOW_PAGE);
 		}
 	});
+}
+
+/**
+ * テーブルとページャの作成
+ *
+ */
+TabbodyListpage.prototype.createTableWithPager = function(nowPage){
+	PagerUtil.pager(this.accountBookData, this.PAGER_MAX, nowPage);
+	TableUtil.table($("#tableArea"), TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+	$("#pagerArea").html(PagerUtil.getRefAll());
+	PagerUtil.onClick($.proxy(function(nowPage){
+		// テーブルとページャの作成
+		this.createTableWithPager(nowPage);
+	}, this));
 }
 
 /**
@@ -197,9 +201,8 @@ TabbodyListpage.prototype.loadDialog = function(){
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
-			var tableCommon = new TableCommon("modal-content");
-			tableCommon.form(TABBODY_LISTPAGE_PARAM_FORM);
-			tableCommon.setCombobox(page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
+			TableUtil.form($("#modal-content"), TABBODY_LISTPAGE_PARAM_FORM);
+			TableUtil.setCombobox($("#modal-content"), page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
 		}
 	});
 

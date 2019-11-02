@@ -10,11 +10,12 @@ public interface Util {
 	public enum Css {
 
 		LOGIN_CSS_PATH("login.css"),
-		LIST_CSS_PATH("list.css"),
+		MAIN_CSS_PATH("main.css"),
 		TAB_CSS_PATH("tab.css"),
 		TABBODY_LISTPAGE_CSS_PATH("/page/tabbody_listpage.css"),
 		MODAL_CSS_PATH("/common/modal.css"),
-		PROGRESS_CSS_PATH("/common/progress.css");
+		PROGRESS_CSS_PATH("/common/progress.css"),
+		PAGER_CSS_PATH("/common/pager.css");
 
 		private final String path;
 

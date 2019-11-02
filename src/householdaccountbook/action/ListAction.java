@@ -12,6 +12,8 @@ import householdaccountbook.dto.User;
 import householdaccountbook.model.ExpenseModel;
 import householdaccountbook.model.HouseHoldAccountBookModel;
 import householdaccountbook.model.ListModel;
+import householdaccountbook.util.DateUtil;
+import householdaccountbook.util.StringUtil;
 
 //==================================================================
 // 一覧画面用アクションクラス
@@ -67,8 +69,8 @@ public class ListAction extends BaseAction {
 		Gson gson = new Gson();
 		ListModel model = new ListModel();
 		try {
-			List<HouseHoldAccountBook> houseHoldAccountBooks = model.load(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)));
-			json = gson.toJson(houseHoldAccountBooks);
+			List<Object[]> list = model.load(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)));
+			json = gson.toJson(convertList(list));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			setErrorMessage(SQL_ERROR);
@@ -115,8 +117,24 @@ public class ListAction extends BaseAction {
 
 		List<String> list = new ArrayList<String>();
 		json = gson.toJson(list);
+
 		return ACTION_SUCCESS;
 	}
 
+	/**
+	 * データのフォーマット変換
+	 *
+	 * @param list 家計簿データリスト
+	 * @return フォーマット変換後の家計簿データリスト
+	 */
+	private List<Object[]> convertList(List<Object[]> list){
+
+		for(Object[] obj : list) {
+			obj[5] = DateUtil.convertToSlashDateString((String) obj[5]);// 日付
+			obj[6] = StringUtil.separate((Integer) obj[6]); // 所得
+			obj[7] = StringUtil.separate((Integer) obj[7]); // 出費
+		}
+		return list;
+	}
 
 }

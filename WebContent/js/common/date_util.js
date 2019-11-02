@@ -18,7 +18,7 @@ DateUtil.getYear = function() {
  *
  */
 DateUtil.getMonth = function() {
-	return this.toDateDigits((new Date()).getMonth() + 1, 2);
+	return (new Date()).getMonth() + 1;
 }
 
 /**
@@ -26,7 +26,7 @@ DateUtil.getMonth = function() {
  *
  */
 DateUtil.getDay = function() {
-	return this.toDateDigits((new Date()).getDate(), 2);
+	return (new Date()).getDate();
 }
 
 /**
