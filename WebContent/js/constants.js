@@ -1,10 +1,18 @@
 /*************************************************
- * パラメーター用共通クラス
- * 作成日: 2019/10/13
+ * 定数用クラス
+ * 作成日: 2019/11/03
  *
  *************************************************/
+/** タブメニューのインスタンス生成 **/
+Constants.TAB_INSTANCE_FUNC = {
+		["LIST_PAGE"]: () => {
+			new TabbodyListpage();
+		}
+}
+
 /** 一覧画面 **/
-var TABBODY_LISTPAGE_PARAM_TABLE = {
+/** 初期表示テーブル(ヘッダー) **/
+Constants.TABBODY_LISTPAGE_PARAM_TABLE = {
 		attr: {
 			id: "table"
 		},
@@ -63,7 +71,8 @@ var TABBODY_LISTPAGE_PARAM_TABLE = {
 			]
 };
 
-var TABBODY_LISTPAGE_PARAM_FORM = {
+/** ダイアログのフォーム **/
+Constants.TABBODY_LISTPAGE_PARAM_FORM = {
 		rows: [
 			{
 				textArea: {
@@ -231,3 +240,9 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 			}
 			]
 };
+
+/**
+ * コンストラクタ
+ *
+ */
+function Constants(){}

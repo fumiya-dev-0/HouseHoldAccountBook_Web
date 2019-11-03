@@ -210,7 +210,7 @@ TabbodyListpage.prototype.load = function(formData){
  */
 TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
-	TableUtil.table($("#tableArea"), TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+	TableUtil.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
 	$("#pagerArea").html(PagerUtil.getRefAll());
 	PagerUtil.onClick($.proxy(function(nowPage){
 		// テーブルとページャの作成
@@ -229,7 +229,7 @@ TabbodyListpage.prototype.loadDialog = function(){
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
-			TableUtil.form($("#modal-content"), TABBODY_LISTPAGE_PARAM_FORM);
+			TableUtil.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
 			TableUtil.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
 		}
 	});

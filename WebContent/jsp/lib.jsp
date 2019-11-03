@@ -15,8 +15,7 @@
 <link rel="stylesheet" type="text/css" href="css/common/default.css">
 <link rel="stylesheet" type="text/css" href="css/common/table.css">
 <!-- JSファイル読み込み -->
-<script src="js/define.js"></script>
-<script src="js/param.js"></script>
+<script src="js/constants.js"></script>
 <script src="js/common/ajax_util.js"></script>
 <script src="js/common/date_util.js"></script>
 <script src="js/common/string_util.js"></script>
