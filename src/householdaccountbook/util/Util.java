@@ -16,7 +16,7 @@ public interface Util {
 		LOGIN_CSS_PATH("login.css"),
 		MAIN_CSS_PATH("main.css"),
 		TAB_CSS_PATH("tab.css"),
-		TABBODY_LISTPAGE_CSS_PATH("/page/tabbody_listpage.css"),
+		TABBODY_LISTPAGE_CSS_PATH("/listpage/tabbody_listpage.css"),
 		MODAL_CSS_PATH("/common/modal.css"),
 		PROGRESS_CSS_PATH("/common/progress.css"),
 		PAGER_CSS_PATH("/common/pager.css");
@@ -83,7 +83,7 @@ public interface Util {
 	public enum JavaScript {
 
 		TAB_JS_PATH("tab.js"),
-		TABBODY_LISTPAGE_JS_PATH("/page/tabbody_listpage.js");
+		TABBODY_LISTPAGE_JS_PATH("/listpage/tabbody_listpage.js");
 
 		// JSファイルパス
 		private final String path;
