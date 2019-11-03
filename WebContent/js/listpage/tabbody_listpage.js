@@ -115,7 +115,7 @@ TabbodyListpage.prototype.modal = function(){
 					height: "30px"
 				}
 			}
-		]
+			]
 	});
 	return modalHelper;
 }
@@ -153,18 +153,18 @@ TabbodyListpage.prototype.createOption = function(year, month){
 
 	var option = null;
 	option = "<option value=''></option>"
-	for(var i = 0; i < 10; i++){
-		for(var j = 0; j < 12; j++){
-			option += "<option value='" + year + "/" + DateUtil.toDateDigits(month, 2) + "'>" + year + "年" + DateUtil.toDateDigits(month, 2) + "月"  + "</option>";
-			if(month <= 1){
-				break;
-			}else{
-				month--;
+		for(var i = 0; i < 10; i++){
+			for(var j = 0; j < 12; j++){
+				option += "<option value='" + year + "/" + DateUtil.toDateDigits(month, 2) + "'>" + year + "年" + DateUtil.toDateDigits(month, 2) + "月"  + "</option>";
+				if(month <= 1){
+					break;
+				}else{
+					month--;
+				}
 			}
+			month = 12;
+			year--;
 		}
-		month = 12;
-		year--;
-	}
 	return option;
 }
 
@@ -195,13 +195,13 @@ TabbodyListpage.prototype.load = function(formData){
 	var self = this;
 	AjaxUtil.process({
 		type: formData ? "POST" : "GET",
-		url: "list",
-		data: formData,
-		callback: function(data) {
-			self.accountBookData = data;
-			// テーブルとページャの作成
-			self.createTableWithPager(this.DEFAULT_NOW_PAGE, self.accountBookData);
-		}
+				url: "list",
+				data: formData,
+				callback: function(data) {
+					self.accountBookData = data;
+					// テーブルとページャの作成
+					self.createTableWithPager(this.DEFAULT_NOW_PAGE, self.accountBookData);
+				}
 	});
 }
 
@@ -214,8 +214,8 @@ TabbodyListpage.prototype.load = function(formData){
 TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
 
-	this.tableUtil = TableUtil.getInstance();
-	this.tableUtil.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+	this.tableHelper = TableHelper.getInstance();
+	this.tableHelper.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
 
 	$("#pagerArea").html(PagerUtil.getRefAll());
 	PagerUtil.onClick($.proxy(function(nowPage){
@@ -235,9 +235,9 @@ TabbodyListpage.prototype.loadDialog = function(){
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
-			var tableUtil = TableUtil.getInstance();
-			tableUtil.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
-			tableUtil.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
+			var tableHelper = TableHelper.getInstance();
+			tableHelper.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
+			tableHelper.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
 		}
 	});
 }

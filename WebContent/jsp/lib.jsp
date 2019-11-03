@@ -19,7 +19,7 @@
 <script src="js/common/ajax_util.js"></script>
 <script src="js/common/date_util.js"></script>
 <script src="js/common/string_util.js"></script>
-<script src="js/common/table_util.js"></script>
+<script src="js/common/table_helper.js"></script>
 <script src="js/common/modal_helper.js"></script>
 <script src="js/common/progress_util.js"></script>
 <script src="js/common/pager_util.js"></script>

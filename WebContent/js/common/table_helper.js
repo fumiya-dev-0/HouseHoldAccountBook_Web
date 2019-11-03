@@ -1,20 +1,20 @@
 /*************************************************
- * テーブル生成用共通クラス
+ * テーブル生成用ヘルパークラス
  * 作成日: 2019/09/21
  *
  *************************************************/
-function TableUtil(){}
+function TableHelper(){}
 
 /**
  * インスタンスの取得
  *
  * @return インスタンス
  */
-TableUtil.getInstance = function(){
-	if(!this.tableUtil){
-		this.tableUtil = new TableUtil();
+TableHelper.getInstance = function(){
+	if(!this.tableHelper){
+		this.tableHelper = new TableHelper();
 	}
-	return this.tableUtil;
+	return this.tableHelper;
 }
 
 /**
@@ -24,7 +24,7 @@ TableUtil.getInstance = function(){
  * @param option ヘッダー情報
  * @param data 表示データ
  */
-TableUtil.prototype.table = function(area, option, data){
+TableHelper.prototype.table = function(area, option, data){
 
 	// テーブルの生成
 	area.html("<table></table>");
@@ -50,7 +50,7 @@ TableUtil.prototype.table = function(area, option, data){
  * @param table テーブル
  * @param option ヘッダー情報
  */
-TableUtil.prototype.header = function(table, option){
+TableHelper.prototype.header = function(table, option){
 	// ヘッダー作成
 	table.html("<thead><tr></tr></thead>");
 	var self = this;
@@ -67,7 +67,7 @@ TableUtil.prototype.header = function(table, option){
  * @param idx 行番号
  * @param option カラムのプロパティ
  */
-TableUtil.prototype.createHeaderCol = function(table, idx, option){
+TableHelper.prototype.createHeaderCol = function(table, idx, option){
 	// ヘッダー列作成
 	this.addHeaderCol(table.find("tr"));
 	// ヘッダー列プロパティ作成
@@ -80,7 +80,7 @@ TableUtil.prototype.createHeaderCol = function(table, idx, option){
  * @param table テーブル
  * @param data 表示データ
  */
-TableUtil.prototype.addRows = function(table, data){
+TableHelper.prototype.addRows = function(table, data){
 
 	// ボディ要素作成
 	table.append("<tbody></tbody>");
@@ -109,7 +109,7 @@ TableUtil.prototype.addRows = function(table, data){
  * @param hCol ヘッダーカラム
  * @param col カラム
  */
-TableUtil.prototype.isSetTargetHidden = function(hCol, col){
+TableHelper.prototype.isSetTargetHidden = function(hCol, col){
 	if(hCol.css("display") == "none") col.css("display", "none");
 }
 
@@ -119,7 +119,7 @@ TableUtil.prototype.isSetTargetHidden = function(hCol, col){
  * @param data 表示データ
  * @param rFlg 行フラグ
  */
-TableUtil.prototype.createRowFlg = function(data){
+TableHelper.prototype.createRowFlg = function(data){
 	var rFlg = new Array();
 	$.each(data, function(){
 		rFlg[rFlg.length] = false;
@@ -132,7 +132,7 @@ TableUtil.prototype.createRowFlg = function(data){
  *
  * @param table テーブル
  */
-TableUtil.prototype.select = function(table){
+TableHelper.prototype.select = function(table){
 
 	this.rIdx = null;
 	var self = this;
@@ -152,7 +152,7 @@ TableUtil.prototype.select = function(table){
  *
  * @param tr tr要素
  */
-TableUtil.prototype.update = function(tr){
+TableHelper.prototype.update = function(tr){
 	// 選択行番号と前回選択行番号が一致していない場合
 	if(this.beforeRowIdx !== tr.rowIndex){
 		// カラーと行フラグの更新
@@ -166,7 +166,7 @@ TableUtil.prototype.update = function(tr){
  * @param table テーブル
  * @param tr tr要素
  */
-TableUtil.prototype.beforeUpdate = function(table, tr){
+TableHelper.prototype.beforeUpdate = function(table, tr){
 	// 前回選択行番号が存在する場合
 	if(this.beforeRowIdx){
 		// 前回選択行の取得
@@ -194,7 +194,7 @@ TableUtil.prototype.beforeUpdate = function(table, tr){
  * @param rIdx 行番号
  * @param bool true(選択) / false(非選択)
  */
-TableUtil.prototype.updateColorWithRowFlg = function(tr, color, rIdx, bool){
+TableHelper.prototype.updateColorWithRowFlg = function(tr, color, rIdx, bool){
 	$(tr).find("td").css("background-color", color);
 	this.rFlg[rIdx] = bool;
 }
@@ -205,7 +205,7 @@ TableUtil.prototype.updateColorWithRowFlg = function(tr, color, rIdx, bool){
  * @param area 表示エリア
  * @param option 入力フォーム情報
  */
-TableUtil.prototype.form = function(area, option){
+TableHelper.prototype.form = function(area, option){
 
 	// フォーム・テーブルの作成
 	area.html("<form><table></table></form>");
@@ -237,7 +237,7 @@ TableUtil.prototype.form = function(area, option){
  * @param rows 行データ
  * @param tr tr要素
  */
-TableUtil.prototype.setInput = function(rows, tr){
+TableHelper.prototype.setInput = function(rows, tr){
 
 	var self = this;
 	$.each(rows.inputArea, function(idx, inputArea){
@@ -262,7 +262,7 @@ TableUtil.prototype.setInput = function(rows, tr){
  * @param cIdx 列番号
  * @param data 表示データ
  */
-TableUtil.prototype.setCombobox = function(parent, rIdx, cIdx, data){
+TableHelper.prototype.setCombobox = function(parent, rIdx, cIdx, data){
 	var select = $(parent.selector + " table").find("tbody").children().eq(rIdx).children().eq(cIdx).find("select");
 	this.setSelect(select, data);
 }
@@ -273,7 +273,7 @@ TableUtil.prototype.setCombobox = function(parent, rIdx, cIdx, data){
  * @param select select要素
  * @param data 表示データ
  */
-TableUtil.prototype.setSelect = function(select, data){
+TableHelper.prototype.setSelect = function(select, data){
 
 	var self = this;
 	self.createOption(select, 0, "", "");
@@ -290,7 +290,7 @@ TableUtil.prototype.setSelect = function(select, data){
  * @param val 表示データ(value)
  * @param text 表示データ(text)
  */
-TableUtil.prototype.createOption = function(select, idx, val, text){
+TableHelper.prototype.createOption = function(select, idx, val, text){
 	select.append("<option></option>").find("option").eq(idx).val(val).text(text);
 }
 
@@ -299,7 +299,7 @@ TableUtil.prototype.createOption = function(select, idx, val, text){
  *
  * @param table テーブル
  */
-TableUtil.prototype.addRow = function(table){
+TableHelper.prototype.addRow = function(table){
 	table.append("<tr></tr>");
 }
 
@@ -310,7 +310,7 @@ TableUtil.prototype.addRow = function(table){
  * @param rIdx 行番号
  * @return 行(tr)要素
  */
-TableUtil.prototype.getRow = function(table, rIdx){
+TableHelper.prototype.getRow = function(table, rIdx){
 	return table.find("tr").eq(rIdx);
 }
 
@@ -319,7 +319,7 @@ TableUtil.prototype.getRow = function(table, rIdx){
  *
  * @param tr tr要素
  */
-TableUtil.prototype.addHeaderCol = function(tr){
+TableHelper.prototype.addHeaderCol = function(tr){
 	tr.append("<th></th>");
 }
 
@@ -330,7 +330,7 @@ TableUtil.prototype.addHeaderCol = function(tr){
  * @param cIdx 列番号
  * @return 列(th)要素
  */
-TableUtil.prototype.getHeaderCol = function(tr, cIdx){
+TableHelper.prototype.getHeaderCol = function(tr, cIdx){
 	return tr.find("th").eq(cIdx);
 }
 
@@ -339,7 +339,7 @@ TableUtil.prototype.getHeaderCol = function(tr, cIdx){
  *
  * @param tr tr要素
  */
-TableUtil.prototype.addBodyCol = function(tr){
+TableHelper.prototype.addBodyCol = function(tr){
 	tr.append("<td></td>");
 }
 
@@ -350,7 +350,7 @@ TableUtil.prototype.addBodyCol = function(tr){
  * @param cIdx カラム番号
  * @return 列(td)要素
  */
-TableUtil.prototype.getBodyCol = function(tr, cIdx){
+TableHelper.prototype.getBodyCol = function(tr, cIdx){
 	return tr.find("td").eq(cIdx);
 }
 
@@ -360,7 +360,7 @@ TableUtil.prototype.getBodyCol = function(tr, cIdx){
  * @param option プロパティ情報
  * @param element 指定要素
  */
-TableUtil.prototype.setProperty = function(option, element){
+TableHelper.prototype.setProperty = function(option, element){
 	if(option.text) element.text(option.text);
 	if(option.css) element.css(option.css);
 	if(option.attr) element.attr(option.attr);
