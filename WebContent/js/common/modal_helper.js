@@ -27,6 +27,7 @@ function ModalHelper(){
 /**
  * ダイアログ初期設定
  *
+ * @param option ダイアログオプション情報
  */
 ModalHelper.prototype.dialog = function(option){
 	this.create(option, this.modal, this.overlay, this.content, "#modal-header", "#modal-footer");
@@ -35,15 +36,22 @@ ModalHelper.prototype.dialog = function(option){
 /**
  * モーダルダイアログの表示
  *
+ * @param modal モーダルダイアログ
+ * @param overlay オーバーレイ
  */
 ModalHelper.prototype.show = function(modal, overlay){
 
-	if(!modal) modal = this.modal;
-
-	if(!overlay) overlay = this.overlay;
+	if(!modal){
+		modal = this.modal;
+	}
+	if(!overlay){
+		overlay = this.overlay;
+	}
 
 	// オーバーレイが存在する場合は、新しくモーダルウィンドウを起動しない
-	if(overlay[0]) return;
+	if(overlay[0]){
+		return;
+	}
 
 	// オーバーレイの追加
 	this.addOverlay(overlay);
@@ -58,6 +66,9 @@ ModalHelper.prototype.show = function(modal, overlay){
 /**
  * オーバーレイを削除し、モーダルダイアログを閉じる
  *
+ * @param modal モーダルダイアログ
+ * @param overlay オーバーレイ
+ * @param bool true(コールバック実行) / false(コールバック未実行)
  */
 ModalHelper.prototype.close = function(modal, overlay, bool){
 
@@ -74,20 +85,29 @@ ModalHelper.prototype.close = function(modal, overlay, bool){
 		$(overlay.selector).remove();
 	});
 
+	// コールバック
 	if(this.callback && bool){
 		this.callback();
 	}
 
-	if(this.callback) this.callback = null;
+	// コールバック関数初期化
+	if(this.callback){
+		this.callback = null;
+	}
 }
 
 /**
  * アラートダイアログ作成
  *
+ * @param title タイトル
+ * @param text テキスト
+ * @param callback コールバック
  */
 ModalHelper.prototype.alert = function(title, text, callback){
 
-	if(!this.callback) this.callback = callback;
+	if(!this.callback){
+		this.callback = callback;
+	}
 	var option = {
 			title: title,
 			text: text,
@@ -119,10 +139,15 @@ ModalHelper.prototype.alert = function(title, text, callback){
 /**
  * 確認ダイアログ作成
  *
+ * @param title タイトル
+ * @param text テキスト
+ * @param callback コールバック
  */
 ModalHelper.prototype.confirm = function(title, text, callback){
 
-	if(!this.callback) this.callback = callback;
+	if(!this.callback){
+		this.callback = callback;
+	}
 	var option = {
 			title: title,
 			text: text,
@@ -165,8 +190,14 @@ ModalHelper.prototype.confirm = function(title, text, callback){
 }
 
 /**
- * ダイアログの作成
+ * モーダルダイアログの作成
  *
+ * @param option モーダルダイアログオプション情報
+ * @param modal モーダルダイアログ
+ * @param overlay オーバーレイ
+ * @param content モーダルダイアログ コンテンツ要素
+ * @param header モーダルダイアログ ヘッダー
+ * @param footer モーダルダイアログ フッター
  */
 ModalHelper.prototype.create = function(option, modal, overlay, content, header, footer){
 
@@ -200,6 +231,7 @@ ModalHelper.prototype.create = function(option, modal, overlay, content, header,
 /**
  * オーバーレイの追加
  *
+ * @param overlay オーバーレイ
  */
 ModalHelper.prototype.addOverlay = function(overlay){
 
@@ -215,6 +247,8 @@ ModalHelper.prototype.addOverlay = function(overlay){
 /**
  * ヘッダーの作成
  *
+ * @param modal モーダルダイアログ
+ * @param header ヘッダー
  */
 ModalHelper.prototype.createHeader = function(modal, header){
 
@@ -222,7 +256,9 @@ ModalHelper.prototype.createHeader = function(modal, header){
 	if(modal.find(header).length == 0) {
 		// id名の#を抜き出す
 		var headerId = header.substring(header.indexOf("#") + 1, header.length);
+		// ヘッダー要素生成
 		var div = $("<div>").attr({"id" : headerId, "class" : "modal-header"});
+		// モーダルダイアログの先頭にヘッダー要素追加
 		modal.prepend(div);
 		this.header = $(header);
 	}
@@ -231,9 +267,13 @@ ModalHelper.prototype.createHeader = function(modal, header){
 /**
  * ヘッダー内(子要素)の作成
  *
+ * @param option モーダルダイアログオプション情報
+ * @param modal モーダルダイアログ
+ * @param overlay オーバーレイ
  */
 ModalHelper.prototype.createHeaderChild = function(option, modal, overlay){
 
+	// ヘッダー要素初期化
 	this.header.empty();
 	if(option){
 		if(option.close === false) {
@@ -241,8 +281,11 @@ ModalHelper.prototype.createHeaderChild = function(option, modal, overlay){
 			if(option.title) this.header.prepend("<span>" + option.title + "</span>");
 			return;
 		}else{
+			// ヘッダー内タイトル追加
 			if(option.title) this.header.prepend("<span style='position: absolute; left: 10px'>" + option.title + "</span>");
 		}
+
+		// 閉じるボタン生成
 		var input =
 			$("<input>")
 			.attr({"type" : "button", "id" : "modal-close"})
@@ -257,6 +300,8 @@ ModalHelper.prototype.createHeaderChild = function(option, modal, overlay){
 			.mouseout(function(){
 				$(this).css("opacity", "0.5");
 			});
+
+		// ヘッダー要素に閉じるボタン追加
 		this.header.append(input);
 	}
 }
@@ -264,12 +309,17 @@ ModalHelper.prototype.createHeaderChild = function(option, modal, overlay){
 /**
  * フッターの作成
  *
+ * @param modal モーダルダイアログ
+ * @param footer フッター
  */
 ModalHelper.prototype.createFooter = function(modal, footer){
 	// フッターが存在しない場合のみ作成する
 	if(modal.find(footer).length == 0){
+		// id名の#を抜き出す
 		var footerId = footer.substring(footer.indexOf("#") + 1, footer.length);
+		// フッター要素の取得
 		var div = $("<div>").attr({"id" : footerId, "class" : "modal-footer"});
+		// モーダルダイアログにフッター要素追加
 		modal.append(div);
 		this.footer = $(footer);
 	}
@@ -278,25 +328,30 @@ ModalHelper.prototype.createFooter = function(modal, footer){
 /**
  * フッター内(子要素)の作成
  *
+ * @param option モーダルダイアログオプション情報
  */
 ModalHelper.prototype.createFooterChild = function(option){
 	if(option.buttons){
-
+		// フッター要素初期化
 		this.footer.empty();
 		option.buttons.forEach(function(button){
+			// フッター内ボタン作成
 			var input = $("<input>")
 			.val(button.text)
 			.attr("type", "button")
 			.on("click", button.click);
 
+			// フッター内ボタンattr設定
 			if(button.attr){
 				input.attr(button.attr);
 			}
 
+			// フッター内ボタンcss設定
 			if(button.css){
 				input.css(button.css);
 			}
 
+			// フッター要素にボタン追加
 			this.footer.append(input);
 		}, this)
 	}
@@ -305,6 +360,7 @@ ModalHelper.prototype.createFooterChild = function(option){
 /**
  * モーダルダイアログのセンタリングを行う
  *
+ * @param modal モーダルダイアログ
  */
 ModalHelper.prototype.centering = function(modal){
 

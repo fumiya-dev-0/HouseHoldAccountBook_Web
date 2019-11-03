@@ -9,6 +9,7 @@ function StringUtil(){}
  * 数値をカンマ区切りにする
  *
  * @param num
+ * @return カンマ区切り文字列
  */
 StringUtil.separate = function(num){
 
@@ -30,6 +31,7 @@ StringUtil.separate = function(num){
  * 文字列入力チェック
  *
  * @param str 入力文字列
+ * @return true(未入力) / false(入力)
  */
 StringUtil.isEmpty = function(str){
 	return str.trim() == "" ? true : false;

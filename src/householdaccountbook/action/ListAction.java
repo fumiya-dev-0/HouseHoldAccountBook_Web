@@ -50,7 +50,7 @@ public class ListAction extends BaseAction {
 	/**
 	 * コンボボックスデータ読み込み
 	 *
-	 * @return ACTION_SUCCESS
+	 * @return
 	 */
 	public String loadCombo() {
 
@@ -66,6 +66,7 @@ public class ListAction extends BaseAction {
 	/**
 	 * 登録処理
 	 *
+	 * @return
 	 */
 	public String insert() {
 
@@ -99,8 +100,8 @@ public class ListAction extends BaseAction {
 
 		for(Object[] obj : list) {
 			obj[5] = DateUtil.convertToSlashDateString((String) obj[5]);// 日付
-			obj[6] = StringUtil.separate((Integer) obj[6]); // 所得
-			obj[7] = StringUtil.separate((Integer) obj[7]); // 出費
+			obj[6] = StringUtil.separate((Integer) obj[6]) + "円"; // 所得
+			obj[7] = StringUtil.separate((Integer) obj[7]) + "円"; // 出費
 		}
 		return list;
 	}

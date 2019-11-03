@@ -48,7 +48,6 @@ TabbodyListpage.prototype.init = function(){
 	 *
 	 */
 	$("#new_button").on("click", $.proxy(function(){
-
 		modalHelper.show();
 		this.loadDialog();
 	}, this));
@@ -71,7 +70,6 @@ TabbodyListpage.prototype.show = function(){
 	this.loadCombo();
 
 	this.load();
-
 }
 
 /**
@@ -147,6 +145,9 @@ TabbodyListpage.prototype.loadCombo = function(){
 /**
  * オプション要素の生成
  *
+ * @param year 年
+ * @param month 月
+ * @return option要素
  */
 TabbodyListpage.prototype.createOption = function(year, month){
 
@@ -173,7 +174,6 @@ TabbodyListpage.prototype.createOption = function(year, month){
  */
 TabbodyListpage.prototype.search = function(){
 	var val = $("#date_combo").val();
-
 	if(!val){
 		return;
 	}
@@ -189,6 +189,7 @@ TabbodyListpage.prototype.search = function(){
 /**
  * 読み込み処理
  *
+ * @param formData 入力データ
  */
 TabbodyListpage.prototype.load = function(formData){
 	var self = this;
@@ -207,10 +208,15 @@ TabbodyListpage.prototype.load = function(formData){
 /**
  * テーブルとページャの作成
  *
+ * @param nowPage 現在ページ
+ * @param data 表示データ
  */
 TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
-	TableUtil.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+
+	this.tableUtil = TableUtil.getInstance();
+	this.tableUtil.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+
 	$("#pagerArea").html(PagerUtil.getRefAll());
 	PagerUtil.onClick($.proxy(function(nowPage){
 		// テーブルとページャの作成
@@ -229,8 +235,9 @@ TabbodyListpage.prototype.loadDialog = function(){
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
-			TableUtil.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
-			TableUtil.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
+			var tableUtil = TableUtil.getInstance();
+			tableUtil.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
+			tableUtil.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
 		}
 	});
 }
@@ -238,6 +245,7 @@ TabbodyListpage.prototype.loadDialog = function(){
 /**
  * 登録処理
  *
+ * @param modalHelper モーダルダイアログクラス
  */
 TabbodyListpage.prototype.insert = function(modalHelper){
 

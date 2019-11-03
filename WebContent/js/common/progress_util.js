@@ -20,7 +20,7 @@ ProgressUtil.progress = function() {
 	this.progressModal = $("#progress-modal");
 	this.progressOverlay = $("#progress-overlay");
 	this.progressContent = $("#progress-content");
-	this.setProgressBar($("#progress-bar"));
+	this.progressBar = $("#progress-bar");
 
 	this.width = 50;
 	this.interval = null;
@@ -50,14 +50,6 @@ ProgressUtil.close = function() {
 }
 
 /**
- * プログレスバーの設定
- *
- */
-ProgressUtil.setProgressBar = function(progressBar) {
-	this.progressBar = progressBar;
-}
-
-/**
  * プログレスバーの更新
  *
  */
@@ -75,28 +67,11 @@ ProgressUtil.cntUp = function() {
 }
 
 /**
- * プログレスバー進捗状況の更新(戻る)
- *
- */
-ProgressUtil.cntDown = function() {
-	if(this.width > this.WIDTH_MIN) this.width -= this.WIDTH_POINT;
-	this.update();
-}
-
-/**
  * 自動実行(カウントアップ)
  *
  */
 ProgressUtil.autoProcessCntUp = function() {
 	this.interval = setInterval((this.cntUp).bind(this), this.INTERVAL);
-}
-
-/**
- * 自動実行(カウントダウン)
- *
- */
-ProgressUtil.autoProcessCntDown = function() {
-	this.interval = setInterval((this.cntDown).bind(this), this.INTERVAL);
 }
 
 /**
@@ -113,14 +88,5 @@ ProgressUtil.clearAutoProcess = function() {
  */
 ProgressUtil.isSetWidthMax = function() {
 	if(this.width < this.WIDTH_MAX) this.width = this.WIDTH_MAX;
-	this.update();
-}
-
-/**
- * プログレスバー更新(最小値)
- *
- */
-ProgressUtil.isSetWidthMin = function() {
-	if(this.width > this.WIDTH_MIN) this.width = this.WIDTH_MIN;
 	this.update();
 }

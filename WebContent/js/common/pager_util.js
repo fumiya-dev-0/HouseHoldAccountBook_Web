@@ -8,6 +8,9 @@ function PagerUtil(){}
 /**
  * 初期設定
  *
+ * @param array 表示データ
+ * @param max 1ページのデータ最大表示数
+ * @param nowPage 現在ページ
  */
 PagerUtil.pager = function(array, max, nowPage){
 
@@ -28,6 +31,7 @@ PagerUtil.pager = function(array, max, nowPage){
 /**
  * 表示するデータの取得(切り取り)
  *
+ * @return 表示データ(切り取り後)
  */
 PagerUtil.getDispData = function(){
 	return this.array.slice(this.startNo, (this.max * this.now));
@@ -36,6 +40,7 @@ PagerUtil.getDispData = function(){
 /**
  * 全リンクの取得
  *
+ * @return 全リンク
  */
 PagerUtil.getRefAll = function(){
 	var ref = this.getPrevRef();
@@ -47,6 +52,7 @@ PagerUtil.getRefAll = function(){
 /**
  * 最大ページ数分のリンクを取得
  *
+ * @param 最大ページ数分のリンク
  */
 PagerUtil.getPageRef = function(){
 	var ref = "";
@@ -56,6 +62,11 @@ PagerUtil.getPageRef = function(){
 	return ref;
 }
 
+/**
+ * 現在ページ数確認
+ *
+ * @param idx リンクの番号
+ */
 PagerUtil.isCurrent = function(idx){
 	if(idx == 1){
 		return "pager-left";
@@ -69,6 +80,7 @@ PagerUtil.isCurrent = function(idx){
 /**
  * リンクの取得(前へ)
  *
+ * @param リンク(前へ)
  */
 PagerUtil.getPrevRef = function(){
 	return this.now > 1 ? "<a class='pager' href='#page" + (Number(this.now) - 1) + "'>«前へ</a>" : "<span class='pager-none'>«前へ</span>";
@@ -77,6 +89,7 @@ PagerUtil.getPrevRef = function(){
 /**
  * リンクの取得(次へ)
  *
+ * @param リンク(次へ)
  */
 PagerUtil.getNextRef = function(){
 	return this.now < this.maxPage ? "<a class='pager' href='#page" + (Number(this.now) + 1) + "'>次へ»</a>" : "<span class='pager-none'>次へ»</span>";
@@ -85,6 +98,7 @@ PagerUtil.getNextRef = function(){
 /**
  * リンクのクリックイベント
  *
+ * @param callback コールバック関数
  */
 PagerUtil.onClick = function(callback){
 
