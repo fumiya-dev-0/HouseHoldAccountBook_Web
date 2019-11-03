@@ -3,18 +3,18 @@
  * 作成日: 2019/09/21
  *
  *************************************************/
-// 費目コンボボックス定数
+/** 費目コンボボックス定数 **/
 TabbodyListpage.prototype.ROW_EXPENSE_NAME = 2;
 TabbodyListpage.prototype.COL_EXPENSE_NAME = 1;
 
-// エラーメッセージ
+/** エラーメッセージ **/
 TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
 TabbodyListpage.prototype.DATE_ERROR_MESSAGE = "日付を入力してください。";
 TabbodyListpage.prototype.EXPENSE_ERROR_MESSAGE = "費目を選択してください。";
 TabbodyListpage.prototype.INCOME_ERROR_MESSAGE = "所得を入力してください。";
 TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してください。";
 
-// ページャ用
+/** ページャ用 **/
 TabbodyListpage.prototype.PAGER_MAX = 15;
 TabbodyListpage.prototype.DEFAULT_NOW_PAGE = 1;
 
@@ -28,6 +28,7 @@ function TabbodyListpage(){
 
 	// 画面表示
 	self.show();
+
 }
 
 /**
@@ -35,6 +36,49 @@ function TabbodyListpage(){
  *
  */
 TabbodyListpage.prototype.init = function(){
+
+	// モーダル設定
+	var modalHelper = this.modal();
+
+	// イベントoff
+	this.offEvent();
+
+	/**
+	 * 新規ボタン処理
+	 *
+	 */
+	$("#new_button").on("click", $.proxy(function(){
+
+		modalHelper.show();
+		this.loadDialog();
+	}, this));
+
+	/**
+	 * 年月コンボボックス処理
+	 */
+	$("#date_combo").on("change", $.proxy(function(){
+		this.search();
+	}, this));
+
+}
+
+/**
+ * 画面表示
+ *
+ */
+TabbodyListpage.prototype.show = function(){
+
+	this.loadCombo();
+
+	this.load();
+
+}
+
+/**
+ * モーダル設定
+ *
+ */
+TabbodyListpage.prototype.modal = function(){
 
 	var self = this;
 	var modalHelper = new ModalHelper();
@@ -75,36 +119,16 @@ TabbodyListpage.prototype.init = function(){
 			}
 		]
 	});
-
-	/**
-	 * 新規ボタン処理
-	 *
-	 */
-	$("#new_button").on("click", $.proxy(function(){
-
-		modalHelper.show();
-		this.loadDialog();
-	}, this));
-
-	/**
-	 * 年月コンボボックス処理
-	 */
-	$("#date_combo").on("change", $.proxy(function(){
-		this.search();
-	}, this));
-
+	return modalHelper;
 }
 
 /**
- * 画面表示
+ * イベントoff
  *
  */
-TabbodyListpage.prototype.show = function(){
-
-	this.loadCombo();
-
-	this.load();
-
+TabbodyListpage.prototype.offEvent = function(){
+	$("#new_button").off("click");
+	$("#date_combo").off("change");
 }
 
 /**
