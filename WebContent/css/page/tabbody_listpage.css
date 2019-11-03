@@ -55,7 +55,7 @@
 /* テーブルエリア */
 #tableArea {
 	margin: 30px 0;
-	overflow: auto;
+	height: 590px;
 }
 
 /* テキストエリア*/

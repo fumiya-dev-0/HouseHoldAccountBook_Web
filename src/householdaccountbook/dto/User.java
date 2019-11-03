@@ -1,22 +1,19 @@
 package householdaccountbook.dto;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
+/*************************************************
+ * ユーザーDTOクラス
+ * 作成日: 2019/08/04
+ *
+ *************************************************/
 public class User {
 
-	// ハッシュ関数・ソルト
-	public static final String HASH_ALGORITHM = "SHA-512";
-	public static final String SALT = "bbksadasvgsrsferccadsefg44wefKYTJRBaawf356";
-
-	/**
-	 * メンバ変数
-	 */
+	// ユーザーコード
 	private int userCode;
+	// ユーザーID
 	private String userId;
+	// パスワード
 	private String password;
+	// ログイン状態
 	private String loginState;
 
 	/**
@@ -32,7 +29,7 @@ public class User {
 	/**
 	 * ユーザーコード getter
 	 *
-	 * @return
+	 * @return ユーザーコード
 	 */
 	public int getUserCode() {
 		return userCode;
@@ -41,7 +38,7 @@ public class User {
 	/**
 	 * ユーザーコード setter
 	 *
-	 * @return
+	 * @param userCode ユーザーコード
 	 */
 	public void setUserCode(int userCode) {
 		this.userCode = userCode;
@@ -50,7 +47,7 @@ public class User {
 	/**
 	 * ユーザーID getter
 	 *
-	 * @return
+	 * @return ユーザーID
 	 */
 	public String getUserId() {
 		return userId;
@@ -59,7 +56,7 @@ public class User {
 	/**
 	 * ユーザーID setter
 	 *
-	 * @return
+	 * @param userId ユーザーID
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -68,16 +65,16 @@ public class User {
 	/**
 	 * パスワード getter
 	 *
-	 * @return
+	 * @return password パスワード
 	 */
-	public String getPassword() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return getPasswordHash();
+	public String getPassword() {
+		return password;
 	}
 
 	/**
 	 * パスワード setter
 	 *
-	 * @return
+	 * @param password パスワード
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -86,7 +83,7 @@ public class User {
 	/**
 	 * ログイン状態 getter
 	 *
-	 * @return
+	 * @return ログイン状態
 	 */
 	public String getLoginState() {
 		return loginState;
@@ -95,26 +92,10 @@ public class User {
 	/**
 	 * ログイン状態 setter
 	 *
-	 * @return
+	 * @param loginState ログイン状態
 	 */
 	public void setLoginState(String loginState) {
 		this.loginState = loginState;
-	}
-
-	/**
-	 * ハッシュの取得(パスワード)
-	 *
-	 * @return
-	 * @throws NoSuchAlgorithmException
-	 * @throws UnsupportedEncodingException
-	 */
-	private String getPasswordHash() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
-		String target = password + userId + SALT;
-		digest.update(target.getBytes("utf8"));
-
-		return String.format("%064x", new BigInteger(1, digest.digest()));
-
 	}
 
 }

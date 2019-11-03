@@ -1,44 +1,21 @@
-// ==================================================================
-// Ajax用ユーティリティクラス
-// 作成日: 2019/10/02
-//
-// ==================================================================
+/*************************************************
+ * Ajax用ユーティリティクラス
+ * 作成日: 2019/10/02
+ *
+ *************************************************/
 function AjaxUtil(){}
 
 /**
- * コールバック(SELECT)
+ * ajax処理
  *
  */
-AjaxUtil.getCallbackData = function(option) {
-	$.ajax({
-		type: option.type,
-		url: option.url,
-		dataType: "json",
-		beforeSend: $.proxy(function(jqXHR, settings){ this.progress(option) }, this),
-		async: true
-	}).done(function(data) {
-		// 成功時
-		AjaxUtil.done(data, option);
-	}).fail(function(xmlHttpRequest, textStatus, errorThrown) {
-		// 失敗時
-		AjaxUtil.fail(xmlHttpRequest, textStatus, errorThrown, option);
-	}).always(function(data, textStatus, errorThrown) {
-		AjaxUtil.always(data, textStatus, errorThrown, option);
-	});
-}
-
-/**
- * コールバック(INSERT)
- *
- */
-AjaxUtil.addCallbackData = function(option) {
-
+AjaxUtil.process = function(option) {
 	$.ajax({
 		type: option.type,
 		url: option.url,
 		dataType : "json",
 		beforeSend: $.proxy(function(jqXHR, settings){ this.progress(option) }, this),
-		data: option.data,
+		data: option.data ? option.data : null,
 		contentType: false,
 		processData: false,
 		async: true

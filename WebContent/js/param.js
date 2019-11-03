@@ -1,8 +1,8 @@
-//==================================================================
-// パラメーター用共通クラス
-// 作成日: 2019/10/13
-//
-//==================================================================
+/*************************************************
+ * パラメーター用共通クラス
+ * 作成日: 2019/10/13
+ *
+ *************************************************/
 /**
  * 一覧画面
  *
@@ -27,7 +27,7 @@ var TABBODY_LISTPAGE_PARAM_TABLE = {
 				}
 			},
 			{
-				text: "名前",
+				text: "品名",
 				css: {
 					width: "200px"
 				}
@@ -52,18 +52,18 @@ var TABBODY_LISTPAGE_PARAM_TABLE = {
 				}
 			},
 			{
-				text: "所得",
+				text: "収入",
 				css: {
 					width: "100px"
 				}
 			},
 			{
-				text: "出費",
+				text: "支出",
 				css: {
 					width: "100px"
 				}
 			}
-		]
+			]
 };
 
 var TABBODY_LISTPAGE_PARAM_FORM = {
@@ -99,7 +99,7 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 							"margin-left": "10px"
 						}
 					}
-				]
+					]
 			},
 			{
 				textArea: {
@@ -132,7 +132,7 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 							"margin-left": "10px"
 						}
 					}
-				]
+					]
 			},
 			{
 				textArea: {
@@ -164,7 +164,7 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 							"margin-left": "10px"
 						}
 					}
-				]
+					]
 			},
 			{
 				textArea: {
@@ -197,7 +197,7 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 							"margin-left": "10px"
 						}
 					}
-				]
+					]
 			},
 			{
 				textArea: {
@@ -230,7 +230,7 @@ var TABBODY_LISTPAGE_PARAM_FORM = {
 							"margin-left": "10px"
 						}
 					}
-				]
+					]
 			}
-		]
+			]
 };

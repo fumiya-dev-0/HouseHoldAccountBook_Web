@@ -5,14 +5,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-//=================================================================
-// 日付ユーティリティクラス
-// 作成日: 2019/11/01
-//
-//=================================================================
+/*************************************************
+ * 日付ユーティリティクラス
+ * 作成日: 2019/11/01
+ *
+ *************************************************/
 public class DateUtil {
 
+	// 日付フォーマット(yyyy/MM/dd)
 	private static final String DATE_FORMAT = "yyyy/MM/dd";
+
 	/**
 	 * コンストラクタ(直接アクセス不可)
 	 */
@@ -42,7 +44,7 @@ public class DateUtil {
 	private static Calendar getDate(String str) {
 
 		Calendar cal = Calendar.getInstance();
-		cal.set(Integer.parseInt(str.substring(0, 4)), Integer.parseInt(str.substring(4, 6)), Integer.parseInt(str.substring(6, 8)));
+		cal.set(Integer.parseInt(str.substring(0, 4)), Integer.parseInt(str.substring(4, 6)) - 1, Integer.parseInt(str.substring(6, 8)));
 
 		return cal;
 	}

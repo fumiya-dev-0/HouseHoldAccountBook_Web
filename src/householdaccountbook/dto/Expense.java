@@ -1,13 +1,17 @@
 package householdaccountbook.dto;
 
+/*************************************************
+ * 費目DTOクラス
+ * 作成日: 2019/08/11
+ *
+ *************************************************/
 public class Expense {
 
-	/**
-	 * メンバ変数
-	 *
-	 */
+	// 費目コード
 	private int expenseCode;
+	// 費目名
 	private String name;
+	// 表示順
 	private int displayOrder;
 
 	/**
@@ -23,7 +27,7 @@ public class Expense {
 	/**
 	 * 費目コード getter
 	 *
-	 * @return
+	 * @return 費目コード
 	 */
 	public int getExpenseCode() {
 		return expenseCode;
@@ -32,7 +36,7 @@ public class Expense {
 	/**
 	 * 費目コード setter
 	 *
-	 * @return
+	 * @param expenseCode 費目コード
 	 */
 	public void setExpenseCode(int expenseCode) {
 		this.expenseCode = expenseCode;
@@ -41,7 +45,7 @@ public class Expense {
 	/**
 	 * 費目名 getter
 	 *
-	 * @return
+	 * @return 費目名
 	 */
 	public String getName() {
 		return name;
@@ -50,7 +54,7 @@ public class Expense {
 	/**
 	 * 費目名 setter
 	 *
-	 * @return
+	 * @param name 費目名
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -59,7 +63,7 @@ public class Expense {
 	/**
 	 * 表示順 getter
 	 *
-	 * @return
+	 * @return 表示順
 	 */
 	public int getDisplayOrder() {
 		return displayOrder;
@@ -68,7 +72,7 @@ public class Expense {
 	/**
 	 * 表示順 setter
 	 *
-	 * @return
+	 * @param displayOrder 表示順
 	 */
 	public void setDisplayOrder(int displayOrder) {
 		this.displayOrder = displayOrder;

@@ -1,25 +1,34 @@
 package householdaccountbook.action;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.Cookie;
 
 import householdaccountbook.dto.User;
 import householdaccountbook.model.UserModel;
 import householdaccountbook.util.StringUtil;
 
-public class LoginAction extends BaseAction{
-
-	/**
-	 * メンバ変数
-	 *
-	 */
-	private UserModel loginModel;
-	private User user;
+/*************************************************
+ * ログインアクションクラス
+ * 作成日: 2019/08/04
+ *
+ *************************************************/
+public class LoginAction extends BaseAction {
 
 	private String userId;
 	private String password;
-
 	private Boolean auto;
 
+	// ハッシュ関数
+	public static final String HASH_ALGORITHM = "SHA-512";
+	// ソルト
+	public static final String SALT = "bbksadasvgsrsferccadsefg44wefKYTJRBaawf356";
+
+	public static final String LOGIN_ERROR_MESSAGE = "入力されたユーザID又はパスワードが正しくありません。";
+	public static final String HASH_ERROR_MESSAGE = "ハッシュの生成に失敗しました。";
 
 	/**
 	 * コンストラクタ
@@ -38,9 +47,7 @@ public class LoginAction extends BaseAction{
 	 */
 	public String show() {
 
-		/**
-		 * クッキーにユーザIDが存在する場合、クッキーをユーザIDのセッターに設定する
-		 */
+		// クッキーにユーザIDが存在する場合、クッキーをユーザIDのセッターに設定する
 		Cookie cookies [] = request.getCookies();
 		if(isCookie(cookies)) {
 			setUserId(getCookie(cookies));
@@ -56,17 +63,17 @@ public class LoginAction extends BaseAction{
 	 */
 	public String execute() {
 
-		user = new User();
-		user.setUserId(userId);
-		user.setPassword(password);
-		loginModel = new UserModel(this, user);
-
 		if(!isCheck()) {
 			return ACTION_LOGIN_ERROR;
 		}
 
-		if(!login()) {
-			return ACTION_LOGIN_ERROR;
+		try {
+			if(!login()) {
+				return ACTION_LOGIN_ERROR;
+			}
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+			setErrorMessage(HASH_ERROR_MESSAGE);
 		}
 
 		userIdSaveToCookie();
@@ -107,16 +114,37 @@ public class LoginAction extends BaseAction{
 	 * ログイン処理
 	 *
 	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
 	 */
-	private boolean login() {
+	private boolean login() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-		User user = loginModel.load();
+		UserModel userModel = new UserModel();
+
+		User user = userModel.load(this, userId, getPasswordHash());
 		if(user != null) {
 			setSessionAttribute(SESSION_USER_CODE, String.valueOf(user.getUserCode()));
 			return true;
 		}else {
+			setErrorMessage(LOGIN_ERROR_MESSAGE);
 			return false;
 		}
+
+	}
+
+	/**
+	 * ハッシュの取得(パスワード)
+	 *
+	 * @return ハッシュ
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
+	private String getPasswordHash() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+		String target = password + userId + SALT;
+		digest.update(target.getBytes("utf8"));
+
+		return String.format("%064x", new BigInteger(1, digest.digest()));
 
 	}
 

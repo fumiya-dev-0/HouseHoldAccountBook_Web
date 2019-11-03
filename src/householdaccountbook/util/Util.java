@@ -1,11 +1,15 @@
 package householdaccountbook.util;
 
+/*************************************************
+ * 画面用ユーティリティクラス
+ * 作成日: 2019/08/04
+ *
+ *************************************************/
 public interface Util {
 
 	/**
 	 * CSSファイルパスの列挙型クラス
 	 *
-	 * @author
 	 */
 	public enum Css {
 
@@ -17,12 +21,13 @@ public interface Util {
 		PROGRESS_CSS_PATH("/common/progress.css"),
 		PAGER_CSS_PATH("/common/pager.css");
 
+		// CSSファイルパス
 		private final String path;
 
 		/**
 		 * コンストラクタ
 		 *
-		 * @param path
+		 * @param path CSSファイルパス
 		 */
 		private Css(final String path) {
 			this.path = path;
@@ -31,7 +36,7 @@ public interface Util {
 		/**
 		 * CSSファイルパスの取得
 		 *
-		 * @return
+		 * @return CSSファイルパス
 		 */
 		public String getPath() {
 			return "css/" + this.path;
@@ -42,18 +47,18 @@ public interface Util {
 	/**
 	 * HTMLタグの列挙型クラス
 	 *
-	 * @author
 	 */
 	public enum Html {
 
 		TITLE("家計簿");
 
+		// HTMLタグ
 		private final String htmlTag;
 
 		/**
 		 * コンストラクタ
 		 *
-		 * @param htmlTag
+		 * @param htmlTag HTMLタグ
 		 */
 		private Html(String htmlTag) {
 			this.htmlTag = htmlTag;
@@ -62,7 +67,7 @@ public interface Util {
 		/**
 		 * HTMLタグの取得
 		 *
-		 * @return
+		 * @return HTMLタグ
 		 */
 		public String getHtmlTag() {
 			return htmlTag;
@@ -80,12 +85,13 @@ public interface Util {
 		TAB_JS_PATH("tab.js"),
 		TABBODY_LISTPAGE_JS_PATH("/page/tabbody_listpage.js");
 
+		// JSファイルパス
 		private final String path;
 
 		/**
 		 * コンストラクタ
 		 *
-		 * @param path
+		 * @param path JSファイルパス
 		 */
 		private JavaScript(String path) {
 			this.path = path;
@@ -94,7 +100,7 @@ public interface Util {
 		/**
 		 * JSファイルパスの取得
 		 *
-		 * @return
+		 * @return JSファイルパス
 		 */
 		public String getPath() {
 			return "js/" + path;

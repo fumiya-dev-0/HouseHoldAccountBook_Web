@@ -7,11 +7,11 @@ import org.hibernate.criterion.Projections;
 
 import householdaccountbook.dto.HouseHoldAccountBook;
 
-//==================================================================
-// 家計簿モデルクラス
-// 作成日: 2019/09/21
-//
-//==================================================================
+/*************************************************
+ * 家計簿モデルクラス
+ * 作成日: 2019/09/21
+ *
+ *************************************************/
 public class HouseHoldAccountBookModel extends BaseModel {
 
 	/**
@@ -40,7 +40,8 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	/**
 	 * 登録処理
 	 *
-	 * @return isSuccess 処理成功フラグ
+	 * @param houseHoldAccountBook 家計簿クラス
+	 * @return 処理成功フラグ
 	 */
 	public boolean insert(HouseHoldAccountBook houseHoldAccountBook) {
 

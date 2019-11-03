@@ -7,11 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.type.StandardBasicTypes;
 
-//==================================================================
-// 一覧画面用モデルクラス
-// 作成日: 2019/10/03
-//
-//==================================================================
+/*************************************************
+ * 一覧画面用モデルクラス
+ * 作成日: 2019/10/03
+ *
+ *************************************************/
 public class ListModel extends BaseModel {
 
 	/**
@@ -23,10 +23,13 @@ public class ListModel extends BaseModel {
 	/**
 	 * 読み込み
 	 *
-	 * @return
+	 * @param userCode ユーザーコード
+	 * @param year 年月
+	 * @return 家計簿情報リスト
+	 * @throws SQLException
 	 */
 	@SuppressWarnings({ "unchecked" })
-	public List<Object[]> load(int userCode) throws SQLException {
+	public List<Object[]> load(int userCode, String year) throws SQLException {
 
 		Session session = getSession();
 
@@ -47,6 +50,7 @@ public class ListModel extends BaseModel {
 		sql.append(" inner join EXPENSE expense");
 		sql.append(" on hhab.EXPENSE_CODE = expense.EXPENSE_CODE");
 		sql.append(" where hhab.USER_CODE = :userCode");
+		if(year != null) sql.append(" and concat(substr(hhab.DATE, 1, 4), substr(hhab.DATE, 5, 2)) = :year");
 
 		Query<Object[]> query = session
 				.createSQLQuery(sql.toString())
@@ -59,6 +63,7 @@ public class ListModel extends BaseModel {
 				.addScalar("INCOME", StandardBasicTypes.INTEGER)
 				.addScalar("SPENDING", StandardBasicTypes.INTEGER)
 				.setParameter("userCode", userCode);
+		if(year != null) query.setParameter("year", year);
 
 		List<Object[]> list = query.list();
 

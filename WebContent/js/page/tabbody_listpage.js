@@ -1,8 +1,8 @@
-//==================================================================
-// 一覧画面
-// 作成日: 2019/09/21
-//
-//==================================================================
+/*************************************************
+ * 一覧画面
+ * 作成日: 2019/09/21
+ *
+ *************************************************/
 // 費目コンボボックス定数
 TabbodyListpage.prototype.ROW_EXPENSE_NAME = 2;
 TabbodyListpage.prototype.COL_EXPENSE_NAME = 1;
@@ -28,7 +28,6 @@ function TabbodyListpage(){
 
 	// 画面表示
 	self.show();
-
 }
 
 /**
@@ -37,7 +36,7 @@ function TabbodyListpage(){
  */
 TabbodyListpage.prototype.init = function(){
 
-	var page = this;
+	var self = this;
 	var modalHelper = new ModalHelper();
 	modalHelper.dialog({
 		width: "50%",
@@ -47,7 +46,7 @@ TabbodyListpage.prototype.init = function(){
 				text: "登録",
 				click: function(){
 					modalHelper.confirm("確認", "登録しますか?", function(){
-						page.insert(modalHelper);
+						self.insert(modalHelper);
 					});
 				},
 				attr: {
@@ -155,23 +154,28 @@ TabbodyListpage.prototype.search = function(){
 		return;
 	}
 
-
+	var formData = new FormData();
+	var json = {
+			year: DateUtil.convertToSlashDeleteStringFormat(val)
+	};
+	formData.append("data", DateUtil.convertToSlashDeleteStringFormat(val));
+	this.load(formData);
 }
 
 /**
  * 読み込み処理
  *
  */
-TabbodyListpage.prototype.load = function(){
-
+TabbodyListpage.prototype.load = function(formData){
 	var self = this;
-	AjaxUtil.getCallbackData({
-		type: "GET",
+	AjaxUtil.process({
+		type: formData ? "POST" : "GET",
 		url: "list",
+		data: formData,
 		callback: function(data) {
 			self.accountBookData = data;
 			// テーブルとページャの作成
-			self.createTableWithPager(this.DEFAULT_NOW_PAGE);
+			self.createTableWithPager(this.DEFAULT_NOW_PAGE, self.accountBookData);
 		}
 	});
 }
@@ -180,13 +184,13 @@ TabbodyListpage.prototype.load = function(){
  * テーブルとページャの作成
  *
  */
-TabbodyListpage.prototype.createTableWithPager = function(nowPage){
-	PagerUtil.pager(this.accountBookData, this.PAGER_MAX, nowPage);
+TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
+	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
 	TableUtil.table($("#tableArea"), TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
 	$("#pagerArea").html(PagerUtil.getRefAll());
 	PagerUtil.onClick($.proxy(function(nowPage){
 		// テーブルとページャの作成
-		this.createTableWithPager(nowPage);
+		this.createTableWithPager(nowPage, this.accountBookData);
 	}, this));
 }
 
@@ -196,16 +200,15 @@ TabbodyListpage.prototype.createTableWithPager = function(nowPage){
  */
 TabbodyListpage.prototype.loadDialog = function(){
 
-	var page = this;
-	AjaxUtil.getCallbackData({
+	var self = this;
+	AjaxUtil.process({
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
 			TableUtil.form($("#modal-content"), TABBODY_LISTPAGE_PARAM_FORM);
-			TableUtil.setCombobox($("#modal-content"), page.ROW_EXPENSE_NAME, page.COL_EXPENSE_NAME, data);
+			TableUtil.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
 		}
 	});
-
 }
 
 /**
@@ -221,22 +224,20 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 
 	var formData = new FormData();
 	var json = this.inputData();
-
 	formData.append("data", JSON.stringify(json));
 
-	var page = this;
-	AjaxUtil.addCallbackData({
+	var self = this;
+	AjaxUtil.process({
 		type: "POST",
 		url: "insert",
 		progress: true,
 		data: formData,
 		callback: function(data){
-
 			modalHelper.alert("完了", "登録が完了しました。", function(){
 				modalHelper.close();
-				page.load();
+				self.load();
+				self.loadCombo();
 			});
-
 		}
 	});
 
