@@ -38,7 +38,46 @@ function TabbodyListpage(){
 TabbodyListpage.prototype.init = function(){
 
 	// モーダル設定
-	var modalHelper = this.modal();
+	var modalHelper = ModalHelper.getInstance();
+	var self = this;
+	var option = {
+			width: "50%",
+			height: "300px",
+			buttons: [
+				{
+					text: "登録",
+					click: function(){
+						var messageHelper = MessageHelper.getInstance();
+						messageHelper.confirm("確認", "登録しますか?", function(){
+							self.insert(modalHelper);
+						});
+					},
+					attr: {
+						id: "add-button",
+						class: "button-border button-info"
+					},
+					css: {
+						width: "60px",
+						height: "30px",
+						margin: "0 5px 0 0"
+					}
+				},
+				{
+					text: "閉じる",
+					click: function(){
+						modalHelper.close();
+					},
+					attr: {
+						id: "close-button",
+						class: "button-border button-warning"
+					},
+					css: {
+						width: "60px",
+						height: "30px"
+					}
+				}
+				]
+	};
 
 	// イベントoff
 	this.offEvent();
@@ -47,15 +86,25 @@ TabbodyListpage.prototype.init = function(){
 	 * 新規ボタン処理
 	 *
 	 */
-	$("#new_button").on("click", $.proxy(function(){
-		modalHelper.show();
+	$("#new-button").on("click", $.proxy(function(){
+		modalHelper.dialog(option);
 		this.loadDialog();
+	}, this));
+
+	/**
+	 * 更新ボタン処理
+	 *
+	 */
+	$("#upd-button").on("click", $.proxy(function(){
+		if(this.tableHelper.isRow()){
+			console.log(this.tableHelper.getSelectColText(5));
+		}
 	}, this));
 
 	/**
 	 * 年月コンボボックス処理
 	 */
-	$("#date_combo").on("change", $.proxy(function(){
+	$("#date-combo").on("change", $.proxy(function(){
 		this.search();
 	}, this));
 
@@ -73,60 +122,12 @@ TabbodyListpage.prototype.show = function(){
 }
 
 /**
- * モーダル設定
- *
- */
-TabbodyListpage.prototype.modal = function(){
-
-	var self = this;
-	var modalHelper = new ModalHelper();
-	modalHelper.dialog({
-		width: "50%",
-		height: "300px",
-		buttons: [
-			{
-				text: "登録",
-				click: function(){
-					modalHelper.confirm("確認", "登録しますか?", function(){
-						self.insert(modalHelper);
-					});
-				},
-				attr: {
-					id: "add_button",
-					class: "button-border button-info"
-				},
-				css: {
-					width: "60px",
-					height: "30px",
-					margin: "0 5px 0 0"
-				}
-			},
-			{
-				text: "閉じる",
-				click: function(){
-					modalHelper.close();
-				},
-				attr: {
-					id: "close_button",
-					class: "button-border button-warning"
-				},
-				css: {
-					width: "60px",
-					height: "30px"
-				}
-			}
-			]
-	});
-	return modalHelper;
-}
-
-/**
  * イベントoff
  *
  */
 TabbodyListpage.prototype.offEvent = function(){
-	$("#new_button").off("click");
-	$("#date_combo").off("change");
+	$("#new-button, #upd-button, #add-button, #close-button").off("click");
+	$("#date-combo").off("change");
 }
 
 /**
@@ -139,7 +140,7 @@ TabbodyListpage.prototype.loadCombo = function(){
 	var month = DateUtil.getMonth();
 	var option = this.createOption(year, month);
 
-	$("#date_combo").html(option);
+	$("#date-combo").html(option);
 }
 
 /**
@@ -173,7 +174,7 @@ TabbodyListpage.prototype.createOption = function(year, month){
  *
  */
 TabbodyListpage.prototype.search = function(){
-	var val = $("#date_combo").val();
+	var val = $("#date-combo").val();
 	if(!val){
 		return;
 	}
@@ -265,7 +266,8 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 		progress: true,
 		data: formData,
 		callback: function(data){
-			modalHelper.alert("完了", "登録が完了しました。", function(){
+			var messageHelper = MessageHelper.getInstance();
+			messageHelper.alert("完了", "登録が完了しました。", function(){
 				modalHelper.close();
 				self.load();
 				self.loadCombo();

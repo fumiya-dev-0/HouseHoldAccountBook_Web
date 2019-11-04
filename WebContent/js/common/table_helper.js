@@ -135,6 +135,7 @@ TableHelper.prototype.createRowFlg = function(data){
 TableHelper.prototype.select = function(table){
 
 	this.rIdx = null;
+	this.selector = table.selector;
 	var self = this;
 	$(table.selector + " td").bind("click", function(){
 		var tr = $(this).parent()[0];
@@ -197,6 +198,66 @@ TableHelper.prototype.beforeUpdate = function(table, tr){
 TableHelper.prototype.updateColorWithRowFlg = function(tr, color, rIdx, bool){
 	$(tr).find("td").css("background-color", color);
 	this.rFlg[rIdx] = bool;
+}
+
+/**
+ * 行選択チェック
+ */
+TableHelper.prototype.isRow = function(){
+	var bool = false;
+	if(this.rFlg){
+		bool = this.isRowBool(bool);
+	}
+	return bool;
+}
+
+/**
+ * 行選択チェック処理
+ *
+ * @param bool true(選択) / false(非選択)
+ * @return true(選択) / false(非選択)
+ */
+TableHelper.prototype.isRowBool = function(bool){
+	$.each(this.rFlg, function(idx, isBool){
+		if(isBool){
+			bool = true;
+		}
+	});
+	return bool;
+}
+
+/**
+ * 選択行取得
+ *
+ * @param 選択行
+ */
+TableHelper.prototype.getSelectRow = function(){
+	return $(this.selector).find("tr").eq(this.getRowIdx());
+}
+
+/**
+ * テキスト取得
+ *
+ * @param テキスト
+ */
+TableHelper.prototype.getSelectColText = function(cIdx){
+	var col = this.getSelectRow().find("td").eq(cIdx);
+	return col.text();
+}
+
+/**
+ * 選択行番号取得
+ *
+ * @return 選択行番号
+ */
+TableHelper.prototype.getRowIdx = function(){
+	var rIdx = null;
+	$.each(this.rFlg, function(idx, isBool){
+		if(isBool){
+			rIdx = idx;
+		}
+	});
+	return rIdx;
 }
 
 /**

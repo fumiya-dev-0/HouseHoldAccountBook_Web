@@ -5,16 +5,8 @@
 }
 
 /* 入力エリア */
-#inputArea {
+#input-area {
 
-}
-
-/* 画像 */
-#inputArea input[type="image"] {
-	width: 20px;
-	height: 20px;
-	vertical-align: bottom;
-	margin-bottom: 5px;
 }
 
 /* ボタン */
@@ -56,12 +48,4 @@
 #tableArea {
 	margin: 30px 0;
 	height: 590px;
-}
-
-/* テキストエリア*/
-#memoArea textarea{
-	width: 98%;
-	padding: 10px;
-	height: 100px;
-	resize: none; /* 右下の//を消す */
 }

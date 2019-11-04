@@ -5,6 +5,9 @@
  *
  *************************************************/
  -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <div id="progress-modal" class="modal">
 	<div id="progress-content" class="modal-content">
 		<div id="progress">

@@ -43,6 +43,8 @@
 	</div>
 	<!-- モーダルダイアログ読み込み -->
 	<%@include file="../common/modal.jsp"%>
+	<!-- メッセージダイアログ読み込み -->
+	<%@include file="../common/message.jsp"%>
 	<!-- プログレスダイアログ読み込み -->
 	<%@include file="../common/progress.jsp"%>
 	<!-- JSファイル読み込み -->
