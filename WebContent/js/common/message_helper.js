@@ -54,6 +54,7 @@ MessageHelper.prototype.confirm = function(title, text, callback){
  *
  * @param title タイトル
  * @param text テキスト
+ * @param callback コールバック関数
  */
 MessageHelper.prototype.alertOption = function(title, text, callback){
 	return {
@@ -90,6 +91,7 @@ MessageHelper.prototype.alertOption = function(title, text, callback){
  *
  * @param title タイトル
  * @param text テキスト
+ * @param callback コールバック関数
  */
 MessageHelper.prototype.confirmOption = function(title, text, callback){
 	return {

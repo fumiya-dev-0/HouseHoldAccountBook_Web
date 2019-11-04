@@ -96,7 +96,6 @@ ModalHelper.prototype.show = function(){
  * オーバーレイを削除し、モーダルダイアログを閉じる
  *
  * @param modal モーダルダイアログ
- * @param overlay オーバーレイ
  */
 ModalHelper.prototype.close = function(callback){
 
@@ -148,6 +147,7 @@ ModalHelper.prototype.addHeader = function(){
  * ヘッダー内(子要素)の作成
  *
  * @param option モーダルダイアログオプション情報
+ * @param header ヘッダー要素
  */
 ModalHelper.prototype.addHeaderChild = function(option, header){
 
@@ -213,6 +213,7 @@ ModalHelper.prototype.addFooter = function(){
  * フッター内(子要素)の作成
  *
  * @param option モーダルダイアログオプション情報
+ * @param footer フッター要素
  */
 ModalHelper.prototype.addFooterChild = function(option, footer){
 	if(option.buttons){
@@ -244,8 +245,6 @@ ModalHelper.prototype.addFooterChild = function(option, footer){
 /**
  * オーバーレイの追加
  *
- * @param parent オーバーレイを作成する親要素
- * @param overlay オーバーレイ
  */
 ModalHelper.prototype.addOverlay = function(){
 	// 半透過クラス文字列の取得
@@ -260,7 +259,6 @@ ModalHelper.prototype.addOverlay = function(){
 /**
  * モーダルダイアログのセンタリングを行う
  *
- * @param modal モーダルダイアログ
  */
 ModalHelper.prototype.centering = function(){
 
@@ -294,6 +292,7 @@ ModalHelper.prototype.centering = function(){
  * @param content モーダルダイアログ コンテンツ要素
  * @param header モーダルダイアログ ヘッダーId
  * @param footer モーダルダイアログ フッターId
+ * @param overlayTarget オーバーレイ対象のId
  */
 ModalHelper.prototype.addTarget = function(modal, overlay, content, header, footer, overlayTarget){
 	// モーダルダイアログ配列の初期化

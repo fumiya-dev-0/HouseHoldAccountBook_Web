@@ -47,6 +47,7 @@ ProgressHelper.prototype.progress = function() {
 /**
  * プログレスダイアログを閉じる
  *
+ * @param callback コールバック関数
  */
 ProgressHelper.prototype.end = function(callback) {
 	this.clearAutoProcess();
