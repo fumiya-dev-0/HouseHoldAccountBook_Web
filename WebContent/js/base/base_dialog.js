@@ -37,13 +37,13 @@ BaseDialog.prototype.close = function(callback){
 	var self = this;
 	// モーダルダイアログとオーバーレイをフェードアウト
 	$(this.modal.selector + ", " + this.overlay.selector).fadeOut("slow", function(){
-			if(cnt < 1){
-				$(self.overlay.selector).remove();
-				if(callback){
-					callback();
-				}
-				cnt++;
+		if(cnt < 1){
+			$(self.overlay.selector).remove();
+			if(callback){
+				callback();
 			}
+			cnt++;
+		}
 	});
 
 }

@@ -62,6 +62,8 @@ ModalHelper.prototype.create = function(option){
 		// ヘッダー子要素作成
 		if(header){
 			this.addHeaderChild(option, header);
+		}else{
+			this.addHeaderChild(option, this.header);
 		}
 	}
 
@@ -71,6 +73,8 @@ ModalHelper.prototype.create = function(option){
 		// フッター子要素作成
 		if(footer){
 			this.addFooterChild(option, footer);
+		}else{
+			this.addFooterChild(option, this.footer);
 		}
 	}
 
