@@ -5,7 +5,26 @@
  *************************************************/
 function MessageHelper(){}
 
-MessageHelper.prototype = ModalHelper.getInstance();
+/**
+ * メソッドチェーン
+ *
+ */
+MessageHelper.prototype = {
+
+		alert: function(){
+			this.alert();
+		},
+
+		confirm: function(){
+			this.confirm();
+		},
+
+		show: function(){
+			this.show();
+		}
+}
+
+MessageHelper.prototype = new BaseDialog();
 
 /**
  * インスタンスの取得
@@ -28,10 +47,31 @@ MessageHelper.getInstance = function(){
  */
 MessageHelper.prototype.alert = function(title, text, callback){
 
-	this.addTarget($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#modal"));
-	var option = this.alertOption(title, text, callback);
-	this.create(option);
-	this.show();
+	this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#modal"));
+
+	// タイトル作成
+	if(title){
+		this.header.css("text-align", "left");
+		this.header.find("#alert-header-title").text(title);
+	}
+
+	// テキスト作成
+	if(text){
+		this.content.html("<span>" + text + "</span>");
+	}
+
+	// ボタン処理
+	$("#alert-send-btn").off("click");
+	$("#alert-send-btn").on("click", $.proxy(function(){
+		this.close(function(){
+			if(callback){
+				callback();
+			}
+		});
+	}, this));
+
+	return this;
+
 }
 
 /**
@@ -43,95 +83,32 @@ MessageHelper.prototype.alert = function(title, text, callback){
  */
 MessageHelper.prototype.confirm = function(title, text, callback){
 
-	this.addTarget($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#modal"));
-	var option = this.confirmOption(title, text, callback);
-	this.create(option);
-	this.show();
-}
+	this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#modal"));
 
-/**
- * アラートダイアログオプション作成
- *
- * @param title タイトル
- * @param text テキスト
- * @param callback コールバック関数
- */
-MessageHelper.prototype.alertOption = function(title, text, callback){
-	return {
-		title: title,
-		text: text,
-		close: false,
-		width: "10%",
-		height: "100px",
-		buttons: [
-			{
-				text: "ＯＫ",
-				click: $.proxy(function(){
-					this.close(function(){
-						if(callback){
-							callback();
-						}
-					});
-				}, this),
-				attr: {
-					class: "button-border button-info"
-				},
-				css: {
-					width: "60px",
-					height: "30px",
-					margin: "0 5px 0 0"
-				}
-			}
-			]
-	};
-}
+	// タイトル作成
+	if(title){
+		this.header.find("#confirm-header-title").text(title);
+	}
 
-/**
- * 確認ダイアログオプション
- *
- * @param title タイトル
- * @param text テキスト
- * @param callback コールバック関数
- */
-MessageHelper.prototype.confirmOption = function(title, text, callback){
-	return {
-		title: title,
-		text: text,
-		width: "10%",
-		height: "100px",
-		buttons: [
-			{
-				text: "ＯＫ",
-				click: $.proxy(function(){
-					this.close(function(){
-						if(callback){
-							callback();
-						}
-					});
-				}, this),
-				attr: {
-					class: "button-border button-info"
-				},
-				css: {
-					width: "60px",
-					height: "30px",
-					margin: "0 5px 0 0"
-				}
-			},
-			{
-				text: "閉じる",
-				click: $.proxy(function(){
-					this.close();
-				}, this),
-				attr: {
-					id: "close_button",
-					class: "button-border button-warning"
-				},
-				css: {
-					width: "60px",
-					height: "30px"
-				}
+	// テキスト作成
+	if(text){
+		this.content.html("<span>" + text + "</span>");
+	}
+
+	// ボタン処理
+	$("#confirm-send-btn").off("click");
+	$("#confirm-send-btn").on("click", $.proxy(function(){
+		this.close(function(){
+			if(callback){
+				callback();
 			}
-			]
-	};
+		});
+	}, this));
+
+	$("#confirm-close-btn, #confirm-close").off("click");
+	$("#confirm-close-btn, #confirm-close").on("click", $.proxy(function(){
+		this.close();
+	}, this));
+
+	return this;
 }

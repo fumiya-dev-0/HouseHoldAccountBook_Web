@@ -3,12 +3,33 @@
  * 作成日: 2019/10/02
  *
  *************************************************/
+/** 横幅初期値 */
+ProgressHelper.WIDTH_DEFAULT = 0;
+/** 横幅増加値 */
 ProgressHelper.WIDTH_POINT = 2;
+/** 横幅最大値 */
 ProgressHelper.WIDTH_MAX = 100;
+/** 1秒間隔 */
 ProgressHelper.INTERVAL = 1000;
 function ProgressHelper(){}
 
-ProgressHelper.prototype = ModalHelper.getInstance();
+/**
+ * メソッドチェーン
+ *
+ */
+ProgressHelper.prototype = {
+
+		progress: function(){
+			this.progress();
+		},
+
+		show: function(){
+			this.autoProcessCntUp();
+			this.show();
+		}
+}
+
+ProgressHelper.prototype = new BaseDialog();
 
 /**
  * インスタンスの取得
@@ -28,20 +49,17 @@ ProgressHelper.getInstance = function(){
  */
 ProgressHelper.prototype.progress = function() {
 
-	this.width = 0;
-	this.update();
+	this.initWidth();
 
-	var option = {
-			title: "処理を実行しています...",
-			close: false,
-			width: "15%",
-	};
+	this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#modal"));
 
-	this.addTarget($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#modal"));
-	this.create(option);
-	this.show();
+	var title = "処理を実行しています...";
+	if(title){
+		this.header.css("text-align", "left");
+		this.header.find("#progress-header-title").text(title);
+	}
 
-	this.autoProcessCntUp();
+	return this;
 }
 
 /**
@@ -59,11 +77,20 @@ ProgressHelper.prototype.end = function(callback) {
 }
 
 /**
+ * プログレスバー初期化
+ *
+ */
+ProgressHelper.prototype.initWidth = function() {
+	this.width = ProgressHelper.WIDTH_DEFAULT;
+	this.update();
+}
+
+/**
  * プログレスバーの更新
  *
  */
 ProgressHelper.prototype.update = function() {
-	if(this.width){
+	if(this.width !== null){
 		 $("#progress-bar").css("width", this.width + "%");
 	}
 }

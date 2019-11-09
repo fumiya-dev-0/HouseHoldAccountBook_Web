@@ -17,7 +17,9 @@ public interface Util {
 		MAIN_CSS_PATH("main.css"),
 		TAB_CSS_PATH("tab.css"),
 		TABBODY_LISTPAGE_CSS_PATH("/listpage/tabbody_listpage.css"),
+		BASE_DIALOG_CSS_PATH("/base/base_dialog.css"),
 		MODAL_CSS_PATH("/common/modal.css"),
+		MESSAGE_CSS_PATH("/common/message.css"),
 		PROGRESS_CSS_PATH("/common/progress.css"),
 		PAGER_CSS_PATH("/common/pager.css");
 

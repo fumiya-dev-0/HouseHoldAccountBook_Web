@@ -3,7 +3,7 @@
  * 作成日: 2019/11/03
  *
  *************************************************/
-/** タブメニューのインスタンス生成 **/
+/** タブメニューのインスタンス生成 */
 Constants.TAB_INSTANCE_FUNC = {
 		["LIST_PAGE"]: () => {
 			new TabbodyListpage();
@@ -13,8 +13,8 @@ Constants.TAB_INSTANCE_FUNC = {
 /*************************************************
  * タブ画面
  *************************************************/
-/** 一覧画面 **/
-/** 初期表示テーブル(ヘッダー) **/
+/** 一覧画面 */
+/** 初期表示テーブル(ヘッダー) */
 Constants.TABBODY_LISTPAGE_PARAM_TABLE = {
 		attr: {
 			id: "table"
@@ -74,7 +74,7 @@ Constants.TABBODY_LISTPAGE_PARAM_TABLE = {
 			]
 };
 
-/** ダイアログのフォーム **/
+/** ダイアログのフォーム */
 Constants.TABBODY_LISTPAGE_PARAM_FORM = {
 		rows: [
 			{

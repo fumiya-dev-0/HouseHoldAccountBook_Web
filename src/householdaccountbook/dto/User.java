@@ -23,7 +23,7 @@ public class User {
 		this.userCode = -1;
 		this.userId = null;
 		this.password = null;
-		loginState = null;
+		this.loginState = null;
 	}
 
 	/**

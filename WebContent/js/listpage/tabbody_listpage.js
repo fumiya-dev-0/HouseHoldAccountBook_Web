@@ -3,18 +3,18 @@
  * 作成日: 2019/09/21
  *
  *************************************************/
-/** 費目コンボボックス定数 **/
+/** 費目コンボボックス定数 */
 TabbodyListpage.prototype.ROW_EXPENSE_NAME = 2;
 TabbodyListpage.prototype.COL_EXPENSE_NAME = 1;
 
-/** エラーメッセージ **/
+/** エラーメッセージ */
 TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
 TabbodyListpage.prototype.DATE_ERROR_MESSAGE = "日付を入力してください。";
 TabbodyListpage.prototype.EXPENSE_ERROR_MESSAGE = "費目を選択してください。";
 TabbodyListpage.prototype.INCOME_ERROR_MESSAGE = "所得を入力してください。";
 TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してください。";
 
-/** ページャ用 **/
+/** ページャ用 */
 TabbodyListpage.prototype.PAGER_MAX = 15;
 TabbodyListpage.prototype.DEFAULT_NOW_PAGE = 1;
 
@@ -38,7 +38,7 @@ function TabbodyListpage(){
 TabbodyListpage.prototype.init = function(){
 
 	// モーダル設定
-	var modalHelper = ModalHelper.getInstance();
+	this.modalHelper = ModalHelper.getInstance();
 	var self = this;
 	var option = {
 			width: "50%",
@@ -47,10 +47,7 @@ TabbodyListpage.prototype.init = function(){
 				{
 					text: "登録",
 					click: function(){
-						var messageHelper = MessageHelper.getInstance();
-						messageHelper.confirm("確認", "登録しますか?", function(){
-							self.insert(modalHelper);
-						});
+						self.insert();
 					},
 					attr: {
 						id: "add-button",
@@ -65,7 +62,7 @@ TabbodyListpage.prototype.init = function(){
 				{
 					text: "閉じる",
 					click: function(){
-						modalHelper.close();
+						self.modalHelper.close();
 					},
 					attr: {
 						id: "close-button",
@@ -87,7 +84,7 @@ TabbodyListpage.prototype.init = function(){
 	 *
 	 */
 	$("#new-button").on("click", $.proxy(function(){
-		modalHelper.dialog(option);
+		self.modalHelper.dialog(option).show();
 		this.loadDialog();
 	}, this));
 
@@ -248,7 +245,7 @@ TabbodyListpage.prototype.loadDialog = function(){
  *
  * @param modalHelper モーダルダイアログクラス
  */
-TabbodyListpage.prototype.insert = function(modalHelper){
+TabbodyListpage.prototype.insert = function(){
 
 	this.clear();
 	if(!this.checkData()){
@@ -264,14 +261,19 @@ TabbodyListpage.prototype.insert = function(modalHelper){
 		type: "POST",
 		url: "insert",
 		progress: true,
+		confirm: {
+			title: "確認",
+			text: "登録しますか？"
+		},
+		alert: {
+			title: "完了",
+			text: "登録が完了しました。"
+		},
 		data: formData,
 		callback: function(data){
-			var messageHelper = MessageHelper.getInstance();
-			messageHelper.alert("完了", "登録が完了しました。", function(){
-				modalHelper.close();
-				self.load();
-				self.loadCombo();
-			});
+			self.modalHelper.close();
+			self.load();
+			self.loadCombo();
 		}
 	});
 

@@ -9,5 +9,5 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div id="modal" class="modal">
-	<div id="modal-content" class="modal-content"></div>
+	<div id="modal-content" class="base-dialog-content"></div>
 </div>

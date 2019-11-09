@@ -18,20 +18,23 @@ import householdaccountbook.util.ActionCommon;
  *************************************************/
 public class BaseAction extends ActionSupport implements ServletResponseAware, ServletRequestAware, ActionCommon {
 
-	// クッキー用変数
+	/** クッキー用変数 */
 	public static final String COOKIE_USER_ID = "user_id";
-	// セッション用変数
+	/** セッション用変数 */
 	public static final String SESSION_USER_CODE = "user_code";
 
-	// エラーメッセージ
+	/** エラーメッセージ */
 	private String errorMessage;
-	// 返却用パラメータ
+	/** 返却用パラメータ */
 	private String json;
-	// 入力データ
+	/** 入力データ */
 	private String data;
 
+	/** httpレスポンス情報 */
 	protected HttpServletResponse response;
+	/** httpリクエスト情報 */
 	protected HttpServletRequest request;
+	/** セッション情報 */
 	protected HttpSession session;
 
 	/**
@@ -52,10 +55,11 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+
 	/**
 	 * エラーメッセージの設定
 	 *
-	 * @param errorMessage
+	 * @param errorMessage エラーメッセージ
 	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
@@ -113,6 +117,7 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 	public String getJson() {
 		return json;
 	}
+
 	/**
 	 * 返却用パラメータ setter
 	 *
@@ -144,6 +149,7 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
 	}
+
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;

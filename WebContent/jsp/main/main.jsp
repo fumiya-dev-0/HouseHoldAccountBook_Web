@@ -16,8 +16,12 @@
 <%@include file="../lib.jsp"%>
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MAIN_CSS_PATH.getPath()" />">
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
+<!-- ベースダイアログCSS -->
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@BASE_DIALOG_CSS_PATH.getPath()" />">
 <!-- モーダルダイアログCSS -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MODAL_CSS_PATH.getPath()" />">
+<!-- メッセージダイアログCSS -->
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MESSAGE_CSS_PATH.getPath()" />">
 <!-- プログレスダイアログCSS -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PROGRESS_CSS_PATH.getPath()" />">
 <!-- ページャCSS -->

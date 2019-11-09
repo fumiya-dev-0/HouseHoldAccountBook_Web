@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+#confirm-modal, #alert-modal {
+	width: 30%;
+}
+
+#confirm-header-title {
+	position: absolute;
+	left: 10px;
+}

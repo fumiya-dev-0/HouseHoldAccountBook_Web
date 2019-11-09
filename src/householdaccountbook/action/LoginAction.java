@@ -18,16 +18,21 @@ import householdaccountbook.util.StringUtil;
  *************************************************/
 public class LoginAction extends BaseAction {
 
+	/** ユーザーID(入力) */
 	private String userId;
+	/** パスワード(入力) */
 	private String password;
+	/** クッキー自動登録 */
 	private Boolean auto;
 
-	// ハッシュ関数
+	/** ハッシュ関数 */
 	public static final String HASH_ALGORITHM = "SHA-512";
-	// ソルト
+	/** ソルト */
 	public static final String SALT = "bbksadasvgsrsferccadsefg44wefKYTJRBaawf356";
 
+	/** ユーザー入力エラーメッセージ */
 	public static final String LOGIN_ERROR_MESSAGE = "入力されたユーザID又はパスワードが正しくありません。";
+	/** ハッシュ生成エラーメッセージ */
 	public static final String HASH_ERROR_MESSAGE = "ハッシュの生成に失敗しました。";
 
 	/**
@@ -82,30 +87,55 @@ public class LoginAction extends BaseAction {
 	}
 
 	/**
-	 * アクセサ
+	 * ユーザーID getter
 	 *
-	 * @return
+	 * @return ユーザーID
 	 */
 	public String getUserId() {
 		return userId;
 	}
 
+	/**
+	 * ユーザーID setter
+	 *
+	 * @param userId ユーザーID
+	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
+	/**
+	 * パスワード getter
+	 *
+	 * @return パスワード
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * パスワード setter
+	 *
+	 * @param password パスワード
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * クッキー自動登録 getter
+	 *
+	 * @return クッキー自動登録
+	 */
 	public Boolean getAuto() {
 		return auto;
 	}
 
+	/**
+	 * クッキー自動登録 setter
+	 *
+	 * @param auto クッキー自動登録
+	 */
 	public void setAuto(Boolean auto) {
 		this.auto = auto;
 	}
@@ -113,7 +143,7 @@ public class LoginAction extends BaseAction {
 	/**
 	 * ログイン処理
 	 *
-	 * @return
+	 * @return true(ログイン成功) / false(ログイン失敗)
 	 * @throws UnsupportedEncodingException
 	 * @throws NoSuchAlgorithmException
 	 */
@@ -151,7 +181,7 @@ public class LoginAction extends BaseAction {
 	/**
 	 * 入力チェック
 	 *
-	 * @return
+	 * @return true / false
 	 */
 	private boolean isCheck() {
 
@@ -193,7 +223,8 @@ public class LoginAction extends BaseAction {
 
 	/**
 	 * クッキーが存在するかチェック
-	 * @return
+	 *
+	 * @return true / false
 	 */
 	private boolean isCookie(Cookie cookies[]) {
 
@@ -210,8 +241,8 @@ public class LoginAction extends BaseAction {
 
 	/**
 	 * クッキーの取得
-	 * @return
 	 *
+	 * @return クッキー情報
 	 */
 	private String getCookie(Cookie cookies[]) {
 		String cookie = "";
