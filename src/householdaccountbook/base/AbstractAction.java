@@ -1,5 +1,7 @@
 package householdaccountbook.base;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,10 +11,11 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import householdaccountbook.util.ActionCommon;
+import householdaccountbook.action.util.ActionCommon;
+import householdaccountbook.util.Constants;
 
 /*************************************************
- * ベースアクションクラス
+ * アブストラクトアクションクラス
  * 作成日: 2019/08/04
  *
  *************************************************/
@@ -35,9 +38,19 @@ public abstract class AbstractAction extends ActionSupport implements ServletRes
 
 	/**
 	 * 抽象メソッド
+	 * @param <T>
 	 *
 	 */
 	abstract public String execute();
+
+	/**
+	 * セッションの取得
+	 *
+	 * @return セッション情報
+	 */
+	private HttpSession getSession() {
+		return session == null ? request.getSession(true) : session;
+	}
 
 	/**
 	 * セッション情報の取得
@@ -82,16 +95,28 @@ public abstract class AbstractAction extends ActionSupport implements ServletRes
 	}
 
 	/**
-	 * セッションの取得
+	 * 属性の設定
 	 *
-	 * @return セッション情報
+	 * @param <T> ジェネリクス
+	 * @param resultMap 結果マップ
+	 * @return 属性
 	 */
-	private HttpSession getSession() {
-		if(session == null) {
-			return request.getSession(true);
-		}
+	@SuppressWarnings("unchecked")
+	protected <T> void setAttrResponse(Map<String, T> resultMap) {
 
-		return session;
+		// 属性値が存在する場合
+		if(request.getAttribute(Constants.DATA) != null) {
+			// マップに属性値のコピーを行う
+			Map<String, T> map =  (Map<String, T>) request.getAttribute(Constants.DATA);
+			// マップに新しいマップを追加
+			for(Map.Entry<String, T> entry : resultMap.entrySet()){
+				map.put(entry.getKey(), entry.getValue());
+			}
+			request.setAttribute(Constants.DATA, map);
+		} else {
+			// 属性値が存在しない場合
+			request.setAttribute(Constants.DATA, resultMap);
+		}
 	}
 
 	@Override

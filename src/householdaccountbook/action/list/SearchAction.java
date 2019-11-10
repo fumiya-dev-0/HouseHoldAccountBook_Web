@@ -1,9 +1,9 @@
 package householdaccountbook.action.list;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
-
-import com.google.gson.Gson;
+import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.model.list.ListModel;
@@ -22,15 +22,21 @@ public class SearchAction extends AbstractAction {
 	public String execute() {
 
 		String data = getParam(Constants.DATA);
+		int userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
 		ListModel model = new ListModel();
-		Gson gson = new Gson();
+
 		try {
-			List<Object[]> list = (data == null) ? model.load(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)), null) : model.load(Integer.parseInt(getSessionAttribute(SESSION_USER_CODE)), data);
-			request.setAttribute("data", gson.toJson(convertList(list)));
+			List<Object[]> list = (data == null) ? model.load(userCode, null) : model.load(userCode, data);
+
+			Map<String, List<Object[]>> resultMap = new HashMap<String, List<Object[]>>();
+			resultMap.put("resultList", convertList(list));
+			setAttrResponse(resultMap);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return SQL_ERROR;
+			return ACTION_ERROR;
 		}
+
 		return ACTION_SUCCESS;
 	}
 

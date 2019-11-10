@@ -1,8 +1,8 @@
 package householdaccountbook.action.list;
 
+import java.util.HashMap;
 import java.util.List;
-
-import com.google.gson.Gson;
+import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.Expense;
@@ -18,11 +18,13 @@ public class SearchComboAction extends AbstractAction {
 	@Override
 	public String execute() {
 
-		Gson gson = new Gson();
-
 		ExpenseModel model = new ExpenseModel();
 		List<Expense> expenses = model.load();
-		request.setAttribute("data", gson.toJson(expenses));
+
+		Map<String, List<Expense>> resultMap = new HashMap<String, List<Expense>>();
+		resultMap.put("expenses", expenses);
+		setAttrResponse(resultMap);
+
 		return ACTION_SUCCESS;
 	}
 

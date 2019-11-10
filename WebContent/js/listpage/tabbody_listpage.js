@@ -220,7 +220,7 @@ TabbodyListpage.prototype.load = function(formData){
 				url: "list",
 				data: formData,
 				callback: function(data) {
-					self.accountBookData = data;
+					self.accountBookData = data.resultList;
 					// テーブルとページャの作成
 					self.createTableWithPager(this.DEFAULT_NOW_PAGE, self.accountBookData);
 				}
@@ -235,7 +235,6 @@ TabbodyListpage.prototype.load = function(formData){
  */
 TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
-
 	this.tableHelper = new TableHelper;
 
 	this.tableHelper.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
@@ -260,7 +259,7 @@ TabbodyListpage.prototype.loadDialog = function(rIdx){
 		callback: function(data) {
 			self.formHelper = new TableHelper();
 			self.formHelper.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
-			self.formHelper.setCombobox(self.FORM_ROW_IDX_EXPENSE, self.FORM_COL_IDX, data);
+			self.formHelper.setCombobox(self.FORM_ROW_IDX_EXPENSE, self.FORM_COL_IDX, data.expenses);
 			if(rIdx || rIdx === 0){
 				self.setForm(rIdx);
 			}

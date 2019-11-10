@@ -1,4 +1,4 @@
-package householdaccountbook.util;
+package householdaccountbook.action.util;
 
 /*************************************************
  * アクション用共通インターフェース

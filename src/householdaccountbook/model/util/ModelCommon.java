@@ -1,4 +1,4 @@
-package householdaccountbook.util;
+package householdaccountbook.model.util;
 
 /*************************************************
  * モデル用共通クラス
