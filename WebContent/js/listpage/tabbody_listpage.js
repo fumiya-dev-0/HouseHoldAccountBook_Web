@@ -3,9 +3,10 @@
  * 作成日: 2019/09/21
  *
  *************************************************/
-/** 費目コンボボックス定数 */
-TabbodyListpage.prototype.ROW_EXPENSE_NAME = 2;
-TabbodyListpage.prototype.COL_EXPENSE_NAME = 1;
+/** 入力フォーム行番号 */
+TabbodyListpage.prototype.FORM_ROW_IDX = 2;
+/** 入力フォーム列番号 */
+TabbodyListpage.prototype.FORM_COL_IDX = 1;
 
 /** エラーメッセージ */
 TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
@@ -94,7 +95,8 @@ TabbodyListpage.prototype.init = function(){
 	 */
 	$("#upd-button").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
-			console.log(this.tableHelper.getSelectColText(5));
+			var rIdx = this.tableHelper.getRowIdx();
+			console.log(this.tableHelper.rows(rIdx).cols(5).getText());
 		}
 	}, this));
 
@@ -212,7 +214,8 @@ TabbodyListpage.prototype.load = function(formData){
 TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
 
-	this.tableHelper = TableHelper.getInstance();
+	this.tableHelper = new TableHelper;
+
 	this.tableHelper.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
 
 	$("#pagerArea").html(PagerUtil.getRefAll());
@@ -226,16 +229,16 @@ TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
  * 新規モーダルダイアログのテーブル表示
  *
  */
-TabbodyListpage.prototype.loadDialog = function(){
+TabbodyListpage.prototype.loadDialog = function(rIdx){
 
 	var self = this;
 	AjaxUtil.process({
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
-			var tableHelper = TableHelper.getInstance();
+			var tableHelper = new TableHelper();
 			tableHelper.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
-			tableHelper.setCombobox($("#modal-content"), self.ROW_EXPENSE_NAME, self.COL_EXPENSE_NAME, data);
+			tableHelper.setCombobox(self.FORM_ROW_IDX, self.FORM_COL_IDX, data);
 		}
 	});
 }

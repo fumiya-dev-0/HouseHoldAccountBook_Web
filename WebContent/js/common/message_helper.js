@@ -44,10 +44,15 @@ MessageHelper.getInstance = function(){
  * @param title タイトル
  * @param text テキスト
  * @param callback コールバック関数
+ * @return this インスタンス
  */
 MessageHelper.prototype.alert = function(title, text, callback){
 
-	this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#modal"));
+	if($("#modal").css("display") == "block"){
+		this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#modal"));
+	}else{
+		this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#body"));
+	}
 
 	// タイトル作成
 	if(title){
@@ -80,10 +85,15 @@ MessageHelper.prototype.alert = function(title, text, callback){
  * @param title タイトル
  * @param text テキスト
  * @param callback コールバック関数
+ * @return this インスタンス
  */
 MessageHelper.prototype.confirm = function(title, text, callback){
 
-	this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#modal"));
+	if($("#modal").css("display") == "block"){
+		this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#modal"));
+	}else{
+		this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#body"));
+	}
 
 	// タイトル作成
 	if(title){

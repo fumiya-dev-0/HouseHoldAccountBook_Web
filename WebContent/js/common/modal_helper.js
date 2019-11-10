@@ -38,6 +38,7 @@ ModalHelper.getInstance = function(){
  * ダイアログ初期設定
  *
  * @param option オプションパラメータ
+ * @return this インスタンス
  */
 ModalHelper.prototype.dialog = function(option){
 
@@ -98,6 +99,7 @@ ModalHelper.prototype.create = function(option){
 /**
  * ヘッダーの作成
  *
+ * @return header ヘッダー要素
  */
 ModalHelper.prototype.addHeader = function(){
 
@@ -157,6 +159,7 @@ ModalHelper.prototype.addHeaderChild = function(option, header){
 /**
  * フッターの作成
  *
+ * @return footer フッター要素
  */
 ModalHelper.prototype.addFooter = function(){
 

@@ -6,115 +6,165 @@
 function TableHelper(){}
 
 /**
- * インスタンスの取得
+ * メソッドチェーン
  *
- * @return インスタンス
  */
-TableHelper.getInstance = function(){
-	if(!this.tableHelper){
-		this.tableHelper = new TableHelper();
-	}
-	return this.tableHelper;
+TableHelper.prototype = {
+
+		// テーブルの作成
+		addTable: function(parent){
+			parent.html("<table></table>");
+			return this;
+		},
+
+		// テーブルの取得
+		getTable(parent){
+			return parent.find("table");
+		},
+
+		// フォームの作成
+		addForm: function(parent){
+			parent.html("<form></form>");
+			return this;
+		},
+
+		// フォームの取得
+		getForm(parent){
+			return parent.find("form");
+		},
+
+		// theadの追加
+		addTHead: function(){
+			return this.mTable.append("<thead></thead>");
+		},
+
+		// theadの取得
+		getTHead: function(){
+			return this.mTable.find("thead");
+		},
+
+		// tbodyの追加
+		addTBody: function(){
+			return this.mTable.append("<tbody></tbody>");
+		},
+
+		// tbodyの取得
+		getTBody: function(){
+			return this.mTable.find("tbody");
+		},
+
+		// ヘッダー行の追加
+		addHRows: function(){
+			this.mTable.find("thead").append("<tr></tr>");
+			return this;
+		},
+
+		// ヘッダー行の取得
+		hRows: function(rIdx){
+			this.hRow = this.mTable.find("thead").find("tr").eq(rIdx);
+			return this;
+		},
+
+		// 行の取得
+		rows: function(rIdx){
+			this.row = this.mTable.find("tbody").find("tr").eq(rIdx);
+			return this;
+		},
+
+		// 行の追加
+		addRows: function(){
+			this.mTable.find("tbody").append("<tr></tr>");
+			return this;
+		},
+
+		// ヘッダー列の追加
+		addHCols: function(rIdx){
+			return this.mTable.find("thead").find("tr").eq(rIdx).append("<th></th>");
+		},
+
+		// ヘッダー列の取得
+		hCols: function(cIdx){
+			this.hCol = this.hRow.find("th").eq(cIdx);
+			return this;
+		},
+
+		// 列の追加
+		addCols: function(rIdx){
+			return this.mTable.find("tbody").find("tr").eq(rIdx).append("<td></td>");
+		},
+
+		// 列の取得
+		cols: function(cIdx){
+			this.col = this.row.find("td").eq(cIdx);
+			return this;
+		},
+
+		// ヘッダー列
+		getHCol: function(){
+			return this.hCol;
+		},
+
+		// 列
+		getCol: function(){
+			return this.col;
+		},
+
+		// ヘッダー行
+		getHRow: function(){
+			return this.hRow;
+		},
+
+		// 行
+		getRow: function(){
+			return this.row;
+		},
+
+		// テキスト取得
+		getText: function(){
+			return this.col.text();
+		},
+
+		// テキスト設定
+		setText: function(text){
+			this.col.text(text);
+		}
+
 }
 
+/*************************************************
+ * テーブル生成
+ *************************************************/
 /**
- * 初期設定
+ * テーブル生成
  *
- * @param area 表示エリア
+ * @param parent 表示エリア
  * @param option ヘッダー情報
  * @param data 表示データ
  */
-TableHelper.prototype.table = function(area, option, data){
+TableHelper.prototype.table = function(parent, option, data){
 
 	// テーブルの生成
-	area.html("<table></table>");
+	this.addTable(parent);
 	// テーブルの取得
-	table = area.find("table");
+	this.mTable = this.getTable(parent);
 	// 行フラグの生成
 	this.rFlg = this.createRowFlg(data);
-	// テーブルのcss設定
-	if(option.css) table.css(option.css);
-	// テーブルのattr設定
-	if(option.attr) table.attr(option.attr);
+	// プロパティの設定
+	this.addProp(option, this.mTable);
 	// ヘッダーの作成
-	if(option) this.header(table, option);
+	if(option){
+		this.header(option);
+	}
 	// 行の作成
-	if(data) this.addRows(table, data);
+	if(data){
+		this.body(data);
+	}
 	// テーブル選択時処理
-	this.select(table);
+	this.select();
 }
 
 /**
- * ヘッダーの作成
- *
- * @param table テーブル
- * @param option ヘッダー情報
- */
-TableHelper.prototype.header = function(table, option){
-	// ヘッダー作成
-	table.html("<thead><tr></tr></thead>");
-	var self = this;
-	$.each(option.columns, function(idx, column){
-		// ヘッダー列作成
-		self.createHeaderCol(table, idx, column);
-	});
-}
-
-/**
- * ヘッダー列作成
- *
- * @param table テーブル
- * @param idx 行番号
- * @param option カラムのプロパティ
- */
-TableHelper.prototype.createHeaderCol = function(table, idx, option){
-	// ヘッダー列作成
-	this.addHeaderCol(table.find("tr"));
-	// ヘッダー列プロパティ作成
-	this.setProperty(option, table.find("tr").eq(0).children().eq(idx));
-}
-
-/**
- * ボディの作成
- *
- * @param table テーブル
- * @param data 表示データ
- */
-TableHelper.prototype.addRows = function(table, data){
-
-	// ボディ要素作成
-	table.append("<tbody></tbody>");
-	var self = this;
-	$.each(data, function(rIdx, obj){
-		// 行の追加
-		self.addRow(table.find("tbody"));
-		// 行の取得
-		var tr = self.getRow(table, rIdx + 1);
-		$.each(obj, function(cIdx, value){
-			// ボディ列の追加
-			self.addBodyCol(tr);
-			// ヘッダー列の取得
-			var hCol = self.getHeaderCol(self.getRow(table, 0), cIdx);
-			// ボディ列の取得、テキスト設定
-			var col = self.getBodyCol(tr, cIdx).text(value);
-			// 非表示処理
-			self.isSetTargetHidden(hCol, col);
-		});
-	});
-}
-
-/**
- * 対象のヘッダーが非表示の場合は非表示にする
- *
- * @param hCol ヘッダーカラム
- * @param col カラム
- */
-TableHelper.prototype.isSetTargetHidden = function(hCol, col){
-	if(hCol.css("display") == "none") col.css("display", "none");
-}
-
-/**
- * 行のフラグ作成
+ * 行フラグ作成
  *
  * @param data 表示データ
  * @param rFlg 行フラグ
@@ -128,16 +178,83 @@ TableHelper.prototype.createRowFlg = function(data){
 }
 
 /**
+ * ヘッダーの作成
+ *
+ * @param option ヘッダー情報
+ */
+TableHelper.prototype.header = function(option){
+
+	// ヘッダー追加
+	this.addTHead();
+	// ヘッダー行追加
+	this.addHRows();
+
+	$.each(option.columns, $.proxy(function(idx, cOption){
+
+		// ヘッダー列追加
+		this.addHCols(0);
+		// ヘッダー列取得
+		var hCol = this.hRows(0).hCols(idx).getHCol();
+		// ヘッダー列プロパティ追加
+		this.addProp(cOption, hCol);
+	}, this));
+}
+
+/**
+ * 行の追加
+ *
+ * @param data 表示データ
+ */
+TableHelper.prototype.body = function(data){
+
+	// ボディ要素作成
+	this.addTBody();
+
+	$.each(data, $.proxy(function(rIdx, obj){
+
+		// 行の追加
+		this.addRows();
+		// 列の追加
+		this.addBodyCols(obj, rIdx);
+	}, this));
+}
+
+/**
+ * 列の追加
+ *
+ * @param obj オブジェクト
+ * @param rIdx 行番号
+ */
+TableHelper.prototype.addBodyCols = function(obj, rIdx){
+
+	$.each(obj, $.proxy(function(cIdx, val){
+
+		// ボディ列の追加
+		this.addCols(rIdx);
+		// ヘッダー列の取得
+		var hCol = this.hRows(0).hCols(cIdx).getHCol();
+		// ボディ列の取得
+		var col = this.rows(rIdx).cols(cIdx).getCol();
+		// ボディ列のテキスト設定
+		this.rows(rIdx).cols(cIdx).setText(val);
+		// 非表示処理
+		if(hCol.css("display") == "none"){
+			col.css("display", "none");
+		}
+	}, this));
+
+}
+
+/**
  * テーブルの選択時処理
  *
  * @param table テーブル
  */
-TableHelper.prototype.select = function(table){
+TableHelper.prototype.select = function(){
 
 	this.rIdx = null;
-	this.selector = table.selector;
 	var self = this;
-	$(table.selector + " td").bind("click", function(){
+	$(this.mTable.selector + " td").bind("click", function(){
 		var tr = $(this).parent()[0];
 		// 選択行の更新
 		self.update(tr);
@@ -171,7 +288,7 @@ TableHelper.prototype.beforeUpdate = function(table, tr){
 	// 前回選択行番号が存在する場合
 	if(this.beforeRowIdx){
 		// 前回選択行の取得
-		var beforeTr = table.find("tr")[Number(this.beforeRowIdx)];
+		var beforeTr = this.mTable.find("tr")[Number(this.beforeRowIdx)];
 		// 前回選択行フラグがfalseの場合
 		if(!this.rFlg[this.beforeRowIdx]){
 			// 前回選択行と選択行が一致する場合
@@ -190,7 +307,7 @@ TableHelper.prototype.beforeUpdate = function(table, tr){
 /**
  * カラーと行フラグ更新
  *
- * @param tr tr要素
+ * @param tr 行要素
  * @param color カラーデータ
  * @param rIdx 行番号
  * @param bool true(選択) / false(非選択)
@@ -202,6 +319,7 @@ TableHelper.prototype.updateColorWithRowFlg = function(tr, color, rIdx, bool){
 
 /**
  * 行選択チェック
+ *
  */
 TableHelper.prototype.isRow = function(){
 	var bool = false;
@@ -214,8 +332,8 @@ TableHelper.prototype.isRow = function(){
 /**
  * 行選択チェック処理
  *
- * @param bool true(選択) / false(非選択)
- * @return true(選択) / false(非選択)
+ * @param bool true(選択) / false(未選択)
+ * @return true(選択) / false(未選択)
  */
 TableHelper.prototype.isRowBool = function(bool){
 	$.each(this.rFlg, function(idx, isBool){
@@ -224,25 +342,6 @@ TableHelper.prototype.isRowBool = function(bool){
 		}
 	});
 	return bool;
-}
-
-/**
- * 選択行取得
- *
- * @param 選択行
- */
-TableHelper.prototype.getSelectRow = function(){
-	return $(this.selector).find("tr").eq(this.getRowIdx());
-}
-
-/**
- * テキスト取得
- *
- * @param テキスト
- */
-TableHelper.prototype.getSelectColText = function(cIdx){
-	var col = this.getSelectRow().find("td").eq(cIdx);
-	return col.text();
 }
 
 /**
@@ -260,36 +359,48 @@ TableHelper.prototype.getRowIdx = function(){
 	return rIdx;
 }
 
+/*************************************************
+ * 入力フォーム生成
+ *************************************************/
 /**
  * 表の作成(入力フォーム)
  *
- * @param area 表示エリア
+ * @param parent 表示エリア
  * @param option 入力フォーム情報
  */
-TableHelper.prototype.form = function(area, option){
+TableHelper.prototype.form = function(parent, option){
 
-	// フォーム・テーブルの作成
-	area.html("<form><table></table></form>");
+	// フォームの追加
+	this.addForm(parent);
+	// フォームの取得
+	var form = this.getForm(parent);
+	// テーブルの追加
+	this.addTable(form);
 	// テーブルの取得
-	table = area.find("table");
-	var self = this;
-	$.each(option.rows, function(idx, rows){
+	this.mTable = this.getTable(form);
+	// tbody要素追加
+	this.addTBody();
+
+	$.each(option.rows, $.proxy(function(rIdx, rows){
+
 		// 行の追加
-		self.addRow(table);
-		// 行の取得
-		var tr = self.getRow(table, idx);
-
+		this.addRows();
 		// ヘッダー列の追加
-		self.addHeaderCol(tr);
+		this.addCols(rIdx);
 		// ヘッダー列の取得
-		var th = self.getHeaderCol(tr, 0);
+		var th = this.rows(rIdx).cols(0).getCol();
 
-		// テキストエリア(左側)のプロパティ設定
-		if(rows.textArea) self.setProperty(rows.textArea, th);
+		// テキストエリア(左側)のプロパティ追加
+		if(rows.textArea){
+			this.addProp(rows.textArea, th);
+		}
+
 		// 入力エリア(右側)の設定
-		if(rows.inputArea) self.setInput(rows, tr);
+		if(rows.inputArea){
+			this.setInput(rows, rIdx);
+		}
 
-	});
+	}, this));
 }
 
 /**
@@ -298,21 +409,20 @@ TableHelper.prototype.form = function(area, option){
  * @param rows 行データ
  * @param tr tr要素
  */
-TableHelper.prototype.setInput = function(rows, tr){
+TableHelper.prototype.setInput = function(rows, rIdx){
 
-	var self = this;
-	$.each(rows.inputArea, function(idx, inputArea){
+	$.each(rows.inputArea, $.proxy(function(cIdx, inputArea){
 		if(inputArea.element) {
-			// ボディ列の追加
-			self.addBodyCol(tr);
-			// ボディ列の取得
-			var td = self.getBodyCol(tr, idx);
+			// 列の追加
+			this.addCols(rIdx);
+			// 列の取得
+			var td = this.rows(rIdx).cols(cIdx + 1).getCol();
 			// ボディ列内入力要素制定
 			td.append("<" + inputArea.element + ">" + "</" + inputArea.element + ">");
 			// 入力要素のプロパティ設定
-			self.setProperty(inputArea, td.find(inputArea.element));
+			this.addProp(inputArea, td.find(inputArea.element));
 		}
-	});
+	}, this));
 }
 
 /**
@@ -323,96 +433,29 @@ TableHelper.prototype.setInput = function(rows, tr){
  * @param cIdx 列番号
  * @param data 表示データ
  */
-TableHelper.prototype.setCombobox = function(parent, rIdx, cIdx, data){
-	var select = $(parent.selector + " table").find("tbody").children().eq(rIdx).children().eq(cIdx).find("select");
-	this.setSelect(select, data);
+TableHelper.prototype.setCombobox = function(rIdx, cIdx, data){
+	var select = this.rows(rIdx).cols(cIdx).getCol().find("select");
+	this.addOption(select, data);
 }
 
 /**
- * コンボボックス設定
+ * option要素の追加
  *
  * @param select select要素
  * @param data 表示データ
  */
-TableHelper.prototype.setSelect = function(select, data){
+TableHelper.prototype.addOption = function(select, data){
 
 	var self = this;
-	self.createOption(select, 0, "", "");
+	select.append("<option></option>").find("option").eq(0).val("").text("");
 	$.each(data, function(idx, obj){
-		self.createOption(select, idx+1, obj[Object.keys(obj)[0]], obj[Object.keys(obj)[1]]);
+		var val = obj[Object.keys(obj)[0]];
+		var text = obj[Object.keys(obj)[1]];
+		// option要素の追加
+		select.append("<option></option>");
+		// option要素に値設定
+		select.find("option").eq(idx + 1).val(val).text(text);
 	});
-}
-
-/**
- * オプション(コンボボックス)の作成
- *
- * @param select select要素
- * @param idx 表示データの番号
- * @param val 表示データ(value)
- * @param text 表示データ(text)
- */
-TableHelper.prototype.createOption = function(select, idx, val, text){
-	select.append("<option></option>").find("option").eq(idx).val(val).text(text);
-}
-
-/**
- * 行の追加
- *
- * @param table テーブル
- */
-TableHelper.prototype.addRow = function(table){
-	table.append("<tr></tr>");
-}
-
-/**
- * 行の取得
- *
- * @param table テーブル
- * @param rIdx 行番号
- * @return 行(tr)要素
- */
-TableHelper.prototype.getRow = function(table, rIdx){
-	return table.find("tr").eq(rIdx);
-}
-
-/**
- * 列の追加(ヘッダー)
- *
- * @param tr tr要素
- */
-TableHelper.prototype.addHeaderCol = function(tr){
-	tr.append("<th></th>");
-}
-
-/**
- * 列の取得(ヘッダー)
- *
- * @param tr tr要素
- * @param cIdx 列番号
- * @return 列(th)要素
- */
-TableHelper.prototype.getHeaderCol = function(tr, cIdx){
-	return tr.find("th").eq(cIdx);
-}
-
-/**
- * 列の追加(ボディ)
- *
- * @param tr tr要素
- */
-TableHelper.prototype.addBodyCol = function(tr){
-	tr.append("<td></td>");
-}
-
-/**
- * 列の取得(ボディ)
- *
- * @param tr tr要素
- * @param cIdx カラム番号
- * @return 列(td)要素
- */
-TableHelper.prototype.getBodyCol = function(tr, cIdx){
-	return tr.find("td").eq(cIdx);
 }
 
 /**
@@ -421,8 +464,14 @@ TableHelper.prototype.getBodyCol = function(tr, cIdx){
  * @param option プロパティ情報
  * @param element 指定要素
  */
-TableHelper.prototype.setProperty = function(option, element){
-	if(option.text) element.text(option.text);
-	if(option.css) element.css(option.css);
-	if(option.attr) element.attr(option.attr);
+TableHelper.prototype.addProp = function(option, element){
+	if(option.text){
+		element.text(option.text);
+	}
+	if(option.css){
+		element.css(option.css);
+	}
+	if(option.attr){
+		element.attr(option.attr);
+	}
 }

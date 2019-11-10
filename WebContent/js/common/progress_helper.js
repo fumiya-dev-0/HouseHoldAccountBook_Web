@@ -46,12 +46,17 @@ ProgressHelper.getInstance = function(){
 /**
  * プログレスダイアログ実行
  *
+ * @return this インスタンス
  */
 ProgressHelper.prototype.progress = function() {
 
 	this.initWidth();
 
-	this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#modal"));
+	if($("#modal").css("diplasy") == "block"){
+		this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#modal"));
+	}else{
+		this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#body"));
+	}
 
 	var title = "処理を実行しています...";
 	if(title){
@@ -130,5 +135,7 @@ ProgressHelper.prototype.autoProcessCntUp = function() {
  *
  */
 ProgressHelper.prototype.clearAutoProcess = function() {
-	if(this.interval) clearInterval(this.interval);
+	if(this.interval){
+		clearInterval(this.interval);
+	}
 }
