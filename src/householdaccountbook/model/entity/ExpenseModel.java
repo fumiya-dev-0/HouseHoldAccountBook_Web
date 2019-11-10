@@ -1,4 +1,4 @@
-package householdaccountbook.model;
+package householdaccountbook.model.entity;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
+import householdaccountbook.base.BaseModel;
 import householdaccountbook.dto.Expense;
 
 /*************************************************

@@ -127,6 +127,16 @@ TableHelper.prototype = {
 		// テキスト設定
 		setText: function(text){
 			this.col.text(text);
+		},
+
+		// 値取得
+		getValue: function(){
+			return this.col.children.val();
+		},
+
+		// 値設定
+		setValue: function(val){
+			this.col.children().val(val);
 		}
 
 }

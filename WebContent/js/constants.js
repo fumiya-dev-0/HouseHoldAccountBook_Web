@@ -41,13 +41,6 @@ Constants.TABBODY_LISTPAGE_PARAM_TABLE = {
 				}
 			},
 			{
-				text: "表示順",
-				css: {
-					width: "0px",
-					display: "none"
-				}
-			},
-			{
 				text: "費目",
 				css: {
 					width: "100px"
@@ -77,6 +70,26 @@ Constants.TABBODY_LISTPAGE_PARAM_TABLE = {
 /** ダイアログのフォーム */
 Constants.TABBODY_LISTPAGE_PARAM_FORM = {
 		rows: [
+			{
+				textArea: {
+					text: "家計簿コード",
+					css: {
+						display: "none"
+					}
+				},
+				inputArea: [
+					{
+						element: "input",
+						attr: {
+							type: "hidden",
+							id: "householdaccountbook-code"
+						},
+						css: {
+							display: "none"
+						}
+					}
+					]
+			},
 			{
 				textArea: {
 					text: "名前",

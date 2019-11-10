@@ -1,4 +1,4 @@
-package householdaccountbook.model;
+package householdaccountbook.model.list;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.type.StandardBasicTypes;
+
+import householdaccountbook.base.BaseModel;
 
 /*************************************************
  * 一覧画面用モデルクラス
@@ -35,10 +37,9 @@ public class ListModel extends BaseModel {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("select ");
-		sql.append("       hhab.USER_CODE");
-		sql.append("      ,hhab.HOUSEHOLDACCOUNTBOOK_CODE");
-		sql.append("      ,hhab.NAME as HOUSEHOLDACCOUNTBOOK_NAME");
+		sql.append("      hhab.HOUSEHOLDACCOUNTBOOK_CODE");
 		sql.append("      ,expense.EXPENSE_CODE");
+		sql.append("      ,hhab.NAME as HOUSEHOLDACCOUNTBOOK_NAME");
 		sql.append("      ,expense.NAME");
 		sql.append("      ,hhab.DATE");
 		sql.append("      ,hhab.INCOME");
@@ -54,10 +55,9 @@ public class ListModel extends BaseModel {
 
 		Query<Object[]> query = session
 				.createSQLQuery(sql.toString())
-				.addScalar("USER_CODE", StandardBasicTypes.INTEGER)
 				.addScalar("HOUSEHOLDACCOUNTBOOK_CODE", StandardBasicTypes.INTEGER)
-				.addScalar("HOUSEHOLDACCOUNTBOOK_NAME", StandardBasicTypes.STRING)
 				.addScalar("EXPENSE_CODE", StandardBasicTypes.INTEGER)
+				.addScalar("HOUSEHOLDACCOUNTBOOK_NAME", StandardBasicTypes.STRING)
 				.addScalar("NAME", StandardBasicTypes.STRING)
 				.addScalar("DATE", StandardBasicTypes.STRING)
 				.addScalar("INCOME", StandardBasicTypes.INTEGER)

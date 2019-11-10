@@ -7,25 +7,27 @@
 	<constant name="struts.ui.theme" value="simple" />
 	<package name="householdaccountbook_web" extends="struts-default">
 		<!-- ログイン画面 -->
-		<action name="" class="householdaccountbook.action.LoginAction" method="show">
+		<!-- ログイン画面表示 -->
+		<action name="" class="householdaccountbook.action.login.SearchCookieAction" method="execute">
 			<result name="success">/jsp/login/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>
 		</action>
 		<!-- ログイン処理 -->
-		<action name="login_action" class="householdaccountbook.action.LoginAction" method="execute">
+		<action name="login_action" class="householdaccountbook.action.login.LoginAction" method="execute">
 			<result name="success">/jsp/main/main.jsp</result>
 			<result name="login_error">/jsp/login/login.jsp</result>
 		</action>
 		<!-- 一覧画面 -->
-		<action name="list" class="householdaccountbook.action.ListAction" method="show">
+		<!-- 一覧画面 データ取得 -->
+		<action name="list" class="householdaccountbook.action.list.SearchAction" method="execute">
 			<result name="success">/jsp/json.jsp</result>
 		</action>
 		<!-- コンボボックス取得処理(モーダルダイアログ) -->
-		<action name="list_combo" class="householdaccountbook.action.ListAction" method="loadCombo">
+		<action name="list_combo" class="householdaccountbook.action.list.SearchComboAction" method="execute">
 			<result name="success">/jsp/json.jsp</result>
 		</action>
 		<!-- 追加処理(モーダルダイアログ) -->
-		<action name="insert" class="householdaccountbook.action.ListAction" method="insert">
+		<action name="insert" class="householdaccountbook.action.list.InsertAction" method="execute">
 			<result name="success">/jsp/json.jsp</result>
 			<!--type="json"-->
 		</action>

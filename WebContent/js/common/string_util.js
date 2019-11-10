@@ -8,7 +8,7 @@ function StringUtil(){}
 /**
  * 数値をカンマ区切りにする
  *
- * @param num
+ * @param num 数値
  * @return カンマ区切り文字列
  */
 StringUtil.separate = function(num){
@@ -25,6 +25,16 @@ StringUtil.separate = function(num){
     } else {
         return num;
     }
+}
+
+/**
+ * カンマを削除
+ *
+ * @param str 文字列
+ * @return カンマ削除文字列
+ */
+StringUtil.commaDelFormat = function(str){
+	return str.replace(/,/g, "");
 }
 
 /**

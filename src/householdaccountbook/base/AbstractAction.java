@@ -1,4 +1,4 @@
-package householdaccountbook.action;
+package householdaccountbook.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,19 +16,7 @@ import householdaccountbook.util.ActionCommon;
  * 作成日: 2019/08/04
  *
  *************************************************/
-public class BaseAction extends ActionSupport implements ServletResponseAware, ServletRequestAware, ActionCommon {
-
-	/** クッキー用変数 */
-	public static final String COOKIE_USER_ID = "user_id";
-	/** セッション用変数 */
-	public static final String SESSION_USER_CODE = "user_code";
-
-	/** エラーメッセージ */
-	private String errorMessage;
-	/** 返却用パラメータ */
-	private String json;
-	/** 入力データ */
-	private String data;
+public abstract class AbstractAction extends ActionSupport implements ServletResponseAware, ServletRequestAware, ActionCommon {
 
 	/** httpレスポンス情報 */
 	protected HttpServletResponse response;
@@ -41,29 +29,15 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 	 * コンストラクタ
 	 *
 	 */
-	public BaseAction() {
-		errorMessage = null;
+	public AbstractAction() {
 		session = null;
-		json = null;
 	}
 
 	/**
-	 * エラーメッセージの取得
+	 * 抽象メソッド
 	 *
-	 * @return エラーメッセージ
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	/**
-	 * エラーメッセージの設定
-	 *
-	 * @param errorMessage エラーメッセージ
-	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
+	abstract public String execute();
 
 	/**
 	 * セッション情報の取得
@@ -75,6 +49,7 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 		HttpSession session = getSession();
 		return (String) session.getAttribute(key);
 	}
+
 	/**
 	 * セッション情報の設定
 	 *
@@ -97,6 +72,16 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 	}
 
 	/**
+	 * パラメータの取得
+	 *
+	 * @param key キー値
+	 * @return パラメータ
+	 */
+	protected String getParam(String key) {
+		return request.getParameter(key);
+	}
+
+	/**
 	 * セッションの取得
 	 *
 	 * @return セッション情報
@@ -107,42 +92,6 @@ public class BaseAction extends ActionSupport implements ServletResponseAware, S
 		}
 
 		return session;
-	}
-
-	/**
-	 * 返却用パラメータ getter
-	 *
-	 * @return json
-	 */
-	public String getJson() {
-		return json;
-	}
-
-	/**
-	 * 返却用パラメータ setter
-	 *
-	 * @param json
-	 */
-	public void setJson(String json) {
-		this.json = json;
-	}
-
-	/**
-	 * 入力データ getter
-	 *
-	 * @return data 入力データ
-	 */
-	public String getData() {
-		return data;
-	}
-
-	/**
-	 * 入力データ
-	 *
-	 * @param data 入力データ setter
-	 */
-	public void setData(String data) {
-		this.data = data;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package householdaccountbook.model;
+package householdaccountbook.base;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

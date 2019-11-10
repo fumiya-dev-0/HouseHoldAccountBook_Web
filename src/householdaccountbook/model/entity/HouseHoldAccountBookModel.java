@@ -1,10 +1,11 @@
-package householdaccountbook.model;
+package householdaccountbook.model.entity;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 
+import householdaccountbook.base.BaseModel;
 import householdaccountbook.dto.HouseHoldAccountBook;
 
 /*************************************************

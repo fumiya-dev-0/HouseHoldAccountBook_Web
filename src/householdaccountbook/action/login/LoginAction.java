@@ -1,4 +1,4 @@
-package householdaccountbook.action;
+package householdaccountbook.action.login;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -7,8 +7,12 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.BooleanUtils;
+
+import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.User;
-import householdaccountbook.model.UserModel;
+import householdaccountbook.model.entity.UserModel;
+import householdaccountbook.util.Constants;
 import householdaccountbook.util.StringUtil;
 
 /*************************************************
@@ -16,14 +20,14 @@ import householdaccountbook.util.StringUtil;
  * 作成日: 2019/08/04
  *
  *************************************************/
-public class LoginAction extends BaseAction {
+public class LoginAction extends AbstractAction {
 
 	/** ユーザーID(入力) */
 	private String userId;
 	/** パスワード(入力) */
 	private String password;
-	/** クッキー自動登録 */
-	private Boolean auto;
+	/** エラーメッセージ */
+	private String errorMessage;
 
 	/** ハッシュ関数 */
 	public static final String HASH_ALGORITHM = "SHA-512";
@@ -40,33 +44,16 @@ public class LoginAction extends BaseAction {
 	 *
 	 */
 	public LoginAction() {
+		errorMessage = null;
 		userId = null;
 		password = null;
-		auto = null;
 	}
 
-	/**
-	 * 画面表示
-	 *
-	 * @return
-	 */
-	public String show() {
-
-		// クッキーにユーザIDが存在する場合、クッキーをユーザIDのセッターに設定する
-		Cookie cookies [] = request.getCookies();
-		if(isCookie(cookies)) {
-			setUserId(getCookie(cookies));
-		}
-
-		return ACTION_SUCCESS;
-	}
-
-	/**
-	 * 実行
-	 *
-	 * @return
-	 */
+	@Override
 	public String execute() {
+
+		userId = getParam(Constants.USER_ID);
+		password = getParam(Constants.PASSWORD);
 
 		if(!isCheck()) {
 			return ACTION_LOGIN_ERROR;
@@ -87,60 +74,6 @@ public class LoginAction extends BaseAction {
 	}
 
 	/**
-	 * ユーザーID getter
-	 *
-	 * @return ユーザーID
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * ユーザーID setter
-	 *
-	 * @param userId ユーザーID
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * パスワード getter
-	 *
-	 * @return パスワード
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * パスワード setter
-	 *
-	 * @param password パスワード
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * クッキー自動登録 getter
-	 *
-	 * @return クッキー自動登録
-	 */
-	public Boolean getAuto() {
-		return auto;
-	}
-
-	/**
-	 * クッキー自動登録 setter
-	 *
-	 * @param auto クッキー自動登録
-	 */
-	public void setAuto(Boolean auto) {
-		this.auto = auto;
-	}
-
-	/**
 	 * ログイン処理
 	 *
 	 * @return true(ログイン成功) / false(ログイン失敗)
@@ -149,9 +82,8 @@ public class LoginAction extends BaseAction {
 	 */
 	private boolean login() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-		UserModel userModel = new UserModel();
-
-		User user = userModel.load(this, userId, getPasswordHash());
+		UserModel model = new UserModel();
+		User user = model.load(userId, getPasswordHash());
 		if(user != null) {
 			setSessionAttribute(SESSION_USER_CODE, String.valueOf(user.getUserCode()));
 			return true;
@@ -214,46 +146,11 @@ public class LoginAction extends BaseAction {
 	 */
 	private void userIdSaveToCookie() {
 
+		Boolean auto = BooleanUtils.toBoolean(getParam(Constants.AUTO));
 		// ユーザID保存チェックボックスがtrueのとき
-		if(getAuto()) {
+		if(auto) {
 			setCookie();
 		}
-
-	}
-
-	/**
-	 * クッキーが存在するかチェック
-	 *
-	 * @return true / false
-	 */
-	private boolean isCookie(Cookie cookies[]) {
-
-		if(cookies == null) {
-			return false;
-		}
-
-		if(cookies.length == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * クッキーの取得
-	 *
-	 * @return クッキー情報
-	 */
-	private String getCookie(Cookie cookies[]) {
-		String cookie = "";
-
-		for(int i = 0; i < cookies.length; i++) {
-			if(cookies[i].getName().equals(COOKIE_USER_ID)) {
-				cookie = cookies[i].getValue();
-			}
-		}
-
-		return cookie;
 	}
 
 	/**
@@ -265,7 +162,24 @@ public class LoginAction extends BaseAction {
 		Cookie cookie = new Cookie(COOKIE_USER_ID, userId);
 		cookie.setMaxAge(60 * 60 * 24);
 		response.addCookie(cookie);
+	}
 
+	/**
+	 * エラーメッセージの取得
+	 *
+	 * @return エラーメッセージ
+	 */
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	/**
+	 * エラーメッセージの設定
+	 *
+	 * @param errorMessage エラーメッセージ
+	 */
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 }

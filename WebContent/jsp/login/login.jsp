@@ -46,8 +46,7 @@
 					<td><s:textfield name="userId" id="userId" placeholder="ユーザID" /></td>
 				</tr>
 				<tr>
-					<td><s:password name="password" id="password"
-							placeholder="パスワード" /></td>
+					<td><s:password name="password" id="password" placeholder="パスワード" /></td>
 				</tr>
 				<tr>
 					<td><s:submit value="ログイン" id="login" /></td>

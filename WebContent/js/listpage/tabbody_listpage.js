@@ -4,9 +4,23 @@
  *
  *************************************************/
 /** 入力フォーム行番号 */
-TabbodyListpage.prototype.FORM_ROW_IDX = 2;
+TabbodyListpage.prototype.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE = 0;
+TabbodyListpage.prototype.FORM_ROW_IDX_NAME = 1;
+TabbodyListpage.prototype.FORM_ROW_IDX_DATE = 2;
+TabbodyListpage.prototype.FORM_ROW_IDX_EXPENSE = 3;
+TabbodyListpage.prototype.FORM_ROW_IDX_INCOME = 4;
+TabbodyListpage.prototype.FORM_ROW_IDX_SPENDING = 5;
 /** 入力フォーム列番号 */
 TabbodyListpage.prototype.FORM_COL_IDX = 1;
+
+/** テーブル列番号 */
+TabbodyListpage.prototype.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE = 0;
+TabbodyListpage.prototype.TBL_COL_IDX_EXPENSE_CODE = 1;
+TabbodyListpage.prototype.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_NAME = 2;
+TabbodyListpage.prototype.TBL_COL_IDX_NAME = 3;
+TabbodyListpage.prototype.TBL_COL_IDX_DATE = 4;
+TabbodyListpage.prototype.TBL_COL_IDX_INCOME = 5;
+TabbodyListpage.prototype.TBL_COL_IDX_SPENDING = 6;
 
 /** エラーメッセージ */
 TabbodyListpage.prototype.NAME_ERROR_MESSAGE = "名前を入力してください。";
@@ -41,7 +55,16 @@ TabbodyListpage.prototype.init = function(){
 	// モーダル設定
 	this.modalHelper = ModalHelper.getInstance();
 	var self = this;
-	var option = {
+
+	// イベントoff
+	this.offEvent();
+
+	/**
+	 * 新規ボタン処理
+	 *
+	 */
+	$("#new-button").on("click", $.proxy(function(){
+		this.modalHelper.dialog({
 			width: "50%",
 			height: "300px",
 			buttons: [
@@ -75,17 +98,7 @@ TabbodyListpage.prototype.init = function(){
 					}
 				}
 				]
-	};
-
-	// イベントoff
-	this.offEvent();
-
-	/**
-	 * 新規ボタン処理
-	 *
-	 */
-	$("#new-button").on("click", $.proxy(function(){
-		self.modalHelper.dialog(option).show();
+		}).show();
 		this.loadDialog();
 	}, this));
 
@@ -96,7 +109,43 @@ TabbodyListpage.prototype.init = function(){
 	$("#upd-button").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
 			var rIdx = this.tableHelper.getRowIdx();
-			console.log(this.tableHelper.rows(rIdx).cols(5).getText());
+			var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+			this.modalHelper.dialog({
+				width: "50%",
+				height: "300px",
+				buttons: [
+					{
+						text: "更新",
+						click: function(){
+							self.insert(code);
+						},
+						attr: {
+							id: "add-button",
+							class: "button-border button-info"
+						},
+						css: {
+							width: "60px",
+							height: "30px",
+							margin: "0 5px 0 0"
+						}
+					},
+					{
+						text: "閉じる",
+						click: function(){
+							self.modalHelper.close();
+						},
+						attr: {
+							id: "close-button",
+							class: "button-border button-warning"
+						},
+						css: {
+							width: "60px",
+							height: "30px"
+						}
+					}
+					]
+			}).show();
+			this.loadDialog(rIdx - 1);
 		}
 	}, this));
 
@@ -118,15 +167,6 @@ TabbodyListpage.prototype.show = function(){
 	this.loadCombo();
 
 	this.load();
-}
-
-/**
- * イベントoff
- *
- */
-TabbodyListpage.prototype.offEvent = function(){
-	$("#new-button, #upd-button, #add-button, #close-button").off("click");
-	$("#date-combo").off("change");
 }
 
 /**
@@ -169,24 +209,6 @@ TabbodyListpage.prototype.createOption = function(year, month){
 }
 
 /**
- * 検索処理
- *
- */
-TabbodyListpage.prototype.search = function(){
-	var val = $("#date-combo").val();
-	if(!val){
-		return;
-	}
-
-	var formData = new FormData();
-	var json = {
-			year: DateUtil.convertToSlashDeleteStringFormat(val)
-	};
-	formData.append("data", DateUtil.convertToSlashDeleteStringFormat(val));
-	this.load(formData);
-}
-
-/**
  * 読み込み処理
  *
  * @param formData 入力データ
@@ -226,7 +248,7 @@ TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 }
 
 /**
- * 新規モーダルダイアログのテーブル表示
+ * 新規・更新モーダルダイアログのテーブル表示
  *
  */
 TabbodyListpage.prototype.loadDialog = function(rIdx){
@@ -236,19 +258,72 @@ TabbodyListpage.prototype.loadDialog = function(rIdx){
 		type: "GET",
 		url: "list_combo",
 		callback: function(data) {
-			var tableHelper = new TableHelper();
-			tableHelper.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
-			tableHelper.setCombobox(self.FORM_ROW_IDX, self.FORM_COL_IDX, data);
+			self.formHelper = new TableHelper();
+			self.formHelper.form($("#modal-content"), Constants.TABBODY_LISTPAGE_PARAM_FORM);
+			self.formHelper.setCombobox(self.FORM_ROW_IDX_EXPENSE, self.FORM_COL_IDX, data);
+			if(rIdx || rIdx === 0){
+				self.setForm(rIdx);
+			}
 		}
 	});
 }
 
 /**
- * 登録処理
+ * 入力フォーム値設定
  *
- * @param modalHelper モーダルダイアログクラス
+ * @param rIdx 列番号
  */
-TabbodyListpage.prototype.insert = function(){
+TabbodyListpage.prototype.setForm = function(rIdx){
+
+	// 家計簿コード
+	var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+	// 品名
+	var name = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_NAME).getText();
+	// 日付
+	var date = DateUtil.convertToSlashDeleteStringFormat(this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_DATE).getText());
+	// 費目
+	var expense = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_EXPENSE_CODE).getText();
+	// 収入
+	var income = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_INCOME).getText().slice(0, -1);
+	// 支出
+	var spending = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_SPENDING).getText().slice(0, -1);
+	// 家計簿コード
+	this.formHelper.rows(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE).cols(this.FORM_COL_IDX).setValue(code);
+	// 品名
+	this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).setValue(name);
+	// 日付
+	this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX).setValue(DateUtil.convertToHyphenStringFormat(date));
+	// 費目
+	this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX).setValue(expense);
+	// 収入
+	this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).setValue(StringUtil.commaDelFormat(income));
+	// 支出
+	this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).setValue(StringUtil.commaDelFormat(spending));
+}
+
+/**
+ * 検索処理
+ *
+ */
+TabbodyListpage.prototype.search = function(){
+	var val = $("#date-combo").val();
+	if(!val){
+		return;
+	}
+
+	var formData = new FormData();
+	var json = {
+			year: DateUtil.convertToSlashDeleteStringFormat(val)
+	};
+	formData.append("data", DateUtil.convertToSlashDeleteStringFormat(val));
+	this.load(formData);
+}
+
+/**
+ * 登録更新処理
+ *
+ */
+TabbodyListpage.prototype.insert = function(code){
 
 	this.clear();
 	if(!this.checkData()){
@@ -266,11 +341,11 @@ TabbodyListpage.prototype.insert = function(){
 		progress: true,
 		confirm: {
 			title: "確認",
-			text: "登録しますか？"
+			text: code ? "更新しますか？" : "登録しますか？"
 		},
 		alert: {
 			title: "完了",
-			text: "登録が完了しました。"
+			text: code ? "登録が完了しました。" : "更新が完了しました。"
 		},
 		data: formData,
 		callback: function(data){
@@ -354,4 +429,13 @@ TabbodyListpage.prototype.clear = function(){
 	$("#income").removeClass("error");
 	$("#spending-error").text("");
 	$("#spending").removeClass("error");
+}
+
+/**
+ * イベントoff
+ *
+ */
+TabbodyListpage.prototype.offEvent = function(){
+	$("#new-button, #upd-button, #add-button, #close-button").off("click");
+	$("#date-combo").off("change");
 }
