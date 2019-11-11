@@ -11,6 +11,7 @@ public class AppConstants {
 	 * 全共通
 	 *************************************************/
 	public static final String DATA = "data";
+	public static final String ERROR = "error";
 
 	/*************************************************
 	 * ログイン画面

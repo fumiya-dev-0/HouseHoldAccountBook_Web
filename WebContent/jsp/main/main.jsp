@@ -13,23 +13,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="../lib.jsp"%>
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MAIN_CSS_PATH.getPath()" />">
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
-<!-- ベースダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@BASE_DIALOG_CSS_PATH.getPath()" />">
-<!-- モーダルダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MODAL_CSS_PATH.getPath()" />">
-<!-- メッセージダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MESSAGE_CSS_PATH.getPath()" />">
-<!-- プログレスダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PROGRESS_CSS_PATH.getPath()" />">
-<!-- ページャCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PAGER_CSS_PATH.getPath()" />">
-<!-- タブ画面のCSS・JS -->
-<!-- 一覧画面 -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TABBODY_LISTPAGE_CSS_PATH.getPath()" />">
-<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TABBODY_LISTPAGE_JS_PATH.getPath()" />"></script>
 <!-- タイトル -->
 <title><s:property value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
 </head>
@@ -51,8 +34,8 @@
 	<%@include file="../common/message.jsp"%>
 	<!-- プログレスダイアログ読み込み -->
 	<%@include file="../common/progress.jsp"%>
-	<!-- JSファイル読み込み -->
-	<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
+	<!-- ライブラリ読み込み -->
+	<%@include file="lib.jsp"%>
 	<!-- フッター -->
 	<footer></footer>
 </body>

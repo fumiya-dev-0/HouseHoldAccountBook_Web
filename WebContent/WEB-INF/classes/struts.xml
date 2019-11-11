@@ -10,7 +10,6 @@
 		<!-- ログイン画面表示 -->
 		<action name="" class="householdaccountbook.action.login.SearchCookieAction" method="execute">
 			<result name="success">/jsp/login/login.jsp</result>
-			<result name="error">/jsp/error.jsp</result>
 		</action>
 		<!-- ログイン処理 -->
 		<action name="login_action" class="householdaccountbook.action.login.LoginAction" method="execute">
@@ -20,15 +19,18 @@
 		<!-- 一覧画面 -->
 		<!-- 一覧画面 データ取得 -->
 		<action name="list" class="householdaccountbook.action.list.SearchAction" method="execute">
-			<result name="success">/jsp/json.jsp</result>
+			<result name="success">/jsp/ajax/json.jsp</result>
+			<result name="error">/jsp/ajax/error.jsp</result>
 		</action>
 		<!-- コンボボックス取得処理(モーダルダイアログ) -->
 		<action name="list_combo" class="householdaccountbook.action.list.SearchComboAction" method="execute">
-			<result name="success">/jsp/json.jsp</result>
+			<result name="success">/jsp/ajax/json.jsp</result>
+			<result name="error">/jsp/ajax/error.jsp</result>
 		</action>
 		<!-- 登録更新処理(モーダルダイアログ) -->
 		<action name="upsert" class="householdaccountbook.action.list.UpsertAction" method="execute">
-			<result name="success">/jsp/json.jsp</result>
+			<result name="success">/jsp/ajax/json.jsp</result>
+			<result name="error">/jsp/ajax/error.jsp</result>
 		</action>
 	</package>
 </struts>

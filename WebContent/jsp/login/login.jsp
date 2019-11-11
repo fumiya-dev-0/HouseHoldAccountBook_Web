@@ -14,9 +14,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="../lib.jsp"%>
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
-
 <!-- タイトル -->
 <title><s:property
 		value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
@@ -57,6 +54,8 @@
 			</table>
 		</s:form>
 	</div>
+	<!-- ライブラリ読み込み -->
+	<%@include file="lib.jsp"%>
 	<!-- フッター -->
 	<footer> </footer>
 </body>

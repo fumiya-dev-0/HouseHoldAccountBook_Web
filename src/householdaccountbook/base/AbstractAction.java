@@ -29,7 +29,7 @@ public abstract class AbstractAction extends ActionSupport implements ServletRes
 	protected HttpSession session;
 
 	/**
-	 * 抽象メソッド
+	 * 実行(抽象メソッド)
 	 *
 	 */
 	abstract public String execute() throws Exception;
