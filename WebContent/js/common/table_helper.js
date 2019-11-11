@@ -141,8 +141,14 @@ TableHelper.prototype = {
 
 		// エラー表示
 		error: function(msg){
-			this.col.children().addClass("error");
+			this.col.children().css({"background-color" :"#ffb6c1", "border-color" : "red", "color" : "white"});
 			this.col.next().children().text(msg);
+		},
+
+		// エラークリア
+		clear: function(){
+			this.col.children().css({"background-color" :"white", "border-color" : "#D8D8D8", "color" : "black"});
+			this.col.next().children().text("");
 		}
 
 }

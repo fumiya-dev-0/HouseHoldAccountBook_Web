@@ -52,8 +52,10 @@ function TabbodyListpage(){
  */
 TabbodyListpage.prototype.init = function(){
 
-	// モーダル設定
+	// モーダルダイアログインスタンス
 	this.modalHelper = ModalHelper.getInstance();
+	// メッセージダイアログインスタンス
+	var messageHelper = MessageHelper.getInstance();
 	var self = this;
 
 	// イベントoff
@@ -71,7 +73,7 @@ TabbodyListpage.prototype.init = function(){
 				{
 					text: "登録",
 					click: function(){
-						self.insert();
+						self.upsert();
 					},
 					attr: {
 						id: "add-btn",
@@ -108,8 +110,7 @@ TabbodyListpage.prototype.init = function(){
 	 */
 	$("#upd-btn").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
-			var rIdx = this.tableHelper.getRowIdx();
-			var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+			var rIdx = this.tableHelper.getRowIdx() - 1;
 			this.modalHelper.dialog({
 				width: "50%",
 				height: "300px",
@@ -117,7 +118,7 @@ TabbodyListpage.prototype.init = function(){
 					{
 						text: "更新",
 						click: function(){
-							self.insert(code);
+							self.upsert();
 						},
 						attr: {
 							id: "add-btn",
@@ -145,7 +146,23 @@ TabbodyListpage.prototype.init = function(){
 					}
 					]
 			}).show();
-			this.loadDialog(rIdx - 1);
+			this.loadDialog(rIdx);
+		}else{
+			messageHelper.alert("未選択", "表を選択してください。", null).show();
+		}
+	}, this));
+
+	$("#del-btn").on("click", $.proxy(function(){
+		if(this.tableHelper.isRow()){
+			var rIdx = this.tableHelper.getRowIdx();
+
+			messageHelper.confirm("確認", "削除を行いますか？", $.proxy(function(){
+				var rIdx = this.tableHelper.getRowIdx();
+				var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+				console.log(code);
+			}, this)).show();
+		}else{
+			messageHelper.alert("未選択", "表を選択してください。", null).show();
 		}
 	}, this));
 
@@ -221,10 +238,42 @@ TabbodyListpage.prototype.load = function(formData){
 				data: formData,
 				callback: function(data) {
 					self.accountBookData = data.resultList;
+					// 合計値エリア要素に値を設定
+					self.addSumArea(data.incomeSum, data.spendingSum);
 					// テーブルとページャの作成
 					self.createTableWithPager(this.DEFAULT_NOW_PAGE, self.accountBookData);
 				}
 	});
+}
+
+/**
+ * 合計値エリア要素に値を設定
+ *
+ * @param incomeSum 収入合計値
+ * @param spendingSum 支出合計値
+ */
+TabbodyListpage.prototype.addSumArea = function(incomeSum, spendingSum){
+
+	$("#income-sum").text(incomeSum);
+	$("#spending-sum").text(spendingSum);
+
+	// 収入合計値(数字に変換)
+	var iSum = Number(StringUtil.commaDelFormat(incomeSum.slice(0, -1)));
+	// 支出合計値(数字に変換)
+	var sSum = Number(StringUtil.commaDelFormat(spendingSum.slice(0, -1)));
+
+	// 支出が収入より大きい場合は赤文字にする
+	if(iSum < sSum){
+		$("#spending-sum").css("color", "red");
+	}
+
+	// 残額合計値
+	var balanceSum = iSum - sSum;
+	// 残額が0未満の場合は赤文字にする
+	if(balanceSum < 0){
+		$("#balance-sum").css("color", "red");
+	}
+	$("#balance-sum").text(StringUtil.separate(balanceSum) + "円");
 }
 
 /**
@@ -320,7 +369,7 @@ TabbodyListpage.prototype.search = function(){
  * 登録更新処理
  *
  */
-TabbodyListpage.prototype.insert = function(code){
+TabbodyListpage.prototype.upsert = function(){
 
 	this.clear();
 	if(!this.checkData()){
@@ -328,6 +377,7 @@ TabbodyListpage.prototype.insert = function(code){
 	}
 
 	var formData = this.inputData();
+	var code = formData.get("houseHoldAccountBookCode");
 
 	var self = this;
 	AjaxUtil.process({
@@ -336,11 +386,11 @@ TabbodyListpage.prototype.insert = function(code){
 		progress: true,
 		confirm: {
 			title: "確認",
-			text: code ? "更新しますか？" : "登録しますか？"
+			text: !StringUtil.isEmpty(code) ? "更新しますか？" : "登録しますか？"
 		},
 		alert: {
 			title: "完了",
-			text: code ? "更新が完了しました。" : "登録が完了しました。"
+			text: !StringUtil.isEmpty(code) ? "更新が完了しました。" : "登録が完了しました。"
 		},
 		data: formData,
 		callback: function(data){
@@ -373,7 +423,7 @@ TabbodyListpage.prototype.inputData = function(){
 	// 支出
 	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).getValue();
 
-	formData.append("houseHoldAccountBookCode", code);
+	StringUtil.isEmpty(code) ? formData.append("houseHoldAccountBookCode", "") : formData.append("houseHoldAccountBookCode", code);
 	formData.append("name", name);
 	formData.append("date", DateUtil.convertToHyphenDeleteStringFormat(date));
 	formData.append("expenseCode", expenseCode);
@@ -435,16 +485,16 @@ TabbodyListpage.prototype.checkData = function(){
  */
 TabbodyListpage.prototype.clear = function(){
 
-	$("#name-error").text("");
-	$("#name").removeClass("error");
-	$("#date-error").text("");
-	$("#date").removeClass("error");
-	$("#expense-name-error").text("");
-	$("#expense-name").removeClass("error");
-	$("#income-error").text("");
-	$("#income").removeClass("error");
-	$("#spending-error").text("");
-	$("#spending").removeClass("error");
+	// 品名
+	this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).clear();
+	// 日付
+	this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX).clear();
+	// 費目
+	this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX).clear();
+	// 収入
+	this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).clear();
+	// 支出
+	this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).clear();
 }
 
 /**

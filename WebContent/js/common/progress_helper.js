@@ -55,7 +55,7 @@ ProgressHelper.prototype.progress = function() {
 	if($("#modal").css("diplasy") == "block"){
 		this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#modal"));
 	}else{
-		this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("#body"));
+		this.init($("#progress-modal"), $("#progress-overlay"), $("#progress-content"), $("#progress-header"), null, $("body"));
 	}
 
 	var title = "処理を実行しています...";

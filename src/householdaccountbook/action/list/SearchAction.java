@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
+import householdaccountbook.model.entity.HouseHoldAccountBookModel;
 import householdaccountbook.model.list.ListModel;
 import householdaccountbook.util.AppConstants;
 import householdaccountbook.util.DateUtil;
@@ -23,14 +24,26 @@ public class SearchAction extends AbstractAction {
 		// 年月(入力データ)
 		String year = getParam(AppConstants.YEAR);
 		Integer userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
-		ListModel model = new ListModel();
 
-
-		List<Object[]> list = (year == null) ? model.load(userCode, null) : model.load(userCode, year);
+		ListModel listModel = new ListModel();
+		List<Object[]> list = (year == null) ? listModel.load(userCode, null) : listModel.load(userCode, year);
 
 		Map<String, List<Object[]>> resultMap = new HashMap<String, List<Object[]>>();
 		resultMap.put("resultList", convertList(list));
 		setAttrResponse(resultMap);
+
+
+		HouseHoldAccountBookModel houseHoldAccountBookModel = new HouseHoldAccountBookModel();
+		Integer incomeSum = houseHoldAccountBookModel.findIncomeSum();
+		Integer spendingSum = houseHoldAccountBookModel.findSpendingSum();
+
+		String sIncomeSum = StringUtil.separate((Integer) incomeSum) + "円";
+		String sSpendingSum = StringUtil.separate((Integer) spendingSum) + "円";
+
+		Map<String, String> integerMap = new HashMap<String, String>();
+		integerMap.put("incomeSum", sIncomeSum);
+		integerMap.put("spendingSum", sSpendingSum);
+		setAttrResponse(integerMap);
 
 		return ACTION_SUCCESS;
 	}

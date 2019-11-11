@@ -51,7 +51,7 @@ MessageHelper.prototype.alert = function(title, text, callback){
 	if($("#modal").css("display") == "block"){
 		this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#modal"));
 	}else{
-		this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("#body"));
+		this.init($("#alert-modal"), $("#alert-overlay"), $("#alert-content"), $("#alert-header"), $("#alert-footer"), $("body"));
 	}
 
 	// タイトル作成
@@ -92,7 +92,7 @@ MessageHelper.prototype.confirm = function(title, text, callback){
 	if($("#modal").css("display") == "block"){
 		this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#modal"));
 	}else{
-		this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("#body"));
+		this.init($("#confirm-modal"), $("#confirm-overlay"), $("#confirm-content"), $("#confirm-header"), $("#confirm-footer"), $("body"));
 	}
 
 	// タイトル作成

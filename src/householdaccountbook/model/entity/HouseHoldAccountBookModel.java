@@ -27,15 +27,49 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	 * @return 家計簿コード
 	 */
 	@SuppressWarnings("deprecation")
-	public int findHouseHoldAccountBookCode() {
+	public Integer findHouseHoldAccountBookCodeCnt() {
 
 		Session session = getSession();
 
 		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
-		int houseHoldAccountBookCode = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue() + 1;
+		Integer houseHoldAccountBookCode = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue() + 1;
 		session.close();
 
 		return houseHoldAccountBookCode;
+	}
+
+	/**
+	 * 収入合計値取得
+	 *
+	 * @return 収入合計値
+	 */
+	@SuppressWarnings("deprecation")
+	public Integer findIncomeSum() {
+
+		Session session = getSession();
+
+		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
+		Integer incomeSum = ((Long) criteria.setProjection(Projections.sum("income")).uniqueResult()).intValue();
+		session.close();
+
+		return incomeSum;
+	}
+
+	/**
+	 * 支出合計値取得
+	 *
+	 * @return 支出合計値
+	 */
+	@SuppressWarnings("deprecation")
+	public int findSpendingSum() {
+
+		Session session = getSession();
+
+		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
+		int spendingSum = ((Long) criteria.setProjection(Projections.sum("spending")).uniqueResult()).intValue();
+		session.close();
+
+		return spendingSum;
 	}
 
 	/**

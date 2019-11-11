@@ -14,7 +14,7 @@
 		<s:submit id="print-btn" value="印刷" class="btn-info" />
 		<s:submit id="new-btn" value="新規" class="btn-info" />
 		<s:submit id="upd-btn" value="更新" class="btn-info" />
-		<s:submit id="dlt-btn" value="削除" class="btn-warning" />
+		<s:submit id="del-btn" value="削除" class="btn-warning" />
 	</div>
 	<div id="main-area">
 		<div class="main-area-child">
@@ -26,7 +26,6 @@
 			<div id="balance-sum" class="sum-area">999,999円</div>
 		</div>
 		<div class="main-area-child">
-			<span>家計簿表</span>
 			<div id="table-area"></div>
 		</div>
 	</div>
