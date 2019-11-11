@@ -1,6 +1,5 @@
 package householdaccountbook.action.list;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,23 +18,19 @@ import householdaccountbook.util.StringUtil;
 public class SearchAction extends AbstractAction {
 
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 
 		String data = getParam(Constants.DATA);
 		int userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
 		ListModel model = new ListModel();
 
-		try {
-			List<Object[]> list = (data == null) ? model.load(userCode, null) : model.load(userCode, data);
 
-			Map<String, List<Object[]>> resultMap = new HashMap<String, List<Object[]>>();
-			resultMap.put("resultList", convertList(list));
-			setAttrResponse(resultMap);
+		List<Object[]> list = (data == null) ? model.load(userCode, null) : model.load(userCode, data);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return ACTION_ERROR;
-		}
+		Map<String, List<Object[]>> resultMap = new HashMap<String, List<Object[]>>();
+		resultMap.put("resultList", convertList(list));
+		setAttrResponse(resultMap);
+
 
 		return ACTION_SUCCESS;
 	}

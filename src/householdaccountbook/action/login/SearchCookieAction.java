@@ -14,16 +14,8 @@ public class SearchCookieAction extends AbstractAction {
 	/** ユーザーID(入力) */
 	private String userId;
 
-	/**
-	 * コンストラクタ
-	 *
-	 */
-	public SearchCookieAction() {
-		userId = null;
-	}
-
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 
 		// クッキーにユーザIDが存在する場合、クッキーをユーザIDのセッターに設定する
 		Cookie cookies [] = request.getCookies();

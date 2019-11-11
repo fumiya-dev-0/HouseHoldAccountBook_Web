@@ -41,7 +41,7 @@ public abstract class AbstractAction extends ActionSupport implements ServletRes
 	 * @param <T>
 	 *
 	 */
-	abstract public String execute();
+	abstract public String execute() throws Exception;
 
 	/**
 	 * セッションの取得

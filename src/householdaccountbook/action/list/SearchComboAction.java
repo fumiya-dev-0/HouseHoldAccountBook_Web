@@ -16,7 +16,7 @@ import householdaccountbook.model.entity.ExpenseModel;
 public class SearchComboAction extends AbstractAction {
 
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 
 		ExpenseModel model = new ExpenseModel();
 		List<Expense> expenses = model.load();

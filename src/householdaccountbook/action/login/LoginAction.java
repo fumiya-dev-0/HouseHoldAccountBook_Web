@@ -39,18 +39,8 @@ public class LoginAction extends AbstractAction {
 	/** ハッシュ生成エラーメッセージ */
 	public static final String HASH_ERROR_MESSAGE = "ハッシュの生成に失敗しました。";
 
-	/**
-	 * コンストラクタ
-	 *
-	 */
-	public LoginAction() {
-		errorMessage = null;
-		userId = null;
-		password = null;
-	}
-
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 
 		userId = getParam(Constants.USER_ID);
 		password = getParam(Constants.PASSWORD);

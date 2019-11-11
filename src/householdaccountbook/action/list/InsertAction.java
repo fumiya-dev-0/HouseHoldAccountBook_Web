@@ -21,7 +21,7 @@ import householdaccountbook.util.Constants;
 public class InsertAction extends AbstractAction {
 
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 
 		String data = getParam(Constants.DATA);
 		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
