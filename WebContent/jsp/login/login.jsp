@@ -46,7 +46,7 @@
 					<td><s:password name="password" id="password" placeholder="パスワード" /></td>
 				</tr>
 				<tr>
-					<td><s:submit value="ログイン" id="login" /></td>
+					<td><s:submit value="ログイン" id="login" class="btn-info" /></td>
 				</tr>
 				<tr>
 					<td><label><s:checkbox name="auto" id="auto" />ユーザIDを保存する</label></td>

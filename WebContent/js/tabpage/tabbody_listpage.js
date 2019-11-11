@@ -75,7 +75,7 @@ TabbodyListpage.prototype.init = function(){
 					},
 					attr: {
 						id: "add-button",
-						class: "button-border button-info"
+						class: "btn-info"
 					},
 					css: {
 						width: "60px",
@@ -90,7 +90,7 @@ TabbodyListpage.prototype.init = function(){
 					},
 					attr: {
 						id: "close-button",
-						class: "button-border button-warning"
+						class: "btn-warning"
 					},
 					css: {
 						width: "60px",
@@ -121,7 +121,7 @@ TabbodyListpage.prototype.init = function(){
 						},
 						attr: {
 							id: "add-button",
-							class: "button-border button-info"
+							class: "btn-info"
 						},
 						css: {
 							width: "60px",
@@ -136,7 +136,7 @@ TabbodyListpage.prototype.init = function(){
 						},
 						attr: {
 							id: "close-button",
-							class: "button-border button-warning"
+							class: "btn-warning"
 						},
 						css: {
 							width: "60px",
@@ -237,9 +237,9 @@ TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
 	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
 	this.tableHelper = new TableHelper;
 
-	this.tableHelper.table($("#tableArea"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+	this.tableHelper.table($("#table-area"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
 
-	$("#pagerArea").html(PagerUtil.getRefAll());
+	$("#pager-area").html(PagerUtil.getRefAll());
 	PagerUtil.onClick($.proxy(function(nowPage){
 		// テーブルとページャの作成
 		this.createTableWithPager(nowPage, this.accountBookData);
@@ -390,33 +390,39 @@ TabbodyListpage.prototype.inputData = function(){
 TabbodyListpage.prototype.checkData = function(){
 
 	var checkFlg = true;
-	if(StringUtil.isEmpty($("#name").val())){
-		$("#name-error").text(this.NAME_ERROR_MESSAGE);
-		$("#name").addClass("error");
+
+	// 品名
+	var name = this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX)
+	if(StringUtil.isEmpty(name.getValue())){
+		name.error(this.NAME_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
-	if(StringUtil.isEmpty($("#date").val())){
-		$("#date-error").text(this.DATE_ERROR_MESSAGE);
-		$("#date").addClass("error");
+	// 日付
+	var date = this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX);
+	if(StringUtil.isEmpty(date.getValue())){
+		date.error(this.DATE_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
-	if(StringUtil.isEmpty($("#expense-name").val())){
-		$("#expense-name-error").text(this.EXPENSE_ERROR_MESSAGE);
-		$("#expense-name").addClass("error");
+	// 費目
+	var expenseCode = this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX);
+	if(StringUtil.isEmpty(expenseCode.getValue())){
+		expenseCode.error(this.EXPENSE_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
-	if(StringUtil.isEmpty($("#income").val())){
-		$("#income-error").text(this.INCOME_ERROR_MESSAGE);
-		$("#income").addClass("error");
+	// 収入
+	var income = this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX);
+	if(StringUtil.isEmpty(income.getValue())){
+		income.error(this.INCOME_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
-	if(StringUtil.isEmpty($("#spending").val())){
-		$("#spending-error").text(this.SPENDING_ERROR_MESSAGE);
-		$("#spending").addClass("error");
+	// 支出
+	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX);
+	if(StringUtil.isEmpty(spending.getValue())){
+		spending.error(this.SPENDING_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 

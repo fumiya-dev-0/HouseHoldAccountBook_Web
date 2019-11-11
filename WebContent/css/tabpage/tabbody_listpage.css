@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+#input-area {
+
+}
+
+#main-area {
+	margin: 20px 0;
+	height: 100%;
+}
+
+.main-area-child {
+	display: inline-block;
+}
+
+.main-area-child:first-child {
+	padding-right: 10px;
+}
+
+.main-area-child:last-child {
+	vertical-align: top;
+}

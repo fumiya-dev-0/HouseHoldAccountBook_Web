@@ -1,51 +1,57 @@
-@charset "utf-8";
-
-.button-border {
-	border: 1px solid;
-}
-
-/* 入力エリア */
-#input-area {
-
-}
+@charset "UTF-8";
 
 /* ボタン */
-.button-info {
+.btn-info {
 	background-color: #81BEF7;
 	color: white;
 	border-color: #81BEF7;
+	width: 50px;
+	height: 30px;
+	border: 1px solid #81BEF7;
+	font-size: 14px;
+	border-radius: 5px;
+	outline: none;
+	cursor: pointer;
 }
 
-.button-warning {
+.btn-warning {
 	background-color: #eea236;
 	color: white;
 	border-color: #eea236;
+	width: 50px;
+	height: 30px;
+	border: 1px solid #eea236;
+	font-size: 14px;
+	border-radius: 5px;
+	outline: none;
+	cursor: pointer;
 }
 
 /* ボタンがカーソルに置かれた時に色変更 */
-.button-info:hover {
+.btn-info:hover {
 	background: #58ACFA;
 	border: solid 1px #58ACFA;
 }
 
-.button-warning:hover {
+.btn-warning:hover {
 	background: #ffa500;
 	border: solid 1px #ffa500;
 }
 
 /* ボタンがクリックされた時に色変更 */
-.button-info:active {
+.btn-info:active {
 	background: #2E9AFE;
 	border: solid 1px #2E9AFE;
 }
 
-.button-warning:active {
+.btn-warning:active {
 	background: #ff8c00;
 	border: solid 1px #ff8c00;
 }
 
-/* テーブルエリア */
-#tableArea {
-	margin: 30px 0;
-	height: 590px;
+/* コンボボックス */
+.combo {
+	width: 120px;
+	height: 30px;
+	border-radius: 5px;
 }

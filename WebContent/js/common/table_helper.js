@@ -137,6 +137,12 @@ TableHelper.prototype = {
 		// 値設定
 		setValue: function(val){
 			this.col.children().val(val);
+		},
+
+		// エラー表示
+		error: function(msg){
+			this.col.children().addClass("error");
+			this.col.next().children().text(msg);
 		}
 
 }

@@ -15,8 +15,8 @@
 	</div>
 	<div id="confirm-content" class="base-dialog-content"></div>
 	<div id="confirm-footer" class="base-dialog-footer">
-		<input type="button" id="confirm-send-btn" class="button-border button-info" style="width: 60px; height: 30px;" value="ＯＫ">
-		<input type="button" id="confirm-close-btn" class="button-border button-warning" style="width: 60px; height: 30px;" value="閉じる">
+		<input type="button" id="confirm-send-btn" class="btn-info" style="width: 60px; height: 30px;" value="ＯＫ">
+		<input type="button" id="confirm-close-btn" class="btn-warning" style="width: 60px; height: 30px;" value="閉じる">
 	</div>
 </div>
 <div id="alert-modal" class="modal">
@@ -25,6 +25,6 @@
 	</div>
 	<div id="alert-content" class="base-dialog-content"></div>
 	<div id="alert-footer" class="base-dialog-footer">
-		<input type="button" id="alert-send-btn" class="button-border button-info" style="width: 60px; height: 30px;" value="ＯＫ">
+		<input type="button" id="alert-send-btn" class="btn-info" style="width: 60px; height: 30px;" value="ＯＫ">
 	</div>
 </div>

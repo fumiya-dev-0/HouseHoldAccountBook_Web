@@ -14,6 +14,8 @@
 <!-- CSSファイル読み込み -->
 <!-- 初期読み込みCSS -->
 <link rel="stylesheet" type="text/css" href="css/common/default.css">
+<!-- インプット要素CSS -->
+<link rel="stylesheet" type="text/css" href="css/common/input.css">
 <!-- テーブルCSS -->
 <link rel="stylesheet" type="text/css" href="css/common/table.css">
 <!-- メニュー画面CSS -->
@@ -31,7 +33,7 @@
 <!-- ページャCSS -->
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PAGER_CSS_PATH.getPath()" />">
 <!-- 一覧画面CSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TABBODY_LISTPAGE_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TABPAGE_TABBODY_CSS_PATH.getPath()" />">
 
 <!-- JSファイル読み込み -->
 <!-- 定数用JSファイル -->
@@ -55,6 +57,6 @@
 <!-- ページャクラスJS -->
 <script src="js/common/pager_util.js"></script>
 <!-- 一覧画面JS -->
-<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TABBODY_LISTPAGE_JS_PATH.getPath()" />"></script>
+<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TABPAGE_TABBODY_JS_PATH.getPath()" />"></script>
 <!-- タブメニューJS -->
 <script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>

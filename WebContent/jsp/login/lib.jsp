@@ -13,4 +13,6 @@
 
 <!-- CSSファイル読み込み -->
 <link rel="stylesheet" type="text/css" href="css/common/default.css">
+<!-- インプット要素CSS -->
+<link rel="stylesheet" type="text/css" href="css/common/input.css">
 <link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">

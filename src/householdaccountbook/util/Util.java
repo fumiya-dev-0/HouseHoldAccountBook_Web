@@ -13,15 +13,15 @@ public interface Util {
 	 */
 	public enum Css {
 
-		LOGIN_CSS_PATH("login.css"),
-		MAIN_CSS_PATH("main.css"),
-		TAB_CSS_PATH("tab.css"),
-		TABBODY_LISTPAGE_CSS_PATH("/listpage/tabbody_listpage.css"),
-		BASE_DIALOG_CSS_PATH("/base/base_dialog.css"),
-		MODAL_CSS_PATH("/common/modal.css"),
-		MESSAGE_CSS_PATH("/common/message.css"),
-		PROGRESS_CSS_PATH("/common/progress.css"),
-		PAGER_CSS_PATH("/common/pager.css");
+		LOGIN_CSS_PATH("login/login.css"),
+		MAIN_CSS_PATH("main/main.css"),
+		TAB_CSS_PATH("main/tab.css"),
+		TABPAGE_TABBODY_CSS_PATH("tabpage/tabbody_listpage.css"),
+		BASE_DIALOG_CSS_PATH("base/base_dialog.css"),
+		MODAL_CSS_PATH("common/modal.css"),
+		MESSAGE_CSS_PATH("common/message.css"),
+		PROGRESS_CSS_PATH("common/progress.css"),
+		PAGER_CSS_PATH("common/pager.css");
 
 		// CSSファイルパス
 		private final String path;
@@ -84,8 +84,8 @@ public interface Util {
 	 */
 	public enum JavaScript {
 
-		TAB_JS_PATH("tab.js"),
-		TABBODY_LISTPAGE_JS_PATH("/listpage/tabbody_listpage.js");
+		TAB_JS_PATH("main/tab.js"),
+		TABPAGE_TABBODY_JS_PATH("/tabpage/tabbody_listpage.js");
 
 		// JSファイルパス
 		private final String path;

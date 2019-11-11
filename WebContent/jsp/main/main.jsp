@@ -22,7 +22,7 @@
 	<h1>
 		<s:property value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
 	</h1>
-	<s:submit name="logout" id="logout" value="ログアウト" />
+	<s:submit name="logout" id="logout" class="btn-warning" value="ログアウト" />
 	</header>
 	<div id="main">
 		<!-- タブメニュー読み込み -->
