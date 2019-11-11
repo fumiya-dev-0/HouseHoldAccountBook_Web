@@ -8,11 +8,11 @@ package householdaccountbook.dto;
 public class Expense {
 
 	// 費目コード
-	private int expenseCode;
+	private Integer expenseCode;
 	// 費目名
 	private String name;
 	// 表示順
-	private int displayOrder;
+	private Integer displayOrder;
 
 	/**
 	 * コンストラクタ
@@ -29,7 +29,7 @@ public class Expense {
 	 *
 	 * @return 費目コード
 	 */
-	public int getExpenseCode() {
+	public Integer getExpenseCode() {
 		return expenseCode;
 	}
 
@@ -38,7 +38,7 @@ public class Expense {
 	 *
 	 * @param expenseCode 費目コード
 	 */
-	public void setExpenseCode(int expenseCode) {
+	public void setExpenseCode(Integer expenseCode) {
 		this.expenseCode = expenseCode;
 	}
 
@@ -65,7 +65,7 @@ public class Expense {
 	 *
 	 * @return 表示順
 	 */
-	public int getDisplayOrder() {
+	public Integer getDisplayOrder() {
 		return displayOrder;
 	}
 
@@ -74,7 +74,7 @@ public class Expense {
 	 *
 	 * @param displayOrder 表示順
 	 */
-	public void setDisplayOrder(int displayOrder) {
+	public void setDisplayOrder(Integer displayOrder) {
 		this.displayOrder = displayOrder;
 	}
 

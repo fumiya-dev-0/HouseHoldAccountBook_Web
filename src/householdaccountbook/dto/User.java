@@ -8,7 +8,7 @@ package householdaccountbook.dto;
 public class User {
 
 	// ユーザーコード
-	private int userCode;
+	private Integer userCode;
 	// ユーザーID
 	private String userId;
 	// パスワード
@@ -31,7 +31,7 @@ public class User {
 	 *
 	 * @return ユーザーコード
 	 */
-	public int getUserCode() {
+	public Integer getUserCode() {
 		return userCode;
 	}
 
@@ -40,7 +40,7 @@ public class User {
 	 *
 	 * @param userCode ユーザーコード
 	 */
-	public void setUserCode(int userCode) {
+	public void setUserCode(Integer userCode) {
 		this.userCode = userCode;
 	}
 

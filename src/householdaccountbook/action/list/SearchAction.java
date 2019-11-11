@@ -6,7 +6,7 @@ import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.model.list.ListModel;
-import householdaccountbook.util.Constants;
+import householdaccountbook.util.AppConstants;
 import householdaccountbook.util.DateUtil;
 import householdaccountbook.util.StringUtil;
 
@@ -20,17 +20,17 @@ public class SearchAction extends AbstractAction {
 	@Override
 	public String execute() throws Exception {
 
-		String data = getParam(Constants.DATA);
-		int userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
+		// 年月(入力データ)
+		String year = getParam(AppConstants.YEAR);
+		Integer userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
 		ListModel model = new ListModel();
 
 
-		List<Object[]> list = (data == null) ? model.load(userCode, null) : model.load(userCode, data);
+		List<Object[]> list = (year == null) ? model.load(userCode, null) : model.load(userCode, year);
 
 		Map<String, List<Object[]>> resultMap = new HashMap<String, List<Object[]>>();
 		resultMap.put("resultList", convertList(list));
 		setAttrResponse(resultMap);
-
 
 		return ACTION_SUCCESS;
 	}

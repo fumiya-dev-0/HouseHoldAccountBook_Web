@@ -8,7 +8,7 @@ package householdaccountbook.dto;
 public class HouseHoldAccountBook {
 
 	// 家計簿コード
-	private int HouseHoldAccountBookCode;
+	private Integer HouseHoldAccountBookCode;
 	// 費目クラス
 	private Expense expense;
 	// ユーザークラス
@@ -18,9 +18,9 @@ public class HouseHoldAccountBook {
 	// 品名
 	private String name;
 	// 収入
-	private int income;
+	private Integer income;
 	// 支出
-	private int spending;
+	private Integer spending;
 
 	/**
 	 * コンストラクタ
@@ -41,7 +41,7 @@ public class HouseHoldAccountBook {
 	 *
 	 * @return 家計簿コード
 	 */
-	public int getHouseHoldAccountBookCode() {
+	public Integer getHouseHoldAccountBookCode() {
 		return HouseHoldAccountBookCode;
 	}
 
@@ -50,7 +50,7 @@ public class HouseHoldAccountBook {
 	 *
 	 * @param houseHoldAccountBookCode 家計簿コード
 	 */
-	public void setHouseHoldAccountBookCode(int houseHoldAccountBookCode) {
+	public void setHouseHoldAccountBookCode(Integer houseHoldAccountBookCode) {
 		this.HouseHoldAccountBookCode = houseHoldAccountBookCode;
 	}
 
@@ -131,7 +131,7 @@ public class HouseHoldAccountBook {
 	 *
 	 * @return 収入
 	 */
-	public int getIncome() {
+	public Integer getIncome() {
 		return income;
 	}
 
@@ -140,7 +140,7 @@ public class HouseHoldAccountBook {
 	 *
 	 * @param income 収入
 	 */
-	public void setIncome(int income) {
+	public void setIncome(Integer income) {
 		this.income = income;
 	}
 
@@ -149,7 +149,7 @@ public class HouseHoldAccountBook {
 	 *
 	 * @return 支出
 	 */
-	public int getSpending() {
+	public Integer getSpending() {
 		return spending;
 	}
 
@@ -158,7 +158,7 @@ public class HouseHoldAccountBook {
 	 *
 	 * @param spending 支出
 	 */
-	public void setSpending(int spending) {
+	public void setSpending(Integer spending) {
 		this.spending = spending;
 	}
 

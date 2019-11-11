@@ -288,6 +288,7 @@ TabbodyListpage.prototype.setForm = function(rIdx){
 	var spending = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_SPENDING).getText().slice(0, -1);
 	// 家計簿コード
 	this.formHelper.rows(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE).cols(this.FORM_COL_IDX).setValue(code);
+
 	// 品名
 	this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).setValue(name);
 	// 日付
@@ -311,10 +312,7 @@ TabbodyListpage.prototype.search = function(){
 	}
 
 	var formData = new FormData();
-	var json = {
-			year: DateUtil.convertToSlashDeleteStringFormat(val)
-	};
-	formData.append("data", DateUtil.convertToSlashDeleteStringFormat(val));
+	formData.append("year", DateUtil.convertToSlashDeleteStringFormat(val));
 	this.load(formData);
 }
 
@@ -329,14 +327,12 @@ TabbodyListpage.prototype.insert = function(code){
 		return;
 	}
 
-	var formData = new FormData();
-	var json = this.inputData();
-	formData.append("data", JSON.stringify(json));
+	var formData = this.inputData();
 
 	var self = this;
 	AjaxUtil.process({
 		type: "POST",
-		url: "insert",
+		url: "upsert",
 		progress: true,
 		confirm: {
 			title: "確認",
@@ -344,7 +340,7 @@ TabbodyListpage.prototype.insert = function(code){
 		},
 		alert: {
 			title: "完了",
-			text: code ? "登録が完了しました。" : "更新が完了しました。"
+			text: code ? "更新が完了しました。" : "登録が完了しました。"
 		},
 		data: formData,
 		callback: function(data){
@@ -361,15 +357,30 @@ TabbodyListpage.prototype.insert = function(code){
  *
  */
 TabbodyListpage.prototype.inputData = function(){
-	return {
-		name: $("#name").val(),
-		date: DateUtil.convertToHyphenDeleteStringFormat($("#date").val()),
-		expense: {
-			expenseCode: $("#expense-name").val()
-		},
-		income: $("#income").val(),
-		spending: $("#spending").val()
-	};
+
+	var formData = new FormData();
+
+	// 家計簿コード
+	var code = this.formHelper.rows(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE).cols(this.FORM_COL_IDX).getValue();
+	// 品名
+	var name = this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).getValue();
+	// 日付
+	var date = this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX).getValue();
+	// 費目
+	var expenseCode = this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX).getValue();
+	// 収入
+	var income = this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).getValue();
+	// 支出
+	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).getValue();
+
+	formData.append("houseHoldAccountBookCode", code);
+	formData.append("name", name);
+	formData.append("date", DateUtil.convertToHyphenDeleteStringFormat(date));
+	formData.append("expenseCode", expenseCode);
+	formData.append("income", income);
+	formData.append("spending", spending);
+
+	return formData;
 }
 
 /**

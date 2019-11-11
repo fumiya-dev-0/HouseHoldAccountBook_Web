@@ -12,10 +12,10 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import householdaccountbook.action.util.ActionCommon;
-import householdaccountbook.util.Constants;
+import householdaccountbook.util.AppConstants;
 
 /*************************************************
- * アブストラクトアクションクラス
+ * 抽象アクションクラス
  * 作成日: 2019/08/04
  *
  *************************************************/
@@ -29,16 +29,7 @@ public abstract class AbstractAction extends ActionSupport implements ServletRes
 	protected HttpSession session;
 
 	/**
-	 * コンストラクタ
-	 *
-	 */
-	public AbstractAction() {
-		session = null;
-	}
-
-	/**
 	 * 抽象メソッド
-	 * @param <T>
 	 *
 	 */
 	abstract public String execute() throws Exception;
@@ -105,17 +96,17 @@ public abstract class AbstractAction extends ActionSupport implements ServletRes
 	protected <T> void setAttrResponse(Map<String, T> resultMap) {
 
 		// 属性値が存在する場合
-		if(request.getAttribute(Constants.DATA) != null) {
+		if(request.getAttribute(AppConstants.DATA) != null) {
 			// マップに属性値のコピーを行う
-			Map<String, T> map =  (Map<String, T>) request.getAttribute(Constants.DATA);
+			Map<String, T> map =  (Map<String, T>) request.getAttribute(AppConstants.DATA);
 			// マップに新しいマップを追加
 			for(Map.Entry<String, T> entry : resultMap.entrySet()){
 				map.put(entry.getKey(), entry.getValue());
 			}
-			request.setAttribute(Constants.DATA, map);
+			request.setAttribute(AppConstants.DATA, map);
 		} else {
 			// 属性値が存在しない場合
-			request.setAttribute(Constants.DATA, resultMap);
+			request.setAttribute(AppConstants.DATA, resultMap);
 		}
 	}
 

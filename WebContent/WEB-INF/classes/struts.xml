@@ -26,8 +26,8 @@
 		<action name="list_combo" class="householdaccountbook.action.list.SearchComboAction" method="execute">
 			<result name="success">/jsp/json.jsp</result>
 		</action>
-		<!-- 追加処理(モーダルダイアログ) -->
-		<action name="insert" class="householdaccountbook.action.list.InsertAction" method="execute">
+		<!-- 登録更新処理(モーダルダイアログ) -->
+		<action name="upsert" class="householdaccountbook.action.list.UpsertAction" method="execute">
 			<result name="success">/jsp/json.jsp</result>
 		</action>
 	</package>

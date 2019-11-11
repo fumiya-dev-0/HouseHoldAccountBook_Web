@@ -131,7 +131,7 @@ TableHelper.prototype = {
 
 		// 値取得
 		getValue: function(){
-			return this.col.children.val();
+			return this.col.children().val();
 		},
 
 		// 値設定

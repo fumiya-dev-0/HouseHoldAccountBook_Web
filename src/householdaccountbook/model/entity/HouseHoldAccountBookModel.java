@@ -39,19 +39,25 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	}
 
 	/**
-	 * 登録処理
+	 * 登録更新処理
 	 *
 	 * @param houseHoldAccountBook 家計簿クラス
+	 * @param insertFlg 追加フラグ
 	 * @return 処理成功フラグ
 	 */
-	public boolean insert(HouseHoldAccountBook houseHoldAccountBook) {
+	public boolean upsert(HouseHoldAccountBook houseHoldAccountBook, Boolean insertFlg) {
 
 		boolean isSuccess = true;
 
 		Session session = getSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			session.save(houseHoldAccountBook);
+			if(insertFlg) {
+				session.save(houseHoldAccountBook);
+			}else {
+				session.update(houseHoldAccountBook);
+			}
+
 			session.flush();
 			transaction.commit();
 		} catch (Exception e) {
@@ -65,4 +71,5 @@ public class HouseHoldAccountBookModel extends BaseModel {
 		}
 		return isSuccess;
 	}
+
 }
