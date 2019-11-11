@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+/** モーダル要素 */
 .modal {
 	margin: auto;
 	padding: 0;
@@ -10,6 +11,7 @@
 	display: none;
 }
 
+/** オーバーレイ */
 .overlay {
 	z-index: 1;
 	display: none; /* 要素を非表示(フェードインさせるために記述) */
@@ -20,26 +22,31 @@
 	height: 120%; /* 要素の高さ(スマホ対策のため、120%) */
 }
 
+/** オーバーレイ(半透明にする) */
 .overlay-translucent {
 	background-color: rgba(0, 0, 0, 0.75); /* 背景色(半透明) */
 }
 
+/** ヘッダー要素 */
 .base-dialog-header {
 	text-align: right;
 	border-bottom: 2px solid #aaa;
 	padding: 10px;
 }
 
+/** フッター要素 */
 .base-dialog-footer {
 	text-align: right;
 	border-top: 2px solid #aaa;
 	padding: 10px;
 }
 
+/** コンテンツ要素 */
 .base-dialog-content {
 	padding: 20px;
 }
 
+/** ×(閉じる)ボタン */
 .base-dialog-close {
 	margin-top: -8px;
 	background: none;
@@ -47,4 +54,15 @@
 	font-size: 24px;
 	opacity: 0.5;
 	outline: none;
+	cursor: pointer;
+}
+
+/* カーソル位置がボタンと重なった時に透明度変更 */
+.base-dialog-close:hover {
+	opacity: 1;
+}
+
+/* カーソル位置がボタンと離れた時に透明度変更 */
+.base-dialog-close:not(:hover) {
+	opacity: 0.5;
 }

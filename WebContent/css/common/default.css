@@ -32,12 +32,8 @@ footer {
 	background-color: #4488b3;
 }
 
-input[type="text"], input[type="password"], textarea, input[type="number"] {
+input[type="text"], input[type="password"], input[type="number"], select, input[type="date"] {
 	border-radius: 5px;
 	outline: none;
-}
-
-input[type="text"], input[type="password"], select, input[type="number"] {
 	border: 1px solid #D8D8D8;
-	outline: none;
 }

@@ -63,7 +63,7 @@ TabbodyListpage.prototype.init = function(){
 	 * 新規ボタン処理
 	 *
 	 */
-	$("#new-button").on("click", $.proxy(function(){
+	$("#new-btn").on("click", $.proxy(function(){
 		this.modalHelper.dialog({
 			width: "50%",
 			height: "300px",
@@ -74,7 +74,7 @@ TabbodyListpage.prototype.init = function(){
 						self.insert();
 					},
 					attr: {
-						id: "add-button",
+						id: "add-btn",
 						class: "btn-info"
 					},
 					css: {
@@ -89,7 +89,7 @@ TabbodyListpage.prototype.init = function(){
 						self.modalHelper.close();
 					},
 					attr: {
-						id: "close-button",
+						id: "close-btn",
 						class: "btn-warning"
 					},
 					css: {
@@ -106,7 +106,7 @@ TabbodyListpage.prototype.init = function(){
 	 * 更新ボタン処理
 	 *
 	 */
-	$("#upd-button").on("click", $.proxy(function(){
+	$("#upd-btn").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
 			var rIdx = this.tableHelper.getRowIdx();
 			var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
@@ -120,7 +120,7 @@ TabbodyListpage.prototype.init = function(){
 							self.insert(code);
 						},
 						attr: {
-							id: "add-button",
+							id: "add-btn",
 							class: "btn-info"
 						},
 						css: {
@@ -135,7 +135,7 @@ TabbodyListpage.prototype.init = function(){
 							self.modalHelper.close();
 						},
 						attr: {
-							id: "close-button",
+							id: "close-btn",
 							class: "btn-warning"
 						},
 						css: {
@@ -452,6 +452,6 @@ TabbodyListpage.prototype.clear = function(){
  *
  */
 TabbodyListpage.prototype.offEvent = function(){
-	$("#new-button, #upd-button, #add-button, #close-button").off("click");
+	$("#new-btn, #upd-btn, #add-btn, #close-btn").off("click");
 	$("#date-combo").off("change");
 }

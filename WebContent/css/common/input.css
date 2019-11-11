@@ -27,7 +27,7 @@
 	cursor: pointer;
 }
 
-/* ボタンがカーソルに置かれた時に色変更 */
+/* カーソル位置がボタンと重なった時に色変更 */
 .btn-info:hover {
 	background: #58ACFA;
 	border: solid 1px #58ACFA;
