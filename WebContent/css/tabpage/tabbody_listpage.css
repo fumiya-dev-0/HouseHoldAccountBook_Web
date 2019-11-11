@@ -14,9 +14,17 @@
 }
 
 .main-area-child:first-child {
-	padding-right: 10px;
+	margin-right: 10px;
 }
 
 .main-area-child:last-child {
 	vertical-align: top;
+}
+
+.sum-area {
+	background-color: #808080;
+	color: white;
+	padding: 2px 5px;
+	border-radius: 5px;
+	margin: 5px 0;
 }
