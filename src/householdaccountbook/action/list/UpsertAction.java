@@ -8,9 +8,10 @@ import householdaccountbook.dto.HouseHoldAccountBook;
 import householdaccountbook.dto.User;
 import householdaccountbook.model.entity.HouseHoldAccountBookModel;
 import householdaccountbook.util.AppConstants;
+import householdaccountbook.util.ParamHelper;
 
 /*************************************************
- * 一覧画面登録更新アクションクラス
+ * 一覧画面データ登録更新アクションクラス
  * 作成日: 2019/11/10
  *
  *************************************************/
@@ -20,35 +21,52 @@ public class UpsertAction extends AbstractAction {
 	public String execute() throws Exception {
 
 		// 家計簿コード
-		Integer houseHoldAccountBookCode = NumberUtils.isNumber(getParam(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) ? Integer.valueOf(getParam(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) : null;
+		Integer houseHoldAccountBookCode = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) ? Integer.valueOf(ParamHelper.getParam(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) : null;
 		// 品名
-		String name = getParam(AppConstants.NAME);
+		String name = ParamHelper.getParam(AppConstants.NAME);
 		// 日付
-		String date = getParam(AppConstants.DATE);
+		String date = ParamHelper.getParam(AppConstants.DATE);
 		// 費目コード
-		Integer expenseCode = NumberUtils.isNumber(getParam(AppConstants.EXPENSE_CODE)) ? Integer.valueOf(getParam(AppConstants.EXPENSE_CODE)) : null;
+		Integer expenseCode = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.EXPENSE_CODE)) ? Integer.valueOf(ParamHelper.getParam(AppConstants.EXPENSE_CODE)) : null;
 		// 収入
-		Integer income = NumberUtils.isNumber(getParam(AppConstants.INCOME)) ? Integer.valueOf(getParam(AppConstants.INCOME)) : null;
+		Integer income = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.INCOME)) ? Integer.valueOf(ParamHelper.getParam(AppConstants.INCOME)) : null;
 		// 支出
-		Integer spending = NumberUtils.isNumber(getParam(AppConstants.SPENDING)) ? Integer.valueOf(getParam(AppConstants.SPENDING)) : null;
+		Integer spending = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.SPENDING)) ? Integer.valueOf(ParamHelper.getParam(AppConstants.SPENDING)) : null;
 
 		HouseHoldAccountBook houseHoldAccountBook = createHouseHoldAccountBook(houseHoldAccountBookCode, name, date, expenseCode, income, spending);
+
+		// 登録更新
+		if(!upsert(houseHoldAccountBook)) {
+			return ACTION_ERROR;
+		}
+
+		return ACTION_SUCCESS;
+	}
+
+	/**
+	 * 登録更新処理
+	 *
+	 * @param houseHoldAccountBook  家計簿クラス
+	 * @return true(成功) / false(失敗)
+	 */
+	private Boolean upsert(HouseHoldAccountBook houseHoldAccountBook) {
+
 		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
 		if(houseHoldAccountBook.getHouseHoldAccountBookCode() == null) {
 			// 自動採番
-			houseHoldAccountBook.setHouseHoldAccountBookCode(model.findHouseHoldAccountBookCodeCnt());
+			houseHoldAccountBook.setHouseHoldAccountBookCode(model.findHouseHoldAccountBookCodeMax());
 			// 登録処理
 			if(!model.upsert(houseHoldAccountBook, true)) {
-				return ACTION_ERROR;
+				return false;
 			}
 		}else{
 			// 更新処理
 			if(!model.upsert(houseHoldAccountBook, false)) {
-				return ACTION_ERROR;
+				return false;
 			}
 		}
 
-		return ACTION_SUCCESS;
+		return true;
 	}
 
 	/**
@@ -65,7 +83,7 @@ public class UpsertAction extends AbstractAction {
 	private HouseHoldAccountBook createHouseHoldAccountBook(Integer houseHoldAccountBookCode, String name, String date, Integer expenseCode, Integer income, Integer spending) {
 
 		HouseHoldAccountBook houseHoldAccountBook = new HouseHoldAccountBook();
-		Integer userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
+		Integer userCode = Integer.parseInt(ParamHelper.getSession(SESSION_USER_CODE));
 		houseHoldAccountBook.setHouseHoldAccountBookCode(houseHoldAccountBookCode);
 		houseHoldAccountBook.setName(name);
 		houseHoldAccountBook.setDate(date);

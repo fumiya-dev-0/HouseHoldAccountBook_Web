@@ -1,14 +1,13 @@
 package householdaccountbook.action.list;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.model.entity.HouseHoldAccountBookModel;
 import householdaccountbook.model.list.ListModel;
 import householdaccountbook.util.AppConstants;
 import householdaccountbook.util.DateUtil;
+import householdaccountbook.util.ParamHelper;
 import householdaccountbook.util.StringUtil;
 
 /*************************************************
@@ -22,16 +21,13 @@ public class SearchAction extends AbstractAction {
 	public String execute() throws Exception {
 
 		// 年月(入力データ)
-		String year = getParam(AppConstants.YEAR);
-		Integer userCode = Integer.parseInt(getSessionAttribute(SESSION_USER_CODE));
+		String year = ParamHelper.getParam(AppConstants.YEAR);
+		Integer userCode = Integer.parseInt(ParamHelper.getSession(SESSION_USER_CODE));
 
 		ListModel listModel = new ListModel();
 		List<Object[]> list = (year == null) ? listModel.load(userCode, null) : listModel.load(userCode, year);
 
-		Map<String, List<Object[]>> resultMap = new HashMap<String, List<Object[]>>();
 		resultMap.put("resultList", convertList(list));
-		setAttrResponse(resultMap);
-
 
 		HouseHoldAccountBookModel houseHoldAccountBookModel = new HouseHoldAccountBookModel();
 		Integer incomeSum = houseHoldAccountBookModel.findIncomeSum();
@@ -40,10 +36,10 @@ public class SearchAction extends AbstractAction {
 		String sIncomeSum = StringUtil.separate((Integer) incomeSum) + "円";
 		String sSpendingSum = StringUtil.separate((Integer) spendingSum) + "円";
 
-		Map<String, String> integerMap = new HashMap<String, String>();
-		integerMap.put("incomeSum", sIncomeSum);
-		integerMap.put("spendingSum", sSpendingSum);
-		setAttrResponse(integerMap);
+		resultMap.put("incomeSum", sIncomeSum);
+		resultMap.put("spendingSum", sSpendingSum);
+
+		ParamHelper.setParam(resultMap);
 
 		return ACTION_SUCCESS;
 	}

@@ -3,6 +3,7 @@ package householdaccountbook.action.login;
 import javax.servlet.http.Cookie;
 
 import householdaccountbook.base.AbstractAction;
+import householdaccountbook.util.ParamHelper;
 
 /*************************************************
  * クッキー取得アクションクラス
@@ -18,7 +19,7 @@ public class SearchCookieAction extends AbstractAction {
 	public String execute() throws Exception {
 
 		// クッキーにユーザIDが存在する場合、クッキーをユーザIDのセッターに設定する
-		Cookie cookies [] = request.getCookies();
+		Cookie cookies [] = ParamHelper.getRequest().getCookies();
 		if(isCookie(cookies)) {
 			setUserId(getCookie(cookies));
 		}

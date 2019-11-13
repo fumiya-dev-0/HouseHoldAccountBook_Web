@@ -32,5 +32,10 @@
 			<result name="success">/jsp/ajax/json.jsp</result>
 			<result name="error">/jsp/ajax/error.jsp</result>
 		</action>
+		<!-- 削除処理(モーダルダイアログ) -->
+		<action name="delete" class="householdaccountbook.action.list.DeleteAction" method="execute">
+			<result name="success">/jsp/ajax/json.jsp</result>
+			<result name="error">/jsp/ajax/error.jsp</result>
+		</action>
 	</package>
 </struts>

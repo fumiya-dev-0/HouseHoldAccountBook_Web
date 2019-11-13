@@ -5,6 +5,7 @@
  *
  *************************************************/
  -->
+<%@page import="householdaccountbook.util.HtmlConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -13,50 +14,52 @@
 
 <!-- CSSファイル読み込み -->
 <!-- 初期読み込みCSS -->
-<link rel="stylesheet" type="text/css" href="css/common/default.css">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.DEFAULT_CSS_PATH %>">
 <!-- インプット要素CSS -->
-<link rel="stylesheet" type="text/css" href="css/common/input.css">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.INPUT_CSS_PATH %>">
 <!-- テーブルCSS -->
-<link rel="stylesheet" type="text/css" href="css/common/table.css">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.TABLE_CSS_PATH %>">
 <!-- メニュー画面CSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MAIN_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.MAIN_CSS_PATH %>">
 <!-- タブメニューCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TAB_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.MENU_CSS_PATH %>">
 <!-- ベースダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@BASE_DIALOG_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.BASE_DIALOG_CSS_PATH %>">
 <!-- モーダルダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MODAL_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.MODAL_CSS_PATH %>">
 <!-- メッセージダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@MESSAGE_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.MESSAGE_CSS_PATH %>">
 <!-- プログレスダイアログCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PROGRESS_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.PROGRESS_CSS_PATH %>">
 <!-- ページャCSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@PAGER_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.PAGER_CSS_PATH %>">
 <!-- 一覧画面CSS -->
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@TABPAGE_TABBODY_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.LISTPAGE_CSS_PATH %>">
 
 <!-- JSファイル読み込み -->
 <!-- 定数用JSファイル -->
-<script src="js/common/constants.js"></script>
+<script src="<%= HtmlConstants.CONSTANTS_JS_PATH %>"></script>
 <!-- ajaxユーティリティクラスJS -->
-<script src="js/common/ajax_util.js"></script>
+<script src="<%= HtmlConstants.AJAX_UTIL_JS_PATH %>"></script>
 <!-- 日付ユーティリティクラスJS -->
-<script src="js/common/date_util.js"></script>
+<script src="<%= HtmlConstants.DATE_UTIL_JS_PATH %>"></script>
 <!-- 文字列ユーティリティクラスJS -->
-<script src="js/common/string_util.js"></script>
+<script src="<%= HtmlConstants.STRING_UTIL_JS_PATH %>"></script>
 <!-- テーブル生成ヘルパークラスJS -->
-<script src="js/common/table_helper.js"></script>
+<script src="<%= HtmlConstants.TABLE_HELPER_JS_PATH %>"></script>
 <!-- ベースダイアログクラスJS -->
-<script src="js/base/base_dialog.js"></script>
+<script src="<%= HtmlConstants.BASE_DIALOG_JS_PATH %>"></script>
 <!-- モーダルダイアログヘルパークラスJS -->
-<script src="js/common/modal_helper.js"></script>
+<script src="<%= HtmlConstants.MODAL_HELPER_JS_PATH %>"></script>
 <!-- メッセージダイアログヘルパークラスJS -->
-<script src="js/common/message_helper.js"></script>
+<script src="<%= HtmlConstants.MESSAGE_HELPER_JS_PATH %>"></script>
 <!-- プログレスダイアログヘルパークラスJS -->
-<script src="js/common/progress_helper.js"></script>
+<script src="<%= HtmlConstants.PROGRESS_HELPER_JS_PATH %>"></script>
 <!-- ページャクラスJS -->
-<script src="js/common/pager_util.js"></script>
+<script src="<%= HtmlConstants.PAGER_UTIL_JS_PATH %>"></script>
+<!-- メニュー画面JS -->
+<script src="<%= HtmlConstants.MAIN_JS_PATH %>"></script>
 <!-- 一覧画面JS -->
-<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TABPAGE_TABBODY_JS_PATH.getPath()" />"></script>
+<script src="<%= HtmlConstants.LISTPAGE_JS_PATH %>"></script>
 <!-- タブメニューJS -->
-<script src="<s:property value="@householdaccountbook.util.Util$JavaScript@TAB_JS_PATH.getPath()" />"></script>
+<script src="<%= HtmlConstants.MENU_JS_PATH %>"></script>

@@ -13,6 +13,7 @@ import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.User;
 import householdaccountbook.model.entity.UserModel;
 import householdaccountbook.util.AppConstants;
+import householdaccountbook.util.ParamHelper;
 import householdaccountbook.util.StringUtil;
 
 /*************************************************
@@ -42,8 +43,8 @@ public class LoginAction extends AbstractAction {
 	@Override
 	public String execute() throws Exception {
 
-		userId = getParam(AppConstants.USER_ID);
-		password = getParam(AppConstants.PASSWORD);
+		userId = ParamHelper.getParam(AppConstants.USER_ID);
+		password = ParamHelper.getParam(AppConstants.PASSWORD);
 
 		if(!isCheck()) {
 			return ACTION_LOGIN_ERROR;
@@ -75,7 +76,7 @@ public class LoginAction extends AbstractAction {
 		UserModel model = new UserModel();
 		User user = model.load(userId, getPasswordHash());
 		if(user != null) {
-			setSessionAttribute(SESSION_USER_CODE, String.valueOf(user.getUserCode()));
+			ParamHelper.setSession(SESSION_USER_CODE, String.valueOf(user.getUserCode()));
 			return true;
 		}else {
 			setErrorMessage(LOGIN_ERROR_MESSAGE);
@@ -136,7 +137,7 @@ public class LoginAction extends AbstractAction {
 	 */
 	private void userIdSaveToCookie() {
 
-		Boolean auto = BooleanUtils.toBoolean(getParam(AppConstants.AUTO));
+		Boolean auto = BooleanUtils.toBoolean(ParamHelper.getParam(AppConstants.AUTO));
 		// ユーザID保存チェックボックスがtrueのとき
 		if(auto) {
 			setCookie();
@@ -151,7 +152,7 @@ public class LoginAction extends AbstractAction {
 
 		Cookie cookie = new Cookie(COOKIE_USER_ID, userId);
 		cookie.setMaxAge(60 * 60 * 24);
-		response.addCookie(cookie);
+		ParamHelper.getResponse().addCookie(cookie);
 	}
 
 	/**

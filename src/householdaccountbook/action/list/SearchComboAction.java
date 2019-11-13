@@ -1,12 +1,11 @@
 package householdaccountbook.action.list;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.Expense;
 import householdaccountbook.model.entity.ExpenseModel;
+import householdaccountbook.util.ParamHelper;
 
 /*************************************************
  * 一覧画面コンボボックスデータ取得アクションクラス
@@ -21,9 +20,8 @@ public class SearchComboAction extends AbstractAction {
 		ExpenseModel model = new ExpenseModel();
 		List<Expense> expenses = model.load();
 
-		Map<String, List<Expense>> resultMap = new HashMap<String, List<Expense>>();
 		resultMap.put("expenses", expenses);
-		setAttrResponse(resultMap);
+		ParamHelper.setParam(resultMap);
 
 		return ACTION_SUCCESS;
 	}

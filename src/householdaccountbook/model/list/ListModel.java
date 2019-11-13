@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.hibernate.type.StandardBasicTypes;
 
 import householdaccountbook.base.BaseModel;
+import householdaccountbook.util.AppConstants;
 
 /*************************************************
  * 一覧画面用モデルクラス
@@ -37,33 +38,37 @@ public class ListModel extends BaseModel {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("select ");
-		sql.append("      hhab.HOUSEHOLDACCOUNTBOOK_CODE");
-		sql.append("      ,expense.EXPENSE_CODE");
-		sql.append("      ,hhab.NAME as HOUSEHOLDACCOUNTBOOK_NAME");
-		sql.append("      ,expense.NAME");
-		sql.append("      ,hhab.DATE");
-		sql.append("      ,hhab.INCOME");
-		sql.append("      ,hhab.SPENDING");
+		sql.append("  ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_HOUSE_HOLD_ACCOUNT_BOOK_CODE);
+		sql.append("  ,").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.C_EXPENSE_CODE);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.NAME_SNAKE).append(" as HOUSEHOLDACCOUNTBOOK_NAME");
+		sql.append("  ,").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.NAME_SNAKE);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_DATE);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_INCOME);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_SPENDING);
 
 		// 家計簿テーブル
-		sql.append(" from HOUSEHOLDACCOUNTBOOK hhab");
+		sql.append(" from ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK);
 		// 費目テーブル
-		sql.append(" inner join EXPENSE expense");
-		sql.append(" on hhab.EXPENSE_CODE = expense.EXPENSE_CODE");
-		sql.append(" where hhab.USER_CODE = :userCode");
-		if(year != null) sql.append(" and concat(substr(hhab.DATE, 1, 4), substr(hhab.DATE, 5, 2)) = :year");
+		sql.append(" inner join ").append(AppConstants.M_EXPENSE);
+		sql.append(" on ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_EXPENSE_CODE).append(" = ").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.C_EXPENSE_CODE);
+		sql.append(" where ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_USER_CODE).append(" = :userCode");
+		if(year != null) {
+			sql.append(" and concat(substr(").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_DATE).append(", 1, 4), substr(").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_DATE).append(", 5, 2)) = :year");
+		}
 
 		Query<Object[]> query = session
 				.createSQLQuery(sql.toString())
-				.addScalar("HOUSEHOLDACCOUNTBOOK_CODE", StandardBasicTypes.INTEGER)
-				.addScalar("EXPENSE_CODE", StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.C_HOUSE_HOLD_ACCOUNT_BOOK_CODE, StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.C_EXPENSE_CODE, StandardBasicTypes.INTEGER)
 				.addScalar("HOUSEHOLDACCOUNTBOOK_NAME", StandardBasicTypes.STRING)
-				.addScalar("NAME", StandardBasicTypes.STRING)
-				.addScalar("DATE", StandardBasicTypes.STRING)
-				.addScalar("INCOME", StandardBasicTypes.INTEGER)
-				.addScalar("SPENDING", StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.NAME_SNAKE, StandardBasicTypes.STRING)
+				.addScalar(AppConstants.C_DATE, StandardBasicTypes.STRING)
+				.addScalar(AppConstants.C_INCOME, StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.C_SPENDING, StandardBasicTypes.INTEGER)
 				.setParameter("userCode", userCode);
-		if(year != null) query.setParameter("year", year);
+		if(year != null) {
+			query.setParameter("year", year);
+		}
 
 		List<Object[]> list = query.list();
 

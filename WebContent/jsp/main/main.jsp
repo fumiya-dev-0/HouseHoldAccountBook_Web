@@ -15,6 +15,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- タイトル -->
 <title><s:property value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+<script>
+window.onload = function(){
+	Main.init();
+}
+</script>
 </head>
 <body>
 	<!-- ヘッダー -->
@@ -26,7 +31,7 @@
 	</header>
 	<div id="main">
 		<!-- タブメニュー読み込み -->
-		<%@include file="tab.jsp"%>
+		<%@include file="../menu/menu.jsp"%>
 	</div>
 	<!-- モーダルダイアログ読み込み -->
 	<%@include file="../common/modal.jsp"%>

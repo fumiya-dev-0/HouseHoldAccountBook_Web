@@ -5,6 +5,7 @@
  *
  *************************************************/
  -->
+ <%@page import="householdaccountbook.util.HtmlConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -12,7 +13,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <!-- CSSファイル読み込み -->
-<link rel="stylesheet" type="text/css" href="css/common/default.css">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.DEFAULT_CSS_PATH %>">
 <!-- インプット要素CSS -->
-<link rel="stylesheet" type="text/css" href="css/common/input.css">
-<link rel="stylesheet" type="text/css" href="<s:property value="@householdaccountbook.util.Util$Css@LOGIN_CSS_PATH.getPath()" />">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.INPUT_CSS_PATH %>">
+<link rel="stylesheet" type="text/css" href="<%= HtmlConstants.LOGIN_CSS_PATH %>">

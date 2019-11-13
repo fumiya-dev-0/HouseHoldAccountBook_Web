@@ -126,9 +126,9 @@ AjaxUtil.done = function(data) {
 AjaxUtil.fail = function(xmlHttpRequest, textStatus, errorThrown) {
 	console.log( textStatus + "\n" + errorThrown + "\n" + xmlHttpRequest);
 	if(this.progressHelper){
-		this.progressHelper.end(function(){
+		this.progressHelper.end($.proxy(function(){
 			this.messageHelper.alert("エラー", "サーバー側の処理でエラーが発生しました。", null).show();
-		});
+		}, this));
 	}else{
 		this.messageHelper.alert("エラー", "サーバー側の処理でエラーが発生しました。", null).show();
 	}

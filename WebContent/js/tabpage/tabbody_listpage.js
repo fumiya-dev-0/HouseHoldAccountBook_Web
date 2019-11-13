@@ -154,13 +154,9 @@ TabbodyListpage.prototype.init = function(){
 
 	$("#del-btn").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
-			var rIdx = this.tableHelper.getRowIdx();
-
-			messageHelper.confirm("確認", "削除を行いますか？", $.proxy(function(){
-				var rIdx = this.tableHelper.getRowIdx();
-				var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
-				console.log(code);
-			}, this)).show();
+			var rIdx = this.tableHelper.getRowIdx() - 1;
+			var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+			this.delete(code);
 		}else{
 			messageHelper.alert("未選択", "表を選択してください。", null).show();
 		}
@@ -495,6 +491,37 @@ TabbodyListpage.prototype.clear = function(){
 	this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).clear();
 	// 支出
 	this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).clear();
+}
+
+/**
+ * 削除処理
+ *
+ */
+TabbodyListpage.prototype.delete = function(code){
+
+	var formData = new FormData();
+	formData.append("houseHoldAccountBookCode", code);
+
+	var self = this;
+	AjaxUtil.process({
+		type: "POST",
+		url: "delete",
+		progress: true,
+		confirm: {
+			title: "確認",
+			text: "削除しますか？"
+		},
+		alert: {
+			title: "完了",
+			text: "削除が完了しました。"
+		},
+		data: formData,
+		callback: function(data){
+			self.load();
+			self.loadCombo();
+		}
+	});
+
 }
 
 /**
