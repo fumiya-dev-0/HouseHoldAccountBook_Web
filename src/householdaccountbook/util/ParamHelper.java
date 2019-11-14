@@ -176,18 +176,18 @@ public class ParamHelper {
 			}
 			if(entry.getValue() instanceof List) {
 				List<Object[]> list = (List<Object[]>) entry.getValue();
-				listUnSanitize(list);
+				convertObjAry(list);
 				resultMap.put(entry.getKey(), list);
 			}
 		}
 	}
 
 	/**
-	 * リストでサニタイジングされたタグを元に戻す
+	 * リストをObject配列型に変換
 	 *
 	 * @param list リスト(結果マップのvalue)
 	 */
-	private static void listUnSanitize(List<Object[]> list) {
+	private static void convertObjAry(List<Object[]> list) {
 
 		int idx = 0;
 		for(Object[] objAry : list) {

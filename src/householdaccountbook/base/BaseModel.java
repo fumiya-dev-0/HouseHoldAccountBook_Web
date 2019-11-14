@@ -14,12 +14,6 @@ import householdaccountbook.model.util.ModelCommon;
 public class BaseModel implements ModelCommon {
 
 	/**
-	 * コンストラクタ
-	 *
-	 */
-	public BaseModel() {}
-
-	/**
 	 * セッションの取得
 	 *
 	 * @return セッション情報

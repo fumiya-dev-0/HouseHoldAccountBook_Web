@@ -54,7 +54,7 @@ public class SearchAction extends AbstractAction {
 	/**
 	 * 合計マップに変換
 	 *
-	 * @param list リスト
+	 * @param list 家計簿データリスト
 	 * @param sumMap 合計マップ
 	 * @return 合計マップ
 	 */
