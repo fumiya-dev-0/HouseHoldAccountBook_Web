@@ -65,7 +65,7 @@ public class StringUtil {
 	 * @param str 文字列
 	 * @return カンマ挿入後の文字列
 	 */
-	public static String separate(int num) {
+	public static String separate(Integer num) {
 		return String.format("%,d", num);
 	}
 

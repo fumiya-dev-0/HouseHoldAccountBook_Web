@@ -1,9 +1,10 @@
 package householdaccountbook.action.list;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import householdaccountbook.base.AbstractAction;
-import householdaccountbook.model.entity.HouseHoldAccountBookModel;
 import householdaccountbook.model.list.ListModel;
 import householdaccountbook.util.AppConstants;
 import householdaccountbook.util.DateUtil;
@@ -22,26 +23,52 @@ public class SearchAction extends AbstractAction {
 
 		// 年月(入力データ)
 		String year = ParamHelper.getParam(AppConstants.YEAR);
+		// ユーザーコード
 		Integer userCode = Integer.parseInt(ParamHelper.getSession(SESSION_USER_CODE));
 
 		ListModel listModel = new ListModel();
 		List<Object[]> list = (year == null) ? listModel.load(userCode, null) : listModel.load(userCode, year);
 
+		// 合計マップ
+		Map<Integer, Integer> sumMap = new HashMap<Integer, Integer>();
+		sumMap.put(5, 0);
+		sumMap.put(6, 0);
+		// 結果リストを合計マップに変換
+		convertSumMap(list, sumMap);
+
 		resultMap.put("resultList", convertList(list));
 
-		HouseHoldAccountBookModel houseHoldAccountBookModel = new HouseHoldAccountBookModel();
-		Integer incomeSum = houseHoldAccountBookModel.findIncomeSum();
-		Integer spendingSum = houseHoldAccountBookModel.findSpendingSum();
+		// 収入
+		String incomeSum = String.format("%s円", StringUtil.separate(sumMap.get(5)));
+		// 支出
+		String spendingSum = String.format("%s円", StringUtil.separate(sumMap.get(6)));
 
-		String sIncomeSum = StringUtil.separate((Integer) incomeSum) + "円";
-		String sSpendingSum = StringUtil.separate((Integer) spendingSum) + "円";
-
-		resultMap.put("incomeSum", sIncomeSum);
-		resultMap.put("spendingSum", sSpendingSum);
+		resultMap.put("incomeSum", incomeSum);
+		resultMap.put("spendingSum", spendingSum);
 
 		ParamHelper.setParam(resultMap);
 
 		return ACTION_SUCCESS;
+	}
+
+	/**
+	 * 合計マップに変換
+	 *
+	 * @param list リスト
+	 * @param sumMap 合計マップ
+	 * @return 合計マップ
+	 */
+	private Map<Integer, Integer> convertSumMap(List<Object[]> list, Map<Integer, Integer> sumMap) {
+
+		for(Object[] obj : list) {
+			for(Map.Entry<Integer, Integer> entry : sumMap.entrySet()) {
+				Integer sum = (Integer) obj[entry.getKey()];
+				sum += (Integer) entry.getKey();
+				sumMap.put(entry.getKey(), sumMap.get(sum));
+			}
+		}
+
+		return sumMap;
 	}
 
 	/**

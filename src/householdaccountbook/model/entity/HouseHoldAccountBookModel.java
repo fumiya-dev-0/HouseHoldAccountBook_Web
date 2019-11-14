@@ -54,40 +54,6 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	}
 
 	/**
-	 * 収入合計値取得
-	 *
-	 * @return 収入合計値
-	 */
-	@SuppressWarnings("deprecation")
-	public Integer findIncomeSum() {
-
-		Session session = getSession();
-
-		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
-		Integer incomeSum = ((Long) criteria.setProjection(Projections.sum("income")).uniqueResult()).intValue();
-		session.close();
-
-		return incomeSum;
-	}
-
-	/**
-	 * 支出合計値取得
-	 *
-	 * @return 支出合計値
-	 */
-	@SuppressWarnings("deprecation")
-	public int findSpendingSum() {
-
-		Session session = getSession();
-
-		Criteria criteria = session.createCriteria(HouseHoldAccountBook.class);
-		int spendingSum = ((Long) criteria.setProjection(Projections.sum("spending")).uniqueResult()).intValue();
-		session.close();
-
-		return spendingSum;
-	}
-
-	/**
 	 * 登録更新処理
 	 *
 	 * @param houseHoldAccountBook 家計簿クラス
@@ -103,10 +69,9 @@ public class HouseHoldAccountBookModel extends BaseModel {
 		try {
 			if(insertFlg) {
 				session.save(houseHoldAccountBook);
-			}else {
+			}else{
 				session.update(houseHoldAccountBook);
 			}
-
 			session.flush();
 			transaction.commit();
 		} catch (Exception e) {
@@ -136,7 +101,6 @@ public class HouseHoldAccountBookModel extends BaseModel {
 		Transaction transaction = session.beginTransaction();
 		try {
 			session.delete(houseHoldAccountBook);
-
 			session.flush();
 			transaction.commit();
 		} catch (Exception e) {

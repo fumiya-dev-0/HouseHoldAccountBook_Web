@@ -14,7 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- タイトル -->
-<title><s:property value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+<title><%= HtmlConstants.TITLE %></title>
 <script>
 window.onload = function(){
 	Main.init();
@@ -25,7 +25,7 @@ window.onload = function(){
 	<!-- ヘッダー -->
 	<header>
 	<h1>
-		<s:property value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
+		<%= HtmlConstants.TITLE %>
 	</h1>
 	<s:submit name="logout" id="logout" class="btn-warning" value="ログアウト" />
 	</header>
@@ -41,6 +41,8 @@ window.onload = function(){
 	<%@include file="../common/progress.jsp"%>
 	<!-- ライブラリ読み込み -->
 	<%@include file="lib.jsp"%>
+	<!-- 定数クラス読み込み -->
+	<%@include file="../util/app_constants.jsp"%>
 	<!-- フッター -->
 	<footer></footer>
 </body>

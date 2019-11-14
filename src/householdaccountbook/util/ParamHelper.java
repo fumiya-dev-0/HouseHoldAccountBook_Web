@@ -1,10 +1,14 @@
 package householdaccountbook.util;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
 
 /*************************************************
  * パラメータ用ヘルパークラス
@@ -27,7 +31,7 @@ public class ParamHelper {
 	 * @return パラメータ
 	 */
 	public static String getParam(String key) {
-		return request.getParameter(key);
+		return convertSanitize(request.getParameter(key));
 	}
 
 	/**
@@ -38,6 +42,7 @@ public class ParamHelper {
 	 */
 	public static void setParam(Map<String, Object> resultMap) {
 		request.setAttribute(AppConstants.DATA, resultMap);
+		paramUnSanitize();
 	}
 
 	/**
@@ -74,7 +79,7 @@ public class ParamHelper {
 	 *
 	 * @param key セッションキー
 	 */
-	public static void sessionRemove(String key) {
+	public static void removeSession(String key) {
 		session.removeAttribute(key);
 	}
 
@@ -112,6 +117,99 @@ public class ParamHelper {
 	 */
 	public static void setRequest(HttpServletRequest request) {
 		ParamHelper.request = request;
+	}
+
+	/**
+	 * サニタイジングを行う
+	 *
+	 * @param str 文字列
+	 * @return サニタイズ後の文字列
+	 */
+	private static String convertSanitize(String str) {
+
+		if(StringUtils.isEmpty(str)) {
+			return str;
+		}
+		return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;").replaceAll("'", "&#39");
+	}
+
+	/**
+	 * サニタイジングされたタグを元に戻す
+	 *
+	 * @param str 文字列
+	 * @return タグを元に戻した文字列
+	 */
+	private static String convertUnSanitize(String str) {
+
+		if(StringUtils.isEmpty(str)) {
+			return str;
+		}
+		return str.replaceAll("&#39", "'").replaceAll("&quot;", "\"").replaceAll("&gt;", ">").replaceAll("&lt;", "<").replaceAll("&amp;", "&");
+	}
+
+	/**
+	 * パラメータでサニタイジングされたタグを元に戻す
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	private static void paramUnSanitize(){
+
+		Object obj = (Object) request.getAttribute(AppConstants.DATA);
+
+		if(obj instanceof HashMap) {
+			Map<String, Object> resultMap = (Map<String, Object>) obj;
+			mapUnSanitize(resultMap);
+		}
+	}
+
+	/**
+	 * マップでサニタイジングされたタグを元に戻す
+	 *
+	 * @param resultMap 結果マップ
+	 */
+	@SuppressWarnings("unchecked")
+	private static void mapUnSanitize(Map<String, Object> resultMap) {
+
+		for(Map.Entry<String, Object> entry : resultMap.entrySet()) {
+			if(entry.getValue() instanceof String) {
+				resultMap.put(entry.getKey(), convertUnSanitize((String) entry.getValue()));
+			}
+			if(entry.getValue() instanceof List) {
+				List<Object[]> list = (List<Object[]>) entry.getValue();
+				listUnSanitize(list);
+				resultMap.put(entry.getKey(), list);
+			}
+		}
+	}
+
+	/**
+	 * リストでサニタイジングされたタグを元に戻す
+	 *
+	 * @param list リスト(結果マップのvalue)
+	 */
+	private static void listUnSanitize(List<Object[]> list) {
+
+		int idx = 0;
+		for(Object[] objAry : list) {
+			objAryUnSanitize(objAry);
+			list.set(idx++, objAry);
+		}
+	}
+
+	/**
+	 * オブジェクト配列でサニタイジングされたタグを元に戻す
+	 *
+	 * @param objAry オブジェクト配列
+	 */
+	private static void objAryUnSanitize(Object[] objAry) {
+
+		int idx = 0;
+		for(Object obj : objAry) {
+			if(obj instanceof String) {
+				objAry[idx] = convertUnSanitize((String) obj);
+			}
+			idx++;
+		}
 	}
 
 }

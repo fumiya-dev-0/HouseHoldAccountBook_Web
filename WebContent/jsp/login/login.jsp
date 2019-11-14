@@ -15,15 +15,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- タイトル -->
-<title><s:property
-		value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" /></title>
+<title><%= HtmlConstants.TITLE %></title>
 </head>
 <body>
 	<!-- ヘッダー -->
 	<header>
 	<h1>
-		<s:property
-			value="@householdaccountbook.util.Util$Html@TITLE.getHtmlTag()" />
+		<%= HtmlConstants.TITLE %>
 	</h1>
 	</header>
 	<div align="center" id="main">

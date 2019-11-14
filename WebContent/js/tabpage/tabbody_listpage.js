@@ -357,7 +357,7 @@ TabbodyListpage.prototype.search = function(){
 	}
 
 	var formData = new FormData();
-	formData.append("year", DateUtil.convertToSlashDeleteStringFormat(val));
+	formData.append(AppConstants.YEAR, DateUtil.convertToSlashDeleteStringFormat(val));
 	this.load(formData);
 }
 
@@ -373,7 +373,7 @@ TabbodyListpage.prototype.upsert = function(){
 	}
 
 	var formData = this.inputData();
-	var code = formData.get("houseHoldAccountBookCode");
+	var code = formData.get(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE);
 
 	var self = this;
 	AjaxUtil.process({
@@ -419,12 +419,12 @@ TabbodyListpage.prototype.inputData = function(){
 	// 支出
 	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).getValue();
 
-	StringUtil.isEmpty(code) ? formData.append("houseHoldAccountBookCode", "") : formData.append("houseHoldAccountBookCode", code);
-	formData.append("name", name);
-	formData.append("date", DateUtil.convertToHyphenDeleteStringFormat(date));
-	formData.append("expenseCode", expenseCode);
-	formData.append("income", income);
-	formData.append("spending", spending);
+	StringUtil.isEmpty(code) ? formData.append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, "") : formData.append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
+	formData.append(AppConstants.NAME, name);
+	formData.append(AppConstants.DATE, DateUtil.convertToHyphenDeleteStringFormat(date));
+	formData.append(AppConstants.EXPENSE_CODE, expenseCode);
+	formData.append(AppConstants.INCOME, income);
+	formData.append(AppConstants.SPENDING, spending);
 
 	return formData;
 }
@@ -500,7 +500,7 @@ TabbodyListpage.prototype.clear = function(){
 TabbodyListpage.prototype.delete = function(code){
 
 	var formData = new FormData();
-	formData.append("houseHoldAccountBookCode", code);
+	formData.append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
 
 	var self = this;
 	AjaxUtil.process({
