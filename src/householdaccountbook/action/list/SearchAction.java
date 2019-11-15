@@ -46,7 +46,7 @@ public class SearchAction extends AbstractAction {
 		resultMap.put("incomeSum", incomeSum);
 		resultMap.put("spendingSum", spendingSum);
 
-		ParamHelper.setParam(resultMap);
+		ParamHelper.setServerParam(resultMap);
 
 		return ACTION_SUCCESS;
 	}
@@ -58,17 +58,16 @@ public class SearchAction extends AbstractAction {
 	 * @param sumMap 合計マップ
 	 * @return 合計マップ
 	 */
-	private Map<Integer, Integer> convertSumMap(List<Object[]> list, Map<Integer, Integer> sumMap) {
+	private void convertSumMap(List<Object[]> list, Map<Integer, Integer> sumMap) {
 
 		for(Object[] obj : list) {
 			for(Map.Entry<Integer, Integer> entry : sumMap.entrySet()) {
 				Integer sum = (Integer) obj[entry.getKey()];
-				sum += (Integer) entry.getKey();
-				sumMap.put(entry.getKey(), sumMap.get(sum));
+				sum += sumMap.get(entry.getKey());
+				sumMap.put(entry.getKey(), sum);
 			}
 		}
 
-		return sumMap;
 	}
 
 	/**

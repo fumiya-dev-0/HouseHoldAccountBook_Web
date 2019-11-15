@@ -25,7 +25,7 @@ public class ParamHelper {
 	private static HttpSession session;
 
 	/**
-	 * パラメータの取得
+	 * パラメータの取得(クライアント側)
 	 *
 	 * @param key キー値
 	 * @return パラメータ
@@ -35,14 +35,26 @@ public class ParamHelper {
 	}
 
 	/**
-	 * パラメータの設定
+	 * パラメータの取得(サーバー側)
+	 *
+	 * @param key キー値
+	 * @return パラメータ
+	 */
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> getServerParam(String key) {
+		Map<String, Object> resultMap = (Map<String, Object>) request.getAttribute(key);
+		paramUnSanitize();
+		return resultMap;
+	}
+
+	/**
+	 * パラメータの設定(サーバー側)
 	 *
 	 * @param reusltMap 結果マップ
 	 * @return パラメータ
 	 */
-	public static void setParam(Map<String, Object> resultMap) {
+	public static void setServerParam(Map<String, Object> resultMap) {
 		request.setAttribute(AppConstants.DATA, resultMap);
-		paramUnSanitize();
 	}
 
 	/**

@@ -1,3 +1,4 @@
+<%@page import="householdaccountbook.util.ParamHelper"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="householdaccountbook.util.AppConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,4 +6,4 @@
 <%
 	Gson gson = new Gson();
 %>
-<%=gson.toJson(request.getAttribute(AppConstants.DATA))%>
+<%= gson.toJson(ParamHelper.getServerParam(AppConstants.DATA)) %>

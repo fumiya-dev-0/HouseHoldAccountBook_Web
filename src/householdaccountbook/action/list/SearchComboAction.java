@@ -21,7 +21,7 @@ public class SearchComboAction extends AbstractAction {
 		List<Expense> expenses = model.load();
 
 		resultMap.put("expenses", expenses);
-		ParamHelper.setParam(resultMap);
+		ParamHelper.setServerParam(resultMap);
 
 		return ACTION_SUCCESS;
 	}
