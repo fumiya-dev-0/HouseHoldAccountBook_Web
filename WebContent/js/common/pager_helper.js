@@ -3,6 +3,8 @@
  * 作成日: 2019/09/21
  *
  *************************************************/
+PagerHelper.CURRENT_PAGE = 4;
+PagerHelper.END_PAGE = 5;
 function PagerHelper(){}
 
 /**
@@ -11,12 +13,18 @@ function PagerHelper(){}
  * @param max 1ページのデータ最大表示数
  * @param nowPage 現在ページ
  */
-PagerHelper.prototype.pager = function(nowPage, maxPage){
+PagerHelper.prototype.pager = function(nowPage, startPage, endPage, maxPage){
 
 	// 現在ページ
 	this.now = nowPage ? nowPage : 1;
 
-	// 表示ページ件数(データ件数 / 1ページのデータ最大表示数)
+	// 表次ページ件数(開始)
+	this.startPage = startPage;
+
+	// 表示ページ件数(終了)
+	this.endPage = endPage;
+
+	// 表示ページ件数(最大)
 	this.maxPage = maxPage;
 
 }
@@ -40,9 +48,10 @@ PagerHelper.prototype.getRefAll = function(){
  */
 PagerHelper.prototype.getPageRef = function(){
 	var ref = "";
-	for(var i = 1; i <= this.maxPage; i++){
-		ref += (i == this.now) ? "<span class='pager-none " + this.isCurrent(i) + "'>" + this.now + "</span>" : "<a class='pager " + this.isCurrent(i) + "' href='#page" + i + "'>" + i + "</a>";
+	for(var i = this.startPage; i <= this.endPage; i++){
+		ref += i == this.now ? "<span class='pager-none " + this.isCurrent(i) + "'>" + this.now + "</span>" : "<a class='pager " + this.isCurrent(i) + "' href='#page" + i + "'>" + i + "</a>";
 	}
+	ref += "<span class='pager-none pager-right'>...</span>" ;
 	return ref;
 }
 
@@ -52,31 +61,37 @@ PagerHelper.prototype.getPageRef = function(){
  * @param idx リンクの番号
  */
 PagerHelper.prototype.isCurrent = function(idx){
-	if(idx == 1){
+	if(idx == this.startPage){
 		return "pager-left";
-	}else if(idx == this.maxPage){
-		return "pager-right";
 	}else{
 		return "pager-page";
 	}
 }
 
 /**
- * リンクの取得(前へ)
+ * リンクの取得(最初へ・前へ)
  *
- * @param リンク(前へ)
+ * @param リンク(最初へ・前へ)
  */
 PagerHelper.prototype.getPrevRef = function(){
-	return this.now > 1 ? "<a class='pager' href='#page" + (Number(this.now) - 1) + "'>«前へ</a>" : "<span class='pager-none'>«前へ</span>";
+	// 最初へリンク
+	var ref = this.now > 1 ? "<a class='pager pager-right' href='#page" + 1 + "'>最初へ»</a>" : "<span class='pager-none pager-right'>最初へ»</span>";
+	// 前へリンク
+	ref += this.now > 1 ? "<a class='pager' href='#page" + (Number(this.now) - 1) + "'>«前へ</a>" : "<span class='pager-none'>«前へ</span>";
+	return ref;
 }
 
 /**
- * リンクの取得(次へ)
+ * リンクの取得(次へ・最後へ)
  *
- * @param リンク(次へ)
+ * @param リンク(次へ・最後へ)
  */
 PagerHelper.prototype.getNextRef = function(){
-	return this.now < this.maxPage ? "<a class='pager' href='#page" + (Number(this.now) + 1) + "'>次へ»</a>" : "<span class='pager-none'>次へ»</span>";
+	// 次へリンク
+	var ref = this.now < this.endPage ? "<a class='pager' href='#page" + (Number(this.now) + 1) + "'>次へ»</a>" : "<span class='pager-none'>次へ»</span>";
+	// 最後へリンク
+	ref += this.now < this.endPage ? "<a class='pager pager-left' href='#page" + this.maxPage + "'>最後へ»</a>" : "<span class='pager-none pager-left'>最後へ»</span>";
+	return ref;
 }
 
 /**

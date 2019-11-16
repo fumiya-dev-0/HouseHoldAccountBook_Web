@@ -232,6 +232,8 @@ TabbodyListpage.prototype.load = function(formData){
 				callback: function(data) {
 					self.accountBookData = data.resultList;
 					self.nowPage = data.nowPage;
+					self.startPage = data.startPage;
+					self.endPage = data.endPage;
 					self.maxPage = data.maxPage;
 					// 合計値エリア要素に値を設定
 					self.addSumArea(data.incomeSum, data.spendingSum);
@@ -281,7 +283,7 @@ TabbodyListpage.prototype.createTableWithPager = function(){
 	this.tableHelper.table($("#table-area"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, this.accountBookData);
 
 	var pagerHelper = new PagerHelper();
-	pagerHelper.pager(this.nowPage, this.maxPage);
+	pagerHelper.pager(this.nowPage, this.startPage, this.endPage, this.maxPage);
 	$("#pager-area").html(pagerHelper.getRefAll());
 	pagerHelper.onClick($.proxy(function(nowPage){
 

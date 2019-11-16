@@ -22,6 +22,9 @@ public class SearchAction extends AbstractAction {
 	/** 1ページのデータ最大表示数 */
 	private static final Integer PAGER_MAX = 15;
 
+	/** 現在ページ判定 */
+	private static final Integer IS_NOW_PAGE = 4;
+
 	@Override
 	public String execute() throws Exception {
 
@@ -30,16 +33,20 @@ public class SearchAction extends AbstractAction {
 
 		// 年月(入力データ)
 		String year = ParamHelper.getParam(AppConstants.YEAR);
-		// 年月(入力データ)
-		Integer nowPage = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.NOW_PAGE)) ? Integer.parseInt(ParamHelper.getParam(AppConstants.NOW_PAGE)) : 1;
 
+		// 現在ページ
+		Integer nowPage = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.NOW_PAGE)) ? Integer.parseInt(ParamHelper.getParam(AppConstants.NOW_PAGE)) : 1;
 		// データ取得開始番号
 		Integer start = (nowPage - 1) * PAGER_MAX;
 
 		ListModel listModel = new ListModel();
+		// テーブル表示データ取得
 		List<Object[]> list = year == null ? listModel.load(userCode, start, PAGER_MAX) : listModel.search(userCode, start, PAGER_MAX, year);
+		// テーブル表示データフォーマット変換
 		list = convertList(list);
+		// テーブル表示データカウント取得
 		Integer count = year == null ? listModel.count(userCode, null) : listModel.count(userCode, year);
+		// 支出・収入合計リスト取得
 		List<Object[]> sumList = year == null ? listModel.sum(userCode, null) : listModel.sum(userCode, year);
 
 		// 収入
@@ -50,10 +57,23 @@ public class SearchAction extends AbstractAction {
 		// 最大ページ数
 		Integer maxPage = (int) Math.ceil((double) count / PAGER_MAX);
 
+		Integer startPage = null;
+		Integer endPage = null;
+
+		if(nowPage >= IS_NOW_PAGE) {
+			startPage = nowPage - 2;
+			endPage = (nowPage + 2) < maxPage ? nowPage + 2 : maxPage;
+		}else{
+			startPage = 1;
+			endPage = 5 < maxPage ? 5 : maxPage;
+		}
+
 		resultMap.put("resultList", Sanitize.convertListUnSanitize(list));
 		resultMap.put("incomeSum", incomeSum);
 		resultMap.put("spendingSum", spendingSum);
 		resultMap.put("nowPage", nowPage);
+		resultMap.put("startPage", startPage);
+		resultMap.put("endPage", endPage);
 		resultMap.put("maxPage", maxPage);
 
 		ParamHelper.setServerParam(resultMap);
