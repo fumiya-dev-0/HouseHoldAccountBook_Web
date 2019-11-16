@@ -23,7 +23,7 @@ BaseDialog.prototype.show = function(){
 	this.centering();
 
 	// オーバーレイ、モーダルダイアログをフェードインさせる
-	$(this.modal.selector + ", " + this.overlay.selector).fadeIn("slow");
+	$(this.modal.selector + ", " + this.overlay.selector).fadeIn("normal");
 }
 
 /**
@@ -36,7 +36,7 @@ BaseDialog.prototype.close = function(callback){
 	var cnt = 0;
 	var self = this;
 	// モーダルダイアログとオーバーレイをフェードアウト
-	$(this.modal.selector + ", " + this.overlay.selector).fadeOut("slow", function(){
+	$(this.modal.selector + ", " + this.overlay.selector).fadeOut("normal", function(){
 		if(cnt < 1){
 			$(self.overlay.selector).remove();
 			if(callback){
