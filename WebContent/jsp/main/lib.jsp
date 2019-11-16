@@ -56,7 +56,7 @@
 <!-- プログレスダイアログヘルパークラスJS -->
 <script src="<%= HtmlConstants.PROGRESS_HELPER_JS_PATH %>"></script>
 <!-- ページャクラスJS -->
-<script src="<%= HtmlConstants.PAGER_UTIL_JS_PATH %>"></script>
+<script src="<%= HtmlConstants.PAGER_HELPER_JS_PATH %>"></script>
 <!-- メニュー画面JS -->
 <script src="<%= HtmlConstants.MAIN_JS_PATH %>"></script>
 <!-- 一覧画面JS -->

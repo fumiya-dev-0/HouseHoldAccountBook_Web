@@ -22,9 +22,11 @@
 }
 
 .sum-area {
+	width: 100px;
+	text-align: center;
 	background-color: #808080;
 	color: white;
-	padding: 2px 5px;
+	padding: 5px;
 	border-radius: 5px;
 	margin: 5px 0;
 }

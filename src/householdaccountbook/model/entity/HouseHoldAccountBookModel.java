@@ -42,7 +42,7 @@ public class HouseHoldAccountBookModel extends BaseModel {
 	 * @return 家計簿コード
 	 */
 	@SuppressWarnings("deprecation")
-	public Integer findHouseHoldAccountBookCodeMax() {
+	public Integer seqHouseHoldAccountBookCode() {
 
 		Session session = getSession();
 

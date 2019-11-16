@@ -26,7 +26,7 @@ public class DeleteAction extends AbstractAction {
 
 		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
 		HouseHoldAccountBook houseHoldAccountBook = model.findHouseHoldAccountBookCode(houseHoldAccountBookCode);
-		// 登録処理
+		// 削除処理
 		if(!model.delete(houseHoldAccountBook)) {
 			return ACTION_ERROR;
 		}

@@ -1,14 +1,15 @@
 package householdaccountbook.action.list;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.commons.lang.math.NumberUtils;
 
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.model.list.ListModel;
 import householdaccountbook.util.AppConstants;
 import householdaccountbook.util.DateUtil;
 import householdaccountbook.util.ParamHelper;
+import householdaccountbook.util.Sanitize;
 import householdaccountbook.util.StringUtil;
 
 /*************************************************
@@ -18,56 +19,46 @@ import householdaccountbook.util.StringUtil;
  *************************************************/
 public class SearchAction extends AbstractAction {
 
+	/** 1ページのデータ最大表示数 */
+	private static final Integer PAGER_MAX = 15;
+
 	@Override
 	public String execute() throws Exception {
 
+		// ユーザーコード
+		Integer userCode = NumberUtils.isNumber(ParamHelper.getSession(SESSION_USER_CODE)) ? Integer.parseInt(ParamHelper.getSession(SESSION_USER_CODE)) : null;
+
 		// 年月(入力データ)
 		String year = ParamHelper.getParam(AppConstants.YEAR);
-		// ユーザーコード
-		Integer userCode = Integer.parseInt(ParamHelper.getSession(SESSION_USER_CODE));
+		// 年月(入力データ)
+		Integer nowPage = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.NOW_PAGE)) ? Integer.parseInt(ParamHelper.getParam(AppConstants.NOW_PAGE)) : 1;
+
+		// データ取得開始番号
+		Integer start = (nowPage - 1) * PAGER_MAX;
 
 		ListModel listModel = new ListModel();
-		List<Object[]> list = (year == null) ? listModel.load(userCode, null) : listModel.load(userCode, year);
-
-		// 合計マップ
-		Map<Integer, Integer> sumMap = new HashMap<Integer, Integer>();
-		sumMap.put(5, 0);
-		sumMap.put(6, 0);
-		// 結果リストを合計マップに変換
-		convertSumMap(list, sumMap);
-
-		resultMap.put("resultList", convertList(list));
+		List<Object[]> list = year == null ? listModel.load(userCode, start, PAGER_MAX) : listModel.search(userCode, start, PAGER_MAX, year);
+		list = convertList(list);
+		Integer count = year == null ? listModel.count(userCode, null) : listModel.count(userCode, year);
+		List<Object[]> sumList = year == null ? listModel.sum(userCode, null) : listModel.sum(userCode, year);
 
 		// 収入
-		String incomeSum = String.format("%s円", StringUtil.separate(sumMap.get(5)));
+		String incomeSum = String.format("%s円", StringUtil.separate((Integer) sumList.get(0)[0]));
 		// 支出
-		String spendingSum = String.format("%s円", StringUtil.separate(sumMap.get(6)));
+		String spendingSum = String.format("%s円", StringUtil.separate((Integer) sumList.get(0)[1]));
 
+		// 最大ページ数
+		Integer maxPage = (int) Math.ceil((double) count / PAGER_MAX);
+
+		resultMap.put("resultList", Sanitize.convertListUnSanitize(list));
 		resultMap.put("incomeSum", incomeSum);
 		resultMap.put("spendingSum", spendingSum);
+		resultMap.put("nowPage", nowPage);
+		resultMap.put("maxPage", maxPage);
 
 		ParamHelper.setServerParam(resultMap);
 
 		return ACTION_SUCCESS;
-	}
-
-	/**
-	 * 合計マップに変換
-	 *
-	 * @param list 家計簿データリスト
-	 * @param sumMap 合計マップ
-	 * @return 合計マップ
-	 */
-	private void convertSumMap(List<Object[]> list, Map<Integer, Integer> sumMap) {
-
-		for(Object[] obj : list) {
-			for(Map.Entry<Integer, Integer> entry : sumMap.entrySet()) {
-				Integer sum = (Integer) obj[entry.getKey()];
-				sum += sumMap.get(entry.getKey());
-				sumMap.put(entry.getKey(), sum);
-			}
-		}
-
 	}
 
 	/**

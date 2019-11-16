@@ -29,10 +29,6 @@ TabbodyListpage.prototype.EXPENSE_ERROR_MESSAGE = "費目を選択してくだ�
 TabbodyListpage.prototype.INCOME_ERROR_MESSAGE = "所得を入力してください。";
 TabbodyListpage.prototype.SPENDING_ERROR_MESSAGE = "出費を入力してください。";
 
-/** ページャ用 */
-TabbodyListpage.prototype.PAGER_MAX = 15;
-TabbodyListpage.prototype.DEFAULT_NOW_PAGE = 1;
-
 function TabbodyListpage(){
 
 	var self = TabbodyListpage.prototype;
@@ -231,13 +227,16 @@ TabbodyListpage.prototype.load = function(formData){
 	AjaxUtil.process({
 		type: formData ? "POST" : "GET",
 				url: "list",
+				progress: true,
 				data: formData,
 				callback: function(data) {
 					self.accountBookData = data.resultList;
+					self.nowPage = data.nowPage;
+					self.maxPage = data.maxPage;
 					// 合計値エリア要素に値を設定
 					self.addSumArea(data.incomeSum, data.spendingSum);
 					// テーブルとページャの作成
-					self.createTableWithPager(this.DEFAULT_NOW_PAGE, self.accountBookData);
+					self.createTableWithPager();
 				}
 	});
 }
@@ -275,25 +274,28 @@ TabbodyListpage.prototype.addSumArea = function(incomeSum, spendingSum){
 /**
  * テーブルとページャの作成
  *
- * @param nowPage 現在ページ
- * @param data 表示データ
  */
-TabbodyListpage.prototype.createTableWithPager = function(nowPage, data){
-	PagerUtil.pager(data, this.PAGER_MAX, nowPage);
+TabbodyListpage.prototype.createTableWithPager = function(){
+
 	this.tableHelper = new TableHelper;
+	this.tableHelper.table($("#table-area"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, this.accountBookData);
 
-	this.tableHelper.table($("#table-area"), Constants.TABBODY_LISTPAGE_PARAM_TABLE, PagerUtil.getDispData());
+	var pagerHelper = new PagerHelper();
+	pagerHelper.pager(this.nowPage, this.maxPage);
+	$("#pager-area").html(pagerHelper.getRefAll());
+	pagerHelper.onClick($.proxy(function(nowPage){
 
-	$("#pager-area").html(PagerUtil.getRefAll());
-	PagerUtil.onClick($.proxy(function(nowPage){
+		this.nowPage = nowPage;
+		var formData = this.searchData($("#date-combo").val());
 		// テーブルとページャの作成
-		this.createTableWithPager(nowPage, this.accountBookData);
+		this.load(formData);
 	}, this));
 }
 
 /**
  * 新規・更新モーダルダイアログのテーブル表示
  *
+ * @param rIdx 行番号
  */
 TabbodyListpage.prototype.loadDialog = function(rIdx){
 
@@ -351,14 +353,29 @@ TabbodyListpage.prototype.setForm = function(rIdx){
  *
  */
 TabbodyListpage.prototype.search = function(){
+
 	var val = $("#date-combo").val();
 	if(!val){
 		return;
 	}
 
-	var formData = new FormData();
-	formData.append(AppConstants.YEAR, DateUtil.convertToSlashDeleteStringFormat(val));
+	this.nowPage = 0;
+	var formData = this.searchData(val);
 	this.load(formData);
+}
+/**
+ * 検索用パラメータ取得
+ *
+ */
+TabbodyListpage.prototype.searchData = function(val){
+
+	var formData = new FormData();
+	if(val){
+		formData.append(AppConstants.YEAR, DateUtil.convertToSlashDeleteStringFormat(val));
+	}
+
+	formData.append(AppConstants.NOW_PAGE, this.nowPage);
+	return formData;
 }
 
 /**

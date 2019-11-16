@@ -19,11 +19,11 @@
 	<div id="main-area">
 		<div class="main-area-child">
 			<div>収入合計</div>
-			<div id="income-sum" class="sum-area">999,999円</div>
+			<div id="income-sum" class="sum-area"></div>
 			<div>支出合計</div>
-			<div id="spending-sum" class="sum-area">999,999円</div>
+			<div id="spending-sum" class="sum-area"></div>
 			<div>残額合計</div>
-			<div id="balance-sum" class="sum-area">999,999円</div>
+			<div id="balance-sum" class="sum-area"></div>
 		</div>
 		<div class="main-area-child">
 			<div id="table-area"></div>

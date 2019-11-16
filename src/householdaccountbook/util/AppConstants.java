@@ -23,6 +23,7 @@ public class AppConstants {
 	 *************************************************/
 	/** 年 */
 	public static final String YEAR = "year";
+	public static final String NOW_PAGE = "nowPage";
 
 	/*************************************************
 	 * 共通カラム名
@@ -30,6 +31,8 @@ public class AppConstants {
 	/** 名前 */
 	public static final String NAME = "name";
 	public static final String NAME_SNAKE = "name";
+	public static final String COUNT = "COUNT";
+	public static final String SUM = "SUM";
 
 	/*************************************************
 	 * 家計簿テーブル変数

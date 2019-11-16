@@ -54,7 +54,7 @@ public class UpsertAction extends AbstractAction {
 		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
 		if(houseHoldAccountBook.getHouseHoldAccountBookCode() == null) {
 			// 自動採番
-			houseHoldAccountBook.setHouseHoldAccountBookCode(model.findHouseHoldAccountBookCodeMax());
+			houseHoldAccountBook.setHouseHoldAccountBookCode(model.seqHouseHoldAccountBookCode());
 			// 登録処理
 			if(!model.upsert(houseHoldAccountBook, true)) {
 				return false;

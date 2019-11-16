@@ -8,12 +8,6 @@ package householdaccountbook.util;
 public class StringUtil {
 
 	/**
-	 * コンストラクタ(直接アクセス不可)
-	 *
-	 */
-	private StringUtil() {}
-
-	/**
 	 * 空文字チェック
 	 *
 	 * @param s 文字列

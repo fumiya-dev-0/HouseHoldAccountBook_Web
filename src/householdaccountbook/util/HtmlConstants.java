@@ -42,7 +42,7 @@ public class HtmlConstants {
 	public static final String MODAL_HELPER_JS_PATH = JS_PATH + "common/modal_helper.js";
 	public static final String MESSAGE_HELPER_JS_PATH = JS_PATH + "common/message_helper.js";
 	public static final String PROGRESS_HELPER_JS_PATH = JS_PATH + "common/progress_helper.js";
-	public static final String PAGER_UTIL_JS_PATH = JS_PATH + "common/pager_util.js";
+	public static final String PAGER_HELPER_JS_PATH = JS_PATH + "common/pager_helper.js";
 	public static final String MAIN_JS_PATH = JS_PATH + "main/main.js";
 	public static final String MENU_JS_PATH = JS_PATH + "menu/menu.js";
 	public static final String LISTPAGE_JS_PATH = JS_PATH + "/tabpage/tabbody_listpage.js";

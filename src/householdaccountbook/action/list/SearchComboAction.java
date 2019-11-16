@@ -6,6 +6,7 @@ import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.Expense;
 import householdaccountbook.model.entity.ExpenseModel;
 import householdaccountbook.util.ParamHelper;
+import householdaccountbook.util.Sanitize;
 
 /*************************************************
  * 一覧画面コンボボックスデータ取得アクションクラス
@@ -20,7 +21,7 @@ public class SearchComboAction extends AbstractAction {
 		ExpenseModel model = new ExpenseModel();
 		List<Expense> expenses = model.load();
 
-		resultMap.put("expenses", expenses);
+		resultMap.put("expenses", Sanitize.convertBeanUnSanitize(expenses));
 		ParamHelper.setServerParam(resultMap);
 
 		return ACTION_SUCCESS;
