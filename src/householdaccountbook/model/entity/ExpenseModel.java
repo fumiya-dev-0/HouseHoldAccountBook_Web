@@ -8,7 +8,7 @@ import org.hibernate.criterion.Order;
 
 import householdaccountbook.base.BaseModel;
 import householdaccountbook.dto.Expense;
-import householdaccountbook.util.AppConstants;
+import householdaccountbook.util.HtmlConstants;
 
 /*************************************************
  * 費目モデルクラス
@@ -34,7 +34,7 @@ public class ExpenseModel extends BaseModel {
 		Session session = getSession();
 
 		Criteria criteria = session.createCriteria(Expense.class);
-		criteria.addOrder(Order.asc(AppConstants.DISPLAY_ORDER));
+		criteria.addOrder(Order.asc(HtmlConstants.DISPLAY_ORDER));
 		List<Expense> list = criteria.list();
 
 		session.close();

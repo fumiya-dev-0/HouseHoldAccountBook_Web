@@ -57,17 +57,12 @@ TabbodyListpage.prototype.init = function(){
 	// イベントoff
 	this.offEvent();
 
-	/**
-	 * 新規ボタン処理
-	 *
-	 */
-	$("#new-btn").on("click", $.proxy(function(){
-		this.modalHelper.dialog({
+	var option = {
 			width: "50%",
 			height: "300px",
 			buttons: [
 				{
-					text: "登録",
+					text: "",
 					click: function(){
 						self.upsert();
 					},
@@ -96,7 +91,15 @@ TabbodyListpage.prototype.init = function(){
 					}
 				}
 				]
-		}).show();
+	};
+
+	/**
+	 * 新規ボタン処理
+	 *
+	 */
+	$("#new-btn").on("click", $.proxy(function(){
+		option.buttons[0].text = "登録";
+		this.modalHelper.dialog(option).show();
 		this.loadDialog();
 	}, this));
 
@@ -107,41 +110,8 @@ TabbodyListpage.prototype.init = function(){
 	$("#upd-btn").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
 			var rIdx = this.tableHelper.getRowIdx() - 1;
-			this.modalHelper.dialog({
-				width: "50%",
-				height: "300px",
-				buttons: [
-					{
-						text: "更新",
-						click: function(){
-							self.upsert();
-						},
-						attr: {
-							id: "add-btn",
-							class: "btn-info"
-						},
-						css: {
-							width: "60px",
-							height: "30px",
-							margin: "0 5px 0 0"
-						}
-					},
-					{
-						text: "閉じる",
-						click: function(){
-							self.modalHelper.close();
-						},
-						attr: {
-							id: "close-btn",
-							class: "btn-warning"
-						},
-						css: {
-							width: "60px",
-							height: "30px"
-						}
-					}
-					]
-			}).show();
+			option.buttons[0].text = "更新";
+			this.modalHelper.dialog(option).show();
 			this.loadDialog(rIdx);
 		}else{
 			messageHelper.alert("未選択", "表を選択してください。", null).show();
@@ -173,8 +143,9 @@ TabbodyListpage.prototype.init = function(){
  */
 TabbodyListpage.prototype.show = function(){
 
+	// 年月コンボボックス読み込み
 	this.loadCombo();
-
+	// 読み込み処理
 	this.load();
 }
 
@@ -373,10 +344,10 @@ TabbodyListpage.prototype.searchData = function(val){
 
 	var formData = new FormData();
 	if(val){
-		formData.append(AppConstants.YEAR, DateUtil.convertToSlashDeleteStringFormat(val));
+		formData.append(HtmlConstants.YEAR, DateUtil.convertToSlashDeleteStringFormat(val));
 	}
 
-	formData.append(AppConstants.NOW_PAGE, this.nowPage);
+	formData.append(HtmlConstants.NOW_PAGE, this.nowPage);
 	return formData;
 }
 
@@ -392,7 +363,7 @@ TabbodyListpage.prototype.upsert = function(){
 	}
 
 	var formData = this.inputData();
-	var code = formData.get(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE);
+	var code = formData.get(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE);
 
 	var self = this;
 	AjaxUtil.process({
@@ -438,12 +409,12 @@ TabbodyListpage.prototype.inputData = function(){
 	// 支出
 	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).getValue();
 
-	StringUtil.isEmpty(code) ? formData.append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, "") : formData.append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
-	formData.append(AppConstants.NAME, name);
-	formData.append(AppConstants.DATE, DateUtil.convertToHyphenDeleteStringFormat(date));
-	formData.append(AppConstants.EXPENSE_CODE, expenseCode);
-	formData.append(AppConstants.INCOME, income);
-	formData.append(AppConstants.SPENDING, spending);
+	StringUtil.isEmpty(code) ? formData.append(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, "") : formData.append(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
+	formData.append(HtmlConstants.NAME, name);
+	formData.append(HtmlConstants.DATE, DateUtil.convertToHyphenDeleteStringFormat(date));
+	formData.append(HtmlConstants.EXPENSE_CODE, expenseCode);
+	formData.append(HtmlConstants.INCOME, income);
+	formData.append(HtmlConstants.SPENDING, spending);
 
 	return formData;
 }
@@ -519,7 +490,7 @@ TabbodyListpage.prototype.clear = function(){
 TabbodyListpage.prototype.delete = function(code){
 
 	var formData = new FormData();
-	formData.append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
+	formData.append(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
 
 	var self = this;
 	AjaxUtil.process({

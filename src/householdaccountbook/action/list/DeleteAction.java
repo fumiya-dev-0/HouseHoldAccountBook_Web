@@ -8,7 +8,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.HouseHoldAccountBook;
 import householdaccountbook.model.entity.HouseHoldAccountBookModel;
-import householdaccountbook.util.AppConstants;
+import householdaccountbook.util.HtmlConstants;
 import householdaccountbook.util.ParamHelper;
 
 /*************************************************
@@ -22,10 +22,10 @@ public class DeleteAction extends AbstractAction {
 	public String execute() throws Exception {
 
 		// 家計簿コード
-		Integer houseHoldAccountBookCode = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) ? Integer.valueOf(ParamHelper.getParam(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) : null;
+		Integer houseHoldAccountBookCode = NumberUtils.isNumber(ParamHelper.getParam(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) ? Integer.valueOf(ParamHelper.getParam(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE)) : null;
 
 		HouseHoldAccountBookModel model = new HouseHoldAccountBookModel();
-		HouseHoldAccountBook houseHoldAccountBook = model.findHouseHoldAccountBookCode(houseHoldAccountBookCode);
+		HouseHoldAccountBook houseHoldAccountBook = model.findCode(houseHoldAccountBookCode);
 		// 削除処理
 		if(!model.delete(houseHoldAccountBook)) {
 			return ACTION_ERROR;

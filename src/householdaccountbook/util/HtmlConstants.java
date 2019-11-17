@@ -7,44 +7,36 @@ package householdaccountbook.util;
  *************************************************/
 public class HtmlConstants {
 
-	/*************************************************
-	 * HTMLタグ
-	 *************************************************/
+	/** TITLEタグ(HTML) */
 	public static final String TITLE = "家計簿";
+	/** 自動ログイン */
+	public static final String AUTO = "auto";
+	/** 年 */
+	public static final String YEAR = "year";
+	/** 現在ページ */
+	public static final String NOW_PAGE = "nowPage";
+	/** 名前 */
+	public static final String NAME = "name";
+	/** 家計簿コード */
+	public static final String HOUSE_HOLD_ACCOUNT_BOOK_CODE = "houseHoldAccountBookCode";
+	/** 日付 */
+	public static final String DATE = "date";
+	/** 収入 */
+	public static final String INCOME = "income";
+	/** 支出 */
+	public static final String SPENDING = "spending";
+	/** 費目コード */
+	public static final String EXPENSE_CODE = "expenseCode";
+	/** 表示順 */
+	public static final String DISPLAY_ORDER = "displayOrder";
+	/** ユーザーコード */
+	public static final String USER_CODE = "userCode";
+	/** ユーザーID */
+	public static final String USER_ID = "userId";
+	/** パスワード */
+	public static final String PASSWORD = "password";
+	/** ログイン状態 */
+	public static final String LOGIN_STATE = "loginState";
 
-	/*************************************************
-	 * CSSファイルパス
-	 *************************************************/
-	public static final String CSS_PATH = "css/";
-	public static final String BASE_DIALOG_CSS_PATH = CSS_PATH + "base/base_dialog.css";
-	public static final String DEFAULT_CSS_PATH = CSS_PATH + "common/default.css";
-	public static final String INPUT_CSS_PATH = CSS_PATH + "common/input.css";
-	public static final String TABLE_CSS_PATH = CSS_PATH + "common/table.css";
-	public static final String MODAL_CSS_PATH = CSS_PATH + "common/modal.css";
-	public static final String MESSAGE_CSS_PATH = CSS_PATH + "common/message.css";
-	public static final String PROGRESS_CSS_PATH = CSS_PATH + "common/progress.css";
-	public static final String PAGER_CSS_PATH = CSS_PATH + "common/pager.css";
-	public static final String LOGIN_CSS_PATH = CSS_PATH + "login/login.css";
-	public static final String MAIN_CSS_PATH = CSS_PATH + "main/main.css";
-	public static final String MENU_CSS_PATH = CSS_PATH + "menu/menu.css";
-	public static final String LISTPAGE_CSS_PATH = CSS_PATH + "tabpage/tabbody_listpage.css";
-
-	/*************************************************
-	 * JSファイルパス
-	 *************************************************/
-	public static final String JS_PATH = "js/";
-	public static final String BASE_DIALOG_JS_PATH = JS_PATH + "base/base_dialog.js";
-	public static final String CONSTANTS_JS_PATH = JS_PATH + "common/constants.js";
-	public static final String AJAX_UTIL_JS_PATH = JS_PATH + "common/ajax_util.js";
-	public static final String DATE_UTIL_JS_PATH = JS_PATH + "common/date_util.js";
-	public static final String STRING_UTIL_JS_PATH = JS_PATH + "common/string_util.js";
-	public static final String TABLE_HELPER_JS_PATH = JS_PATH + "common/table_helper.js";
-	public static final String MODAL_HELPER_JS_PATH = JS_PATH + "common/modal_helper.js";
-	public static final String MESSAGE_HELPER_JS_PATH = JS_PATH + "common/message_helper.js";
-	public static final String PROGRESS_HELPER_JS_PATH = JS_PATH + "common/progress_helper.js";
-	public static final String PAGER_HELPER_JS_PATH = JS_PATH + "common/pager_helper.js";
-	public static final String MAIN_JS_PATH = JS_PATH + "main/main.js";
-	public static final String MENU_JS_PATH = JS_PATH + "menu/menu.js";
-	public static final String LISTPAGE_JS_PATH = JS_PATH + "/tabpage/tabbody_listpage.js";
 
 }

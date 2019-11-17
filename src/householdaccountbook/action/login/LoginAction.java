@@ -12,7 +12,7 @@ import org.apache.commons.lang.BooleanUtils;
 import householdaccountbook.base.AbstractAction;
 import householdaccountbook.dto.User;
 import householdaccountbook.model.entity.UserModel;
-import householdaccountbook.util.AppConstants;
+import householdaccountbook.util.HtmlConstants;
 import householdaccountbook.util.ParamHelper;
 import householdaccountbook.util.StringUtil;
 
@@ -43,8 +43,8 @@ public class LoginAction extends AbstractAction {
 	@Override
 	public String execute() throws Exception {
 
-		userId = ParamHelper.getParam(AppConstants.USER_ID);
-		password = ParamHelper.getParam(AppConstants.PASSWORD);
+		userId = ParamHelper.getParam(HtmlConstants.USER_ID);
+		password = ParamHelper.getParam(HtmlConstants.PASSWORD);
 
 		if(!isCheck()) {
 			return ACTION_LOGIN_ERROR;
@@ -137,7 +137,7 @@ public class LoginAction extends AbstractAction {
 	 */
 	private void userIdSaveToCookie() {
 
-		Boolean auto = BooleanUtils.toBoolean(ParamHelper.getParam(AppConstants.AUTO));
+		Boolean auto = BooleanUtils.toBoolean(ParamHelper.getParam(HtmlConstants.AUTO));
 		// ユーザID保存チェックボックスがtrueのとき
 		if(auto) {
 			setCookie();

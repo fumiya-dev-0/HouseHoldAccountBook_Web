@@ -18,71 +18,6 @@ import householdaccountbook.util.AppConstants;
 public class ListModel extends BaseModel {
 
 	/**
-	 * 件数取得
-	 *
-	 * @param userCode ユーザーコード
-	 * @param year 年月
-	 * @return 件数
-	 */
-	@SuppressWarnings("unchecked")
-	public Integer count(Integer userCode, String year) {
-
-		Session session = getSession();
-
-		StringBuilder sql = new StringBuilder();
-		sql.append("select ");
-		sql.append(" count(*) as ").append(AppConstants.COUNT);
-		sql.append(createFromWithWherePhrase(year));
-
-		Query<Integer> query = session
-				.createSQLQuery(sql.toString())
-				.addScalar(AppConstants.COUNT, StandardBasicTypes.INTEGER)
-				.setParameter("userCode", userCode);
-		if(year != null) {
-			query.setParameter("year", year);
-		}
-		Integer count = query.list().get(0);
-
-		session.close();
-
-		return count;
-	}
-
-	/**
-	 * 合計取得
-	 *
-	 * @param userCode ユーザーコード
-	 * @param year 年月
-	 * @return 件数
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Object[]> sum(Integer userCode, String year) {
-
-		Session session = getSession();
-
-		StringBuilder sql = new StringBuilder();
-		sql.append("select ");
-		sql.append(" sum(income) as ").append(AppConstants.INCOME);
-		sql.append(" ,sum(spending) as ").append(AppConstants.SPENDING);
-		sql.append(createFromWithWherePhrase(year));
-
-		Query<Object[]> query = session
-				.createSQLQuery(sql.toString())
-				.addScalar(AppConstants.INCOME, StandardBasicTypes.INTEGER)
-				.addScalar(AppConstants.SPENDING, StandardBasicTypes.INTEGER)
-				.setParameter("userCode", userCode);
-		if(year != null) {
-			query.setParameter("year", year);
-		}
-
-		List<Object[]> sumList = query.list();
-
-		session.close();
-
-		return sumList;
-	}
-
-	/**
 	 * 読み込み
 	 *
 	 * @param userCode ユーザーコード
@@ -146,13 +81,13 @@ public class ListModel extends BaseModel {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("select ");
-		sql.append("  ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_HOUSE_HOLD_ACCOUNT_BOOK_CODE);
-		sql.append("  ,").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.C_EXPENSE_CODE);
-		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.NAME_SNAKE).append(" as HOUSEHOLDACCOUNTBOOK_NAME");
-		sql.append("  ,").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.NAME_SNAKE);
-		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_DATE);
-		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_INCOME);
-		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_SPENDING);
+		sql.append("  ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE);
+		sql.append("  ,").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.EXPENSE_CODE);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.NAME).append(" as HOUSEHOLDACCOUNTBOOK_NAME");
+		sql.append("  ,").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.NAME);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.DATE);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.INCOME);
+		sql.append("  ,").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.SPENDING);
 
 		return sql.toString();
 	}
@@ -171,10 +106,10 @@ public class ListModel extends BaseModel {
 		sql.append(" from ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK);
 		// 費目テーブル
 		sql.append(" inner join ").append(AppConstants.M_EXPENSE);
-		sql.append(" on ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_EXPENSE_CODE).append(" = ").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.C_EXPENSE_CODE);
-		sql.append(" where ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_USER_CODE).append(" = :userCode");
+		sql.append(" on ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.EXPENSE_CODE).append(" = ").append(AppConstants.M_EXPENSE).append(".").append(AppConstants.EXPENSE_CODE);
+		sql.append(" where ").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.USER_CODE).append(" = :userCode");
 		if(year != null) {
-			sql.append(" and concat(substr(").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_DATE).append(", 1, 4), substr(").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.C_DATE).append(", 5, 2)) = :year");
+			sql.append(" and concat(substr(").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.DATE).append(", 1, 4), substr(").append(AppConstants.T_HOUSE_HOLD_ACCOUNT_BOOK).append(".").append(AppConstants.DATE).append(", 5, 2)) = :year");
 		}
 
 		return sql.toString();
@@ -195,13 +130,13 @@ public class ListModel extends BaseModel {
 
 		Query<Object[]> query = session
 				.createSQLQuery(sql.toString())
-				.addScalar(AppConstants.C_HOUSE_HOLD_ACCOUNT_BOOK_CODE, StandardBasicTypes.INTEGER)
-				.addScalar(AppConstants.C_EXPENSE_CODE, StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.EXPENSE_CODE, StandardBasicTypes.INTEGER)
 				.addScalar("HOUSEHOLDACCOUNTBOOK_NAME", StandardBasicTypes.STRING)
-				.addScalar(AppConstants.NAME_SNAKE, StandardBasicTypes.STRING)
-				.addScalar(AppConstants.C_DATE, StandardBasicTypes.STRING)
-				.addScalar(AppConstants.C_INCOME, StandardBasicTypes.INTEGER)
-				.addScalar(AppConstants.C_SPENDING, StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.NAME, StandardBasicTypes.STRING)
+				.addScalar(AppConstants.DATE, StandardBasicTypes.STRING)
+				.addScalar(AppConstants.INCOME, StandardBasicTypes.INTEGER)
+				.addScalar(AppConstants.SPENDING, StandardBasicTypes.INTEGER)
 				.setParameter("userCode", userCode);
 		if(year != null) {
 			query.setParameter("year", year);

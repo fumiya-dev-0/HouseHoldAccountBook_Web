@@ -11,7 +11,7 @@
 <div id="list_page">
 	<div id="input-area">
 		<select id="date-combo" class="combo"></select>
-		<s:submit id="print-btn" value="印刷" class="btn-info" />
+		<s:submit id="csv-btn" value="CSV出力" class="btn-info" />
 		<s:submit id="new-btn" value="新規" class="btn-info" />
 		<s:submit id="upd-btn" value="更新" class="btn-info" />
 		<s:submit id="del-btn" value="削除" class="btn-warning" />

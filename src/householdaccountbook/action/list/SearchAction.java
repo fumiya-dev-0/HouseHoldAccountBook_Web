@@ -5,9 +5,10 @@ import java.util.List;
 import org.apache.commons.lang.math.NumberUtils;
 
 import householdaccountbook.base.AbstractAction;
+import householdaccountbook.model.entity.HouseHoldAccountBookModel;
 import householdaccountbook.model.list.ListModel;
-import householdaccountbook.util.AppConstants;
 import householdaccountbook.util.DateUtil;
+import householdaccountbook.util.HtmlConstants;
 import householdaccountbook.util.ParamHelper;
 import householdaccountbook.util.Sanitize;
 import householdaccountbook.util.StringUtil;
@@ -32,10 +33,10 @@ public class SearchAction extends AbstractAction {
 		Integer userCode = NumberUtils.isNumber(ParamHelper.getSession(SESSION_USER_CODE)) ? Integer.parseInt(ParamHelper.getSession(SESSION_USER_CODE)) : null;
 
 		// 年月(入力データ)
-		String year = ParamHelper.getParam(AppConstants.YEAR);
+		String year = ParamHelper.getParam(HtmlConstants.YEAR);
 
 		// 現在ページ
-		Integer nowPage = NumberUtils.isNumber(ParamHelper.getParam(AppConstants.NOW_PAGE)) ? Integer.parseInt(ParamHelper.getParam(AppConstants.NOW_PAGE)) : 1;
+		Integer nowPage = NumberUtils.isNumber(ParamHelper.getParam(HtmlConstants.NOW_PAGE)) ? Integer.parseInt(ParamHelper.getParam(HtmlConstants.NOW_PAGE)) : 1;
 		// データ取得開始番号
 		Integer start = (nowPage - 1) * PAGER_MAX;
 
@@ -44,15 +45,19 @@ public class SearchAction extends AbstractAction {
 		List<Object[]> list = year == null ? listModel.load(userCode, start, PAGER_MAX) : listModel.search(userCode, start, PAGER_MAX, year);
 		// テーブル表示データフォーマット変換
 		list = convertList(list);
+
+		HouseHoldAccountBookModel houseHoldAccountBookModel = new HouseHoldAccountBookModel();
 		// テーブル表示データカウント取得
-		Integer count = year == null ? listModel.count(userCode, null) : listModel.count(userCode, year);
-		// 支出・収入合計リスト取得
-		List<Object[]> sumList = year == null ? listModel.sum(userCode, null) : listModel.sum(userCode, year);
+		Integer count = year == null ? houseHoldAccountBookModel.count(userCode, null) : houseHoldAccountBookModel.count(userCode, year);
+		// 収入合計取得
+		Integer incomeSum = year == null ? houseHoldAccountBookModel.sum(HtmlConstants.INCOME, userCode, null) : houseHoldAccountBookModel.sum(HtmlConstants.INCOME, userCode, year);
+		// 支出合計取得
+		Integer spendingSum = year == null ? houseHoldAccountBookModel.sum(HtmlConstants.SPENDING, userCode, null) : houseHoldAccountBookModel.sum(HtmlConstants.SPENDING, userCode, year);
 
 		// 収入
-		String incomeSum = String.format("%s円", StringUtil.separate((Integer) sumList.get(0)[0]));
+		String sIncomeSum = String.format("%s円", StringUtil.separate(incomeSum));
 		// 支出
-		String spendingSum = String.format("%s円", StringUtil.separate((Integer) sumList.get(0)[1]));
+		String sSpendingSum = String.format("%s円", StringUtil.separate(spendingSum));
 
 		// 最大ページ数
 		Integer maxPage = (int) Math.ceil((double) count / PAGER_MAX);
@@ -69,8 +74,8 @@ public class SearchAction extends AbstractAction {
 		}
 
 		resultMap.put("resultList", Sanitize.convertListUnSanitize(list));
-		resultMap.put("incomeSum", incomeSum);
-		resultMap.put("spendingSum", spendingSum);
+		resultMap.put("incomeSum", sIncomeSum);
+		resultMap.put("spendingSum", sSpendingSum);
 		resultMap.put("nowPage", nowPage);
 		resultMap.put("startPage", startPage);
 		resultMap.put("endPage", endPage);
