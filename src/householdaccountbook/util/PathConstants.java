@@ -21,8 +21,8 @@ public class PathConstants {
 	public static final String PAGER_CSS_PATH = CSS_PATH + "common/pager.css";
 	public static final String LOGIN_CSS_PATH = CSS_PATH + "login/login.css";
 	public static final String MAIN_CSS_PATH = CSS_PATH + "main/main.css";
-	public static final String MENU_CSS_PATH = CSS_PATH + "menu/menu.css";
-	public static final String LISTPAGE_CSS_PATH = CSS_PATH + "tabpage/tabbody_listpage.css";
+	public static final String MENU_CSS_PATH = CSS_PATH + "main/menu/menu.css";
+	public static final String LISTPAGE_CSS_PATH = CSS_PATH + "main/page/list_page.css";
 
 	/*************************************************
 	 * JSファイルパス
@@ -39,8 +39,8 @@ public class PathConstants {
 	public static final String PROGRESS_HELPER_JS_PATH = JS_PATH + "common/progress_helper.js";
 	public static final String PAGER_HELPER_JS_PATH = JS_PATH + "common/pager_helper.js";
 	public static final String MAIN_JS_PATH = JS_PATH + "main/main.js";
-	public static final String MENU_JS_PATH = JS_PATH + "menu/menu.js";
-	public static final String LISTPAGE_JS_PATH = JS_PATH + "/tabpage/tabbody_listpage.js";
+	public static final String MENU_JS_PATH = JS_PATH + "main/menu/menu.js";
+	public static final String LISTPAGE_JS_PATH = JS_PATH + "main/page/list_page.js";
 
 
 }

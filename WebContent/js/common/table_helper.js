@@ -18,7 +18,7 @@ TableHelper.prototype = {
 		},
 
 		// テーブルの取得
-		getTable(parent){
+		getTable: function(parent){
 			return parent.find("table");
 		},
 
@@ -29,7 +29,7 @@ TableHelper.prototype = {
 		},
 
 		// フォームの取得
-		getForm(parent){
+		getForm: function(parent){
 			return parent.find("form");
 		},
 

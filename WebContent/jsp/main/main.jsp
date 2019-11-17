@@ -31,7 +31,7 @@ window.onload = function(){
 	</header>
 	<div id="main">
 		<!-- タブメニュー読み込み -->
-		<%@include file="../menu/menu.jsp"%>
+		<%@include file="menu/menu.jsp"%>
 	</div>
 	<!-- モーダルダイアログ読み込み -->
 	<%@include file="../common/modal.jsp"%>
@@ -42,7 +42,7 @@ window.onload = function(){
 	<!-- ライブラリ読み込み -->
 	<%@include file="lib.jsp"%>
 	<!-- 定数クラス読み込み -->
-	<%@include file="../util/html_constants.jsp"%>
+	<%@include file="../common/html_constants.jsp"%>
 	<!-- フッター -->
 	<footer></footer>
 </body>
