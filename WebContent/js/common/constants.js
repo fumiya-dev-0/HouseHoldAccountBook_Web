@@ -3,11 +3,14 @@
  * 作成日: 2019/11/03
  *
  *************************************************/
-/** タブメニューのインスタンス生成 */
-Constants.TAB_INSTANCE_FUNC = {
-		["LIST_PAGE"]: () => {
-			new TabbodyListpage();
-		}
+/** 画面のインスタンス生成 */
+Constants.MENU_INSTANCE_FUNC = function(key){
+
+	if(key == "list_page"){
+		return new TabbodyListpage();
+	}
+
+	return null;
 }
 
 /*************************************************

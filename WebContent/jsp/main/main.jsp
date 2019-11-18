@@ -33,16 +33,8 @@ window.onload = function(){
 		<!-- タブメニュー読み込み -->
 		<%@include file="menu/menu.jsp"%>
 	</div>
-	<!-- モーダルダイアログ読み込み -->
-	<%@include file="../common/modal.jsp"%>
-	<!-- メッセージダイアログ読み込み -->
-	<%@include file="../common/message.jsp"%>
-	<!-- プログレスダイアログ読み込み -->
-	<%@include file="../common/progress.jsp"%>
 	<!-- ライブラリ読み込み -->
 	<%@include file="lib.jsp"%>
-	<!-- 定数クラス読み込み -->
-	<%@include file="../common/html_constants.jsp"%>
 	<!-- フッター -->
 	<footer></footer>
 </body>

@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* タブ */
-#tab_controll {
+#menu-controll {
 	margin: 0;
 	padding: 14px 8px 0 8px;
 	background-color: #4488b3;
@@ -9,15 +9,18 @@
 }
 
 /* タブ a要素 */
-#tab_controll a {
+#menu-controll a {
 	display: inline-block;
 	padding: 5px 20px;
 	text-decoration: none;
 	color: white;
 	margin-right: 10px;
+	background-color: #446CB3;
+	color: white;
+	cursor: pointer;
 }
 
-#tab_body {
+#menu-disp {
 	margin-top: -1px;
 	padding: 1em;
 	background-color: white;
