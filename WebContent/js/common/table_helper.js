@@ -78,13 +78,13 @@ TableHelper.prototype = {
 		},
 
 		// ヘッダー列の追加
-		addHCols: function(rIdx){
+		addHCells: function(rIdx){
 			return this.mTable.find("thead").find("tr").eq(rIdx).append("<th></th>");
 		},
 
 		// ヘッダー列の取得
-		hCols: function(cIdx){
-			this.hCol = this.hRow.find("th").eq(cIdx);
+		hCells: function(cIdx){
+			this.hCell = this.hRow.find("th").eq(cIdx);
 			return this;
 		},
 
@@ -93,20 +93,20 @@ TableHelper.prototype = {
 			return this.mTable.find("tbody").find("tr").eq(rIdx).append("<td></td>");
 		},
 
-		// 列の取得
-		cols: function(cIdx){
-			this.col = this.row.find("td").eq(cIdx);
+		// 列の設定
+		cells: function(rIdx, cIdx){
+			this.cell = this.mTable.find("tbody").find("tr").eq(rIdx).find("td").eq(cIdx);
 			return this;
 		},
 
 		// ヘッダー列
-		getHCol: function(){
-			return this.hCol;
+		getHCell: function(){
+			return this.hCell;
 		},
 
 		// 列
-		getCol: function(){
-			return this.col;
+		getCell: function(){
+			return this.cell;
 		},
 
 		// ヘッダー行
@@ -121,35 +121,35 @@ TableHelper.prototype = {
 
 		// テキスト取得
 		getText: function(){
-			return this.col.text();
+			return this.cell.text();
 		},
 
 		// テキスト設定
 		setText: function(text){
-			this.col.text(text);
+			this.cell.text(text);
 		},
 
 		// 値取得
 		getValue: function(){
-			return this.col.children().val();
+			return this.cell.children().val();
 		},
 
 		// 値設定
 		setValue: function(val){
-			this.col.children().val(val);
+			this.cell.children().val(val);
 		},
 
 		// エラー表示
 		error: function(msg){
-			this.col.children().css({"background-color" :"#ffb6c1", "border-color" : "red", "color" : "white"});
-			this.col.next().children().text(msg);
+			this.cell.children().css({"background-color" :"#ffb6c1", "border-color" : "red", "color" : "white"});
+			this.cell.next().children().text(msg);
 		},
 
 		// エラークリア
 		clear: function(){
-			this.col.children().css({"background-color" :"white", "border-color" : "#D8D8D8", "color" : "black"});
-			this.col.next().children().text("");
-		}
+			this.cell.children().css({"background-color" :"white", "border-color" : "#D8D8D8", "color" : "black"});
+			this.cell.next().children().text("");
+		},
 
 }
 
@@ -214,11 +214,11 @@ TableHelper.prototype.header = function(option){
 	$.each(option.columns, $.proxy(function(idx, cOption){
 
 		// ヘッダー列追加
-		this.addHCols(0);
+		this.addHCells(0);
 		// ヘッダー列取得
-		var hCol = this.hRows(0).hCols(idx).getHCol();
+		var hCell = this.hRows(0).hCells(idx).getHCell();
 		// ヘッダー列プロパティ追加
-		this.addProp(cOption, hCol);
+		this.addProp(cOption, hCell);
 	}, this));
 }
 
@@ -254,14 +254,14 @@ TableHelper.prototype.addBodyCols = function(obj, rIdx){
 		// ボディ列の追加
 		this.addCols(rIdx);
 		// ヘッダー列の取得
-		var hCol = this.hRows(0).hCols(cIdx).getHCol();
+		var hCell = this.hRows(0).hCells(cIdx).getHCell();
 		// ボディ列の取得
-		var col = this.rows(rIdx).cols(cIdx).getCol();
+		var cell = this.cells(rIdx, cIdx).getCell();
 		// ボディ列のテキスト設定
-		this.rows(rIdx).cols(cIdx).setText(val);
+		this.cells(rIdx, cIdx).setText(val);
 		// 非表示処理
-		if(hCol.css("display") == "none"){
-			col.css("display", "none");
+		if(hCell.css("display") == "none"){
+			cell.css("display", "none");
 		}
 	}, this));
 
@@ -410,7 +410,7 @@ TableHelper.prototype.form = function(parent, option){
 		// ヘッダー列の追加
 		this.addCols(rIdx);
 		// ヘッダー列の取得
-		var th = this.rows(rIdx).cols(0).getCol();
+		var th = this.cells(rIdx, 0).getCell();
 
 		// テキストエリア(左側)のプロパティ追加
 		if(rows.textArea){
@@ -438,7 +438,7 @@ TableHelper.prototype.setInput = function(rows, rIdx){
 			// 列の追加
 			this.addCols(rIdx);
 			// 列の取得
-			var td = this.rows(rIdx).cols(cIdx + 1).getCol();
+			var td = this.cells(rIdx, cIdx + 1).getCell();
 			// ボディ列内入力要素制定
 			td.append("<" + inputArea.element + ">" + "</" + inputArea.element + ">");
 			// 入力要素のプロパティ設定
@@ -456,7 +456,7 @@ TableHelper.prototype.setInput = function(rows, rIdx){
  * @param data 表示データ
  */
 TableHelper.prototype.setCombobox = function(rIdx, cIdx, data){
-	var select = this.rows(rIdx).cols(cIdx).getCol().find("select");
+	var select = this.cells(rIdx, cIdx).getCell().find("select");
 	this.addOption(select, data);
 }
 

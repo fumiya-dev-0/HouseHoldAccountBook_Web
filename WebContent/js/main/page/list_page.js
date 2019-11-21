@@ -10,6 +10,7 @@ TabbodyListpage.prototype.FORM_ROW_IDX_DATE = 2;
 TabbodyListpage.prototype.FORM_ROW_IDX_EXPENSE = 3;
 TabbodyListpage.prototype.FORM_ROW_IDX_INCOME = 4;
 TabbodyListpage.prototype.FORM_ROW_IDX_SPENDING = 5;
+
 /** 入力フォーム列番号 */
 TabbodyListpage.prototype.FORM_COL_IDX = 1;
 
@@ -121,7 +122,7 @@ TabbodyListpage.prototype.init = function(){
 	$("#del-btn").on("click", $.proxy(function(){
 		if(this.tableHelper.isRow()){
 			var rIdx = this.tableHelper.getRowIdx() - 1;
-			var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+			var code = this.tableHelper.cells(rIdx, this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
 			this.delete(code);
 		}else{
 			messageHelper.alert("未選択", "表を選択してください。", null).show();
@@ -172,7 +173,7 @@ TabbodyListpage.prototype.loadCombo = function(){
 TabbodyListpage.prototype.createOption = function(year, month){
 
 	var option = null;
-	option = "<option value=''></option>"
+	option = "<option value=''>全件選択</option>"
 		for(var i = 0; i < 10; i++){
 			for(var j = 0; j < 12; j++){
 				option += "<option value='" + year + "/" + DateUtil.toDateDigits(month, 2) + "'>" + year + "年" + DateUtil.toDateDigits(month, 2) + "月"  + "</option>";
@@ -295,30 +296,30 @@ TabbodyListpage.prototype.loadDialog = function(rIdx){
 TabbodyListpage.prototype.setForm = function(rIdx){
 
 	// 家計簿コード
-	var code = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
+	var code = this.tableHelper.cells(rIdx, this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_CODE).getText();
 	// 品名
-	var name = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_NAME).getText();
+	var name = this.tableHelper.cells(rIdx, this.TBL_COL_IDX_HOUSEHOLDACCOUNTBOOK_NAME).getText();
 	// 日付
-	var date = DateUtil.convertToSlashDeleteStringFormat(this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_DATE).getText());
+	var date = DateUtil.convertToSlashDeleteStringFormat(this.tableHelper.cells(rIdx, this.TBL_COL_IDX_DATE).getText());
 	// 費目
-	var expense = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_EXPENSE_CODE).getText();
+	var expense = this.tableHelper.cells(rIdx, this.TBL_COL_IDX_EXPENSE_CODE).getText();
 	// 収入
-	var income = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_INCOME).getText().slice(0, -1);
+	var income = this.tableHelper.cells(rIdx, this.TBL_COL_IDX_INCOME).getText().slice(0, -1);
 	// 支出
-	var spending = this.tableHelper.rows(rIdx).cols(this.TBL_COL_IDX_SPENDING).getText().slice(0, -1);
+	var spending = this.tableHelper.cells(rIdx, this.TBL_COL_IDX_SPENDING).getText().slice(0, -1);
 	// 家計簿コード
-	this.formHelper.rows(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE).cols(this.FORM_COL_IDX).setValue(code);
+	this.formHelper.cells(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE, this.FORM_COL_IDX).setValue(code);
 
 	// 品名
-	this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).setValue(name);
+	this.formHelper.cells(this.FORM_ROW_IDX_NAME, this.FORM_COL_IDX).setValue(name);
 	// 日付
-	this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX).setValue(DateUtil.convertToHyphenStringFormat(date));
+	this.formHelper.cells(this.FORM_ROW_IDX_DATE, this.FORM_COL_IDX).setValue(DateUtil.convertToHyphenStringFormat(date));
 	// 費目
-	this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX).setValue(expense);
+	this.formHelper.cells(this.FORM_ROW_IDX_EXPENSE, this.FORM_COL_IDX).setValue(expense);
 	// 収入
-	this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).setValue(StringUtil.commaDelFormat(income));
+	this.formHelper.cells(this.FORM_ROW_IDX_INCOME, this.FORM_COL_IDX).setValue(StringUtil.commaDelFormat(income));
 	// 支出
-	this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).setValue(StringUtil.commaDelFormat(spending));
+	this.formHelper.cells(this.FORM_ROW_IDX_SPENDING, this.FORM_COL_IDX).setValue(StringUtil.commaDelFormat(spending));
 }
 
 /**
@@ -328,9 +329,6 @@ TabbodyListpage.prototype.setForm = function(rIdx){
 TabbodyListpage.prototype.search = function(){
 
 	var val = $("#date-combo").val();
-	if(!val){
-		return;
-	}
 
 	this.nowPage = 0;
 	var formData = this.searchData(val);
@@ -397,17 +395,17 @@ TabbodyListpage.prototype.inputData = function(){
 	var formData = new FormData();
 
 	// 家計簿コード
-	var code = this.formHelper.rows(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE).cols(this.FORM_COL_IDX).getValue();
+	var code = this.formHelper.cells(this.FORM_ROW_IDX_HOUSEHOLDACCOUNTBOOK_CODE, this.FORM_COL_IDX).getValue();
 	// 品名
-	var name = this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).getValue();
+	var name = this.formHelper.cells(this.FORM_ROW_IDX_NAME, this.FORM_COL_IDX).getValue();
 	// 日付
-	var date = this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX).getValue();
+	var date = this.formHelper.cells(this.FORM_ROW_IDX_DATE, this.FORM_COL_IDX).getValue();
 	// 費目
-	var expenseCode = this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX).getValue();
+	var expenseCode = this.formHelper.cells(this.FORM_ROW_IDX_EXPENSE, this.FORM_COL_IDX).getValue();
 	// 収入
-	var income = this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).getValue();
+	var income = this.formHelper.cells(this.FORM_ROW_IDX_INCOME, this.FORM_COL_IDX).getValue();
 	// 支出
-	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).getValue();
+	var spending = this.formHelper.cells(this.FORM_ROW_IDX_SPENDING, this.FORM_COL_IDX).getValue();
 
 	StringUtil.isEmpty(code) ? formData.append(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, "") : formData.append(HtmlConstants.HOUSE_HOLD_ACCOUNT_BOOK_CODE, code);
 	formData.append(HtmlConstants.NAME, name);
@@ -428,35 +426,35 @@ TabbodyListpage.prototype.checkData = function(){
 	var checkFlg = true;
 
 	// 品名
-	var name = this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX)
+	var name = this.formHelper.cells(this.FORM_ROW_IDX_NAME, this.FORM_COL_IDX);
 	if(StringUtil.isEmpty(name.getValue())){
 		name.error(this.NAME_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
 	// 日付
-	var date = this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX);
+	var date = this.formHelper.cells(this.FORM_ROW_IDX_DATE, this.FORM_COL_IDX);
 	if(StringUtil.isEmpty(date.getValue())){
 		date.error(this.DATE_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
 	// 費目
-	var expenseCode = this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX);
+	var expenseCode = this.formHelper.cells(this.FORM_ROW_IDX_EXPENSE, this.FORM_COL_IDX);
 	if(StringUtil.isEmpty(expenseCode.getValue())){
 		expenseCode.error(this.EXPENSE_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
 	// 収入
-	var income = this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX);
+	var income = this.formHelper.cells(this.FORM_ROW_IDX_INCOME, this.FORM_COL_IDX);
 	if(StringUtil.isEmpty(income.getValue())){
 		income.error(this.INCOME_ERROR_MESSAGE);
 		checkFlg = false;
 	}
 
 	// 支出
-	var spending = this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX);
+	var spending = this.formHelper.cells(this.FORM_ROW_IDX_SPENDING, this.FORM_COL_IDX);
 	if(StringUtil.isEmpty(spending.getValue())){
 		spending.error(this.SPENDING_ERROR_MESSAGE);
 		checkFlg = false;
@@ -472,15 +470,15 @@ TabbodyListpage.prototype.checkData = function(){
 TabbodyListpage.prototype.clear = function(){
 
 	// 品名
-	this.formHelper.rows(this.FORM_ROW_IDX_NAME).cols(this.FORM_COL_IDX).clear();
+	this.formHelper.cells(this.FORM_ROW_IDX_NAME, this.FORM_COL_IDX).clear();
 	// 日付
-	this.formHelper.rows(this.FORM_ROW_IDX_DATE).cols(this.FORM_COL_IDX).clear();
+	this.formHelper.cells(this.FORM_ROW_IDX_DATE, this.FORM_COL_IDX).clear();
 	// 費目
-	this.formHelper.rows(this.FORM_ROW_IDX_EXPENSE).cols(this.FORM_COL_IDX).clear();
+	this.formHelper.cells(this.FORM_ROW_IDX_EXPENSE, this.FORM_COL_IDX).clear();
 	// 収入
-	this.formHelper.rows(this.FORM_ROW_IDX_INCOME).cols(this.FORM_COL_IDX).clear();
+	this.formHelper.cells(this.FORM_ROW_IDX_INCOME, this.FORM_COL_IDX).clear();
 	// 支出
-	this.formHelper.rows(this.FORM_ROW_IDX_SPENDING).cols(this.FORM_COL_IDX).clear();
+	this.formHelper.cells(this.FORM_ROW_IDX_SPENDING, this.FORM_COL_IDX).clear();
 }
 
 /**
